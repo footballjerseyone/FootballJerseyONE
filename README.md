@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FootballJerseyONE</title>
 
-  <!-- PayPal SDK (Client-ID später ersetzen) -->
   <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=EUR"></script>
 
   <style>
@@ -23,17 +22,9 @@
     }
 
     .logo{
-      width:120px;
-      height:120px;
-      border-radius:50%;
-      background:white;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      margin-bottom:20px;
-      font-size:40px;
-      color:#0f172a;
-      font-weight:bold;
+      width:120px;height:120px;border-radius:50%;
+      background:white;display:flex;align-items:center;justify-content:center;
+      margin-bottom:20px;font-size:40px;color:#0f172a;font-weight:bold;
     }
 
     h1{font-size:3rem;margin-bottom:10px;}
@@ -41,26 +32,14 @@
 
     .btn{
       padding:12px 20px;
-      background:#22c55e;
-      border:none;
-      border-radius:10px;
-      color:white;
-      cursor:pointer;
-      font-size:1rem;
-      transition:.2s;
+      background:#22c55e;border:none;border-radius:10px;
+      color:white;cursor:pointer;font-size:1rem;
     }
 
-    .btn:hover{background:#16a34a;}
-
     nav{
-      position:sticky;
-      top:0;
-      background:#0b1220;
-      display:flex;
-      justify-content:space-between;
-      padding:15px 20px;
-      align-items:center;
-      z-index:1000;
+      position:sticky;top:0;background:#0b1220;
+      display:flex;justify-content:space-between;
+      padding:15px 20px;align-items:center;z-index:1000;
     }
 
     nav a{color:white;margin:0 10px;text-decoration:none;}
@@ -79,46 +58,43 @@
       border-radius:15px;
       padding:15px;
       text-align:center;
-      transition:.2s;
     }
 
-    .card:hover{transform:translateY(-5px);}
-
-    .card img{
-      width:100%;
-      border-radius:10px;
-      height:200px;
-      object-fit:cover;
-    }
-
+    .card img{width:100%;height:200px;object-fit:cover;border-radius:10px;}
     .price{margin:10px 0;font-weight:bold;}
 
     .cart-btn{
-      position:fixed;
-      right:20px;
-      bottom:20px;
-      background:#22c55e;
-      padding:15px;
-      border-radius:50px;
-      cursor:pointer;
-      font-size:18px;
+      position:fixed;right:20px;bottom:20px;
+      background:#22c55e;padding:15px;border-radius:50px;
+      cursor:pointer;font-size:18px;
     }
 
     .cart-panel{
-      position:fixed;
-      right:0;
-      top:0;
-      width:320px;
-      height:100%;
-      background:#0b1220;
-      padding:20px;
-      overflow-y:auto;
-      display:none;
+      position:fixed;right:0;top:0;
+      width:350px;height:100%;background:#0b1220;
+      padding:20px;overflow-y:auto;
+      transform:translateX(100%);
+      transition:.3s;
     }
+
+    .cart-panel.open{transform:translateX(0);}
+
+    .remove{color:red;cursor:pointer;font-size:12px;margin-left:10px;}
+
+    .qty-btn{margin:0 5px;cursor:pointer;color:#22c55e;}
 
     .paypal-container{margin-top:20px;}
 
-    .remove{color:red;cursor:pointer;font-size:12px;}
+    .clear{
+      margin-top:10px;
+      background:red;
+      padding:8px;
+      border:none;
+      border-radius:8px;
+      color:white;
+      cursor:pointer;
+      width:100%;
+    }
   </style>
 </head>
 <body>
@@ -126,30 +102,28 @@
 <header>
   <div class="logo">⚽</div>
   <h1>FootballJerseyONE</h1>
-  <p>Top Vereine weltweit • Nationalteams • Retro</p>
+  <p>Nationalteams • Vereine • Retro Trikots</p>
   <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop öffnen</button>
 </header>
 
 <nav>
   <div><strong>FootballJerseyONE</strong></div>
   <div>
-    <a href="#national">Nationalteams</a>
+    <a href="#national">National</a>
     <a href="#clubs">Vereine</a>
     <a href="#retro">Retro</a>
   </div>
 </nav>
 
 <div class="container" id="shop">
-
-  <h2 class="section-title" id="national">Nationalmannschaften</h2>
+  <h2 class="section-title">Nationalmannschaften</h2>
   <div class="grid" id="nationalGrid"></div>
 
-  <h2 class="section-title" id="clubs">Vereinsmannschaften (Top 10 Ligen)</h2>
+  <h2 class="section-title">Vereine</h2>
   <div class="grid" id="clubGrid"></div>
 
-  <h2 class="section-title" id="retro">Retro Trikots</h2>
+  <h2 class="section-title">Retro</h2>
   <div class="grid" id="retroGrid"></div>
-
 </div>
 
 <div class="cart-btn" onclick="toggleCart()">🛒</div>
@@ -158,57 +132,24 @@
   <h2>Warenkorb</h2>
   <div id="cartItems"></div>
   <h3 id="total">Total: 0€</h3>
+
+  <button class="clear" onclick="clearCart()">Warenkorb leeren</button>
+
   <div class="paypal-container" id="paypal-button-container"></div>
 </div>
 
 <script>
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const products = {
   national:[
     {name:"Deutschland Heim",price:89,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
     {name:"Brasilien Heim",price:89,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
   ],
-
   clubs:[
-    // Premier League
-    {name:"Manchester City",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
-    {name:"Liverpool FC",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
-    {name:"Arsenal FC",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
-
-    // La Liga
     {name:"Real Madrid",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
-    {name:"FC Barcelona",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
-    {name:"Atletico Madrid",price:94,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"},
-
-    // Serie A
-    {name:"Juventus",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
-    {name:"Inter Mailand",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
-    {name:"AC Milan",price:94,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"},
-
-    // Bundesliga
-    {name:"Bayern München",price:94,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
-    {name:"Borussia Dortmund",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
-
-    // Ligue 1
-    {name:"Paris Saint-Germain",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
-
-    // Eredivisie
-    {name:"Ajax Amsterdam",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
-
-    // Primeira Liga
-    {name:"Benfica",price:94,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"},
-
-    // Brasil
-    {name:"Flamengo",price:94,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
-
-    // MLS
-    {name:"Inter Miami",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
-
-    // Türkei
-    {name:"Galatasaray",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"}
+    {name:"FC Barcelona",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"}
   ],
-
   retro:[
     {name:"Deutschland 1990",price:120,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
     {name:"Brasilien 2002",price:120,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
@@ -216,75 +157,89 @@ const products = {
 };
 
 function renderGrid(id,items){
-  const el=document.getElementById(id);
-  el.innerHTML="";
-  items.forEach(p=>{
-    el.innerHTML+=`
-      <div class='card'>
-        <img src='${p.img}'/>
-        <h3>${p.name}</h3>
-        <div class='price'>${p.price}€</div>
-        <button class='btn' onclick='addToCart("${p.name}",${p.price})'>In den Warenkorb</button>
-      </div>
-    `;
-  });
+  document.getElementById(id).innerHTML = items.map(p=>`
+    <div class='card'>
+      <img src='${p.img}'/>
+      <h3>${p.name}</h3>
+      <div class='price'>${p.price}€</div>
+      <button class='btn' onclick='addToCart("${p.name}",${p.price})'>In den Warenkorb</button>
+    </div>
+  `).join('');
 }
 
 function addToCart(name,price){
-  cart.push({name,price});
-  updateCart();
+  let item = cart.find(i=>i.name===name);
+  if(item){item.qty++}
+  else cart.push({name,price,qty:1});
+  save();
 }
 
-function removeItem(index){
-  cart.splice(index,1);
+function removeItem(name){
+  cart = cart.filter(i=>i.name!==name);
+  save();
+}
+
+function changeQty(name,delta){
+  let item = cart.find(i=>i.name===name);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) removeItem(name);
+  save();
+}
+
+function clearCart(){
+  cart=[];
+  save();
+}
+
+function save(){
+  localStorage.setItem("cart",JSON.stringify(cart));
   updateCart();
 }
 
 function updateCart(){
-  const el=document.getElementById("cartItems");
+  let el=document.getElementById("cartItems");
   el.innerHTML="";
   let total=0;
 
-  cart.forEach((item,i)=>{
-    total+=item.price;
-    el.innerHTML+=`<p>${item.name} - ${item.price}€ <span class='remove' onclick='removeItem(${i})'>X</span></p>`;
+  cart.forEach(i=>{
+    total += i.price * i.qty;
+    el.innerHTML += `
+      <p>
+        ${i.name} (${i.qty})
+        <span class='qty-btn' onclick='changeQty("${i.name}",1)'>+</span>
+        <span class='qty-btn' onclick='changeQty("${i.name}",-1)'>-</span>
+        <span class='remove' onclick='removeItem("${i.name}")'>X</span>
+      </p>`;
   });
 
-  document.getElementById("total").innerText="Total: "+total+"€";
-
+  document.getElementById("total").innerText="Total: "+total.toFixed(2)+"€";
   renderPayPal(total);
 }
 
 function toggleCart(){
-  const panel=document.getElementById("cartPanel");
-  panel.style.display=panel.style.display==="block"?"none":"block";
+  document.getElementById("cartPanel").classList.toggle("open");
 }
 
 function renderPayPal(total){
-  const container=document.getElementById("paypal-button-container");
-  container.innerHTML="";
-
+  const c=document.getElementById("paypal-button-container");
+  c.innerHTML="";
   if(total<=0) return;
 
   paypal.Buttons({
-    createOrder:function(data,actions){
-      return actions.order.create({
-        purchase_units:[{amount:{value:total.toFixed(2)}}]
-      });
-    },
-    onApprove:function(data,actions){
-      return actions.order.capture().then(function(details){
-        alert('Zahlung erfolgreich von '+details.payer.name.given_name);
-        cart=[];
-        updateCart();
-      });
-    }
-  }).render('#paypal-button-container');
+    createOrder:(d,a)=>a.order.create({purchase_units:[{amount:{value:total.toFixed(2)}}]}),
+    onApprove:(d,a)=>a.order.capture().then(()=>{
+      alert("Zahlung erfolgreich!");
+      cart=[];
+      save();
+    })
+  }).render("#paypal-button-container");
 }
 
 renderGrid("nationalGrid",products.national);
 renderGrid("clubGrid",products.clubs);
 renderGrid("retroGrid",products.retro);
+updateCart();
 </script>
 
 </body>
