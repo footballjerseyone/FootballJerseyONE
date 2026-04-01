@@ -159,6 +159,9 @@ return;
 if(h.startsWith('team-')){
 let name=decodeURIComponent(h.replace('team-',''));
 
+let homeImg = `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
+let awayImg = `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
+
 app.innerHTML=`
 <div class='title'>
 <span class='back' onclick='back()'>⬅ Zurück</span>
@@ -168,17 +171,21 @@ ${name}
 <div class='grid'>
 
 <div class='card'>
-<img src="https://via.placeholder.com/300x200?text=${encodeURIComponent(name+' Heim')}" />
+<img src="${homeImg}" />
 <b>${name} Heimtrikot</b>
 <div>29.99€</div>
-<button class='btn' onclick="add('${name} Heimtrikot',29.99,'https://via.placeholder.com/300x200', 'M')">In den Warenkorb</button>
+<button class='btn' onclick="add('${name} Heimtrikot',29.99,'${homeImg}','M')">
+In den Warenkorb
+</button>
 </div>
 
 <div class='card'>
-<img src="https://via.placeholder.com/300x200?text=${encodeURIComponent(name+' Auswärts')}" />
+<img src="${awayImg}" />
 <b>${name} Auswärtstrikot</b>
 <div>29.99€</div>
-<button class='btn' onclick="add('${name} Auswärtstrikot',29.99,'https://via.placeholder.com/300x200', 'M')">In den Warenkorb</button>
+<button class='btn' onclick="add('${name} Auswärtstrikot',29.99,'${awayImg}','M')">
+In den Warenkorb
+</button>
 </div>
 
 </div>
