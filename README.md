@@ -24,10 +24,10 @@ z-index:10;
 }
 
 nav a{margin:0 6px;cursor:pointer;font-size:14px;}
-.search{padding:6px;border:1px solid #ccc;border-radius:6px;}
+.search,.filter{padding:6px;border:1px solid #ccc;border-radius:6px;}
 
 .container{padding:20px;}
-.title{font-size:1.8rem;margin:15px 0;display:flex;align-items:center;gap:10px;}
+.title{font-size:1.8rem;margin:15px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 
 .back{
 cursor:pointer;
@@ -43,12 +43,11 @@ transition:.2s;
 .sub{font-size:1.2rem;margin:10px 0;color:#555;display:flex;align-items:center;gap:8px;font-weight:600;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
 
-.card{background:#f3f3f3;padding:10px;border-radius:10px;text-align:center;transition:.2s;}
+.card{background:#f3f3f3;padding:10px;border-radius:10px;text-align:center;transition:.2s;cursor:pointer;}
 .card:hover{transform:scale(1.03);}
 .card img{width:100%;height:110px;object-fit:cover;border-radius:8px;margin-bottom:6px;}
 
 .btn{padding:6px 10px;background:#22c55e;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-top:6px;}
-.badge{background:#22c55e;color:#fff;padding:2px 8px;border-radius:10px;font-size:12px;}
 
 .cartModal{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:none;flex-direction:column;z-index:9999;}
 .cartHeader{display:flex;justify-content:space-between;padding:15px;background:#f5f5f5;}
@@ -67,17 +66,14 @@ transition:.2s;
 <a onclick="go('national')">National</a>
 <a onclick="go('clubs')">Vereine</a>
 <a onclick="go('retro')">Retro</a>
-<span onclick="openCart()" style="cursor:pointer">🛒 <span class="badge" id="cartCount">0</span></span>
+<span onclick="openCart()" style="cursor:pointer">🛒 <span id="cartCount">0</span></span>
 </div>
 </nav>
 
 <div class="container" id="app"></div>
 
 <div class="cartModal" id="cartModal">
-<div class="cartHeader">
-<h2>Warenkorb</h2>
-<span onclick="closeCart()" class="back">✖</span>
-</div>
+<div class="cartHeader"><h2>Warenkorb</h2><span onclick="closeCart()" class="back">✖</span></div>
 <div class="cartBody" id="cartBody"></div>
 <div class="checkoutBox">
 <div id="total"></div>
@@ -92,7 +88,7 @@ const SHIPPING = 4.99;
 function saveCart(){localStorage.setItem('cart', JSON.stringify(cart));updateCart();}
 function updateCart(){document.getElementById('cartCount').innerText = cart.length;}
 
-function add(name,price=99,img="https://images.unsplash.com/photo-1521412644187-c49fa049e84d"){
+function add(name,price=99,img="https://placehold.co/300x300?text=Jersey"){
 cart.push({name,price,img});saveCart();}
 
 function removeItem(i){cart.splice(i,1);saveCart();renderCart();}
@@ -127,22 +123,22 @@ onApprove:(d,a)=>a.order.capture().then(()=>{alert('Bestellung erfolgreich');car
 }).render('#paypal-button-container');
 }
 
-const countries = {
-de:"Deutschland", fr:"Frankreich", es:"Spanien", gb:"England", it:"Italien", pt:"Portugal", nl:"Niederlande", be:"Belgien", ch:"Schweiz", at:"Österreich",
-br:"Brasilien", ar:"Argentinien", uy:"Uruguay", co:"Kolumbien", cl:"Chile",
-ng:"Nigeria", ma:"Marokko", sn:"Senegal", gh:"Ghana",
-jp:"Japan", kr:"Südkorea", cn:"China", qa:"Qatar",
-us:"USA", mx:"Mexiko", ca:"Kanada",
-au:"Australien", nz:"Neuseeland"
+const countries={
+de:"Deutschland",fr:"Frankreich",es:"Spanien",gb:"England",it:"Italien",pt:"Portugal",nl:"Niederlande",be:"Belgien",ch:"Schweiz",at:"Österreich",
+br:"Brasilien",ar:"Argentinien",uy:"Uruguay",co:"Kolumbien",cl:"Chile",
+ng:"Nigeria",ma:"Marokko",sn:"Senegal",gh:"Ghana",ci:"Elfenbeinküste",dz:"Algerien",eg:"Ägypten",
+jp:"Japan",kr:"Südkorea",cn:"China",qa:"Qatar",sa:"Saudi-Arabien",ae:"UAE",
+us:"USA",mx:"Mexiko",ca:"Kanada",
+au:"Australien",nz:"Neuseeland"
 };
 
-const continents = {
-"Europa": ["de","fr","es","gb","it","pt","nl","be","ch","at"],
-"Südamerika": ["br","ar","uy","co","cl"],
-"Afrika": ["ng","ma","sn","gh"],
-"Asien": ["jp","kr","cn","qa"],
-"Nordamerika": ["us","mx","ca"],
-"Ozeanien": ["au","nz"]
+const continents={
+"Europa":["de","fr","es","gb","it","pt","nl","be","ch","at","dk","se","no","pl","cz","gr","ua"],
+"Südamerika":["br","ar","uy","co","cl"],
+"Afrika":["ng","ma","sn","gh","ci","dz","eg"],
+"Asien":["jp","kr","cn","qa","sa","ae"],
+"Nordamerika":["us","mx","ca"],
+"Ozeanien":["au","nz"]
 };
 
 const leagues={
@@ -159,54 +155,58 @@ const leagues={
 };
 
 const retro=[
-{name:"Deutschland 1990",price:120,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
-{name:"Brasilien 2002",price:130,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
+{name:"Deutschland 1990",price:120,img:"https://placehold.co/300x300?text=Germany+1990"},
+{name:"Brasilien 2002",price:130,img:"https://placehold.co/300x300?text=Brazil+2002"}
 ];
 
 function go(p){location.hash=p;render();}
 window.onhashchange=render;
 function back(){history.back();}
+function openTeam(name){location.hash='team-'+encodeURIComponent(name);}
 
-function search(q){
-q=q.toLowerCase();
-if(!q){render();return;}
-let results=[];
-Object.values(leagues).forEach(arr=>arr.forEach(t=>{if(t.toLowerCase().includes(q))results.push(t);}));
-const app=document.getElementById('app');
-app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurück</span> Suche</div>`+
-results.map(r=>`<div class='card'><img src='https://images.unsplash.com/photo-1521412644187-c49fa049e84d'/>${r}<br><button class='btn' onclick="add('${r}')">Kaufen</button></div>`).join('');
-}
+function search(q){q=q.toLowerCase();if(!q){render();return;}let results=[];Object.values(leagues).forEach(a=>a.forEach(t=>{if(t.toLowerCase().includes(q))results.push(t);}));const app=document.getElementById('app');app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurück</span> Suche</div>`+results.map(r=>`<div class='card' onclick="openTeam('${r}')"><img src='https://placehold.co/300x300?text=Kit'/>${r}</div>`).join('');}
 
 function render(){
 updateCart();
 const app=document.getElementById('app');
 const h=location.hash.replace('#','')||'clubs';
 
+if(h.startsWith('team-')){
+const name=decodeURIComponent(h.replace('team-',''));
+app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurück</span>${name}</div>
+<div class='card'>
+<img src='https://placehold.co/400x400?text=Official+Kit+${name}'/>
+<h3>${name}</h3>
+<p>Offizielles Fan Trikot</p>
+<button class='btn' onclick="add('${name} Heim')">Heim</button>
+<button class='btn' onclick="add('${name} Auswärts')">Auswärts</button>
+</div>`;
+return;
+}
+
 if(h==='national'){
 app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurück</span> Nationalteams</div>`+
-Object.entries(continents).map(([cont,codes])=>{
-return `<div class='sub'>${cont}</div>
+Object.entries(continents).map(([cont,codes])=>`
+<div class='sub'>${cont}</div>
 <div class='grid'>${codes.map(code=>`
-<div class='card'>
+<div class='card' onclick="openTeam('${countries[code]}')">
 <img class='flag' src='https://flagcdn.com/w80/${code}.png'/>
-<div style='margin-top:6px;font-weight:600'>${countries[code]}</div>
-<button class='btn' onclick="add('${countries[code]} Heim')">Heim</button>
-<button class='btn' onclick="add('${countries[code]} Auswärts')">Auswärts</button>
-</div>`).join('')}</div>`;
-}).join('');
+<div>${countries[code]}</div>
+</div>`).join('')}</div>`).join('');
 }
 
 else if(h==='clubs'){
-app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurück</span> Ligen</div>`+
+app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurück</span> Vereine</div>
+<div style='margin-bottom:10px'>
+<input class='filter' placeholder='Filter Team...' oninput='filterTeams(this.value)'>
+</div>`+
 Object.entries(leagues).map(([l,teams])=>{
 let [title,code]=l.split('|');
-return `<div class='sub'><img class='flag' src='https://flagcdn.com/w40/${code}.png'/>${title}</div>
+return `<div class='sub'>${title}</div>
 <div class='grid'>${teams.map(t=>`
-<div class='card'>
-<img src='https://images.unsplash.com/photo-1521412644187-c49fa049e84d'/>
-${t}<br>
-<button class='btn' onclick="add('${t} Heim')">Heim</button>
-<button class='btn' onclick="add('${t} Auswärts')">Auswärts</button>
+<div class='card' onclick="openTeam('${t}')">
+<img src='https://placehold.co/300x300?text=Kit+${t}'/>
+${t}
 </div>`).join('')}</div>`;
 }).join('');
 }
@@ -216,6 +216,13 @@ app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurüc
 retro.map(r=>`
 <div class='card'><img src='${r.img}'/>${r.name}<br><button class='btn' onclick="add('${r.name}',${r.price})">Kaufen</button></div>`).join('');
 }
+}
+
+function filterTeams(v){
+v=v.toLowerCase();
+document.querySelectorAll('.card').forEach(c=>{
+c.style.display=c.innerText.toLowerCase().includes(v)?'block':'none';
+});
 }
 
 render();
