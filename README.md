@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FootballJerseyONE REAL MONEY</title>
+<title>FootballJerseyONE</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 body{background:#fff;color:#111;}
@@ -37,8 +37,8 @@ input,select{padding:10px;border:1px solid #ddd;border-radius:8px;}
 <button class="btn" onclick="openCart()">Warenkorb (<span id="cartCount">0</span>)</button>
 </header>
 <section class="hero">
-<h1>REAL MONEY UPGRADE</h1>
-<p>PayPal Live Payments • Orders System • GitHub Pages Ready</p>
+<h1>FootballJerseyONE</h1>
+<p>Offizieller Fußball Trikot Shop • National • Club • Retro</p>
 </section>
 <div class="container">
 <div class="tools">
@@ -80,10 +80,14 @@ let products=[
 let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
 function render(){
-let grid=document.getElementById("grid");let s=document.getElementById("search").value.toLowerCase();let f=document.getElementById("filter").value;
+let grid=document.getElementById("grid");
+let s=document.getElementById("search").value.toLowerCase();
+let f=document.getElementById("filter").value;
+
 grid.innerHTML="";
 products.filter(p=>(f=="all"||p.cat==f)&&p.name.toLowerCase().includes(s)).forEach((p,i)=>{
-let div=document.createElement("div");div.className="card";
+let div=document.createElement("div");
+div.className="card";
 div.innerHTML=`<img src='https://images.unsplash.com/photo-1521412644187-c49fa049e84d'><div class='card-content'><h3>${p.name}</h3><p class='price'>${p.price}€</p><button class='btn' onclick='addToCart(${i})'>In Warenkorb</button></div>`;
 grid.appendChild(div);
 });
@@ -102,46 +106,4 @@ renderPayPal();
 }
 
 function closeCart(){
-document.getElementById("cartModal").style.display="none";
-}
-
-function renderCart(){
-let html="";let total=0;
-cart.forEach(i=>{html+=`<p>${i.name} - ${i.price}€</p>`;total+=i.price;});
-let shipping=cart.length?4.99:0;
-document.getElementById("cartItems").innerHTML=html;
-document.getElementById("shipping").innerText="Versand: "+shipping.toFixed(2)+"€";
-document.getElementById("total").innerText="Gesamt: "+(total+shipping).toFixed(2)+"€";
-}
-
-function renderPayPal(){
-let total=cart.reduce((a,b)=>a+b.price,0)+4.99;
-
-document.getElementById("paypal-button-container").innerHTML="";
-
-paypal.Buttons({
-createOrder:function(data,actions){
-return actions.order.create({
-purchase_units:[{
-amount:{value:total.toFixed(2)}
-}]
-});
-},
-
-onApprove:function(data,actions){
-return actions.order.capture().then(function(details){
-alert("Zahlung erfolgreich: "+details.payer.name.given_name);
-localStorage.removeItem("cart");
-cart=[];
-document.getElementById("cartCount").innerText=0;
-closeCart();
-});
-}
-}).render('#paypal-button-container');
-}
-
-render();
-document.getElementById("cartCount").innerText=cart.length;
-</script>
-</body>
-</html>
+docum
