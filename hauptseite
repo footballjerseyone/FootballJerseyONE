@@ -1,23 +1,52 @@
 <!doctype html>
-<html class="no-js" lang="en-US" >
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-    <title>FootballJerseyONE</title>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FootballJerseyONE – Dein Shop für Football Trikots</title>
 
-    <meta name="keywords" content="FootballJerseyONE">
-    <meta name="description" content="FootballJerseyONE">
+  <meta name="description" content="FootballJerseyONE – Hochwertige Football Jerseys für Fans. Schneller Versand & Top Qualität.">
 
-    <link rel="canonical" href="https://www.footballjerseyone.com/">
+  <style>
+    body {font-family: Arial, sans-serif; margin:0; background:#f5f5f5;}
+    header {background:#111; color:#fff; padding:15px; text-align:center;}
+    nav {background:#222; padding:10px; text-align:center;}
+    nav a {color:#fff; margin:0 10px; text-decoration:none;}
+    .hero {background:#000; color:#fff; padding:60px 20px; text-align:center;}
+    .products {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; padding:20px;}
+    .product {background:#fff; padding:15px; border-radius:10px; text-align:center;}
+    .product img {width:100%; border-radius:10px;}
+    .btn {display:inline-block; padding:10px 15px; background:#000; color:#fff; text-decoration:none; border-radius:5px;}
+    footer {background:#111; color:#fff; text-align:center; padding:15px;}
+  </style>
+</head>
 
-    <meta property="og:site_name" content="FootballJerseyONE">
-    <meta property="og:url" content="https://www.footballjerseyone.com/">
-    <meta property="og:title" content="FootballJerseyONE">
-    <meta property="og:type" content="website">
-    <meta property="og:description" content="FootballJerseyONE">
+<body>
 
-    <!-- Social Media entfernt -->
+<header>
+  <h1>FootballJerseyONE</h1>
+</header>
 
-  </head>
-</html>
+<nav>
+  <a href="#">Home</a>
+  <a href="#products">Shop</a>
+  <a href="#">Kontakt</a>
+</nav>
+
+<section class="hero">
+  <h2>Premium Football Jerseys</h2>
+  <p>Finde dein Lieblings-Trikot – schnell & günstig</p>
+  <a href="#products" class="btn">Jetzt shoppen</a>
+</section>
+
+<section id="products" class="products">
+
+  <div class="product">
+    <img src="https://via.placeholder.com/300" alt="Jersey 1">
+    <h3>NFL Jersey #1</h3>
+    <p>49,99€</p>
+    <a href="#" class="btn">In den Warenkorb</a>
+  </div>
+
+  <div class="product">
+    <img src=
