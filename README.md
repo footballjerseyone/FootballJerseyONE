@@ -1,109 +1,280 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FootballJerseyONE</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-body{background:#fff;color:#111;}
-header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid #eee;position:sticky;top:0;background:#fff;z-index:10;}
-.logo{font-weight:900;color:#111;display:flex;gap:10px;align-items:center;}
-.logo-box{width:14px;height:14px;background:#16a34a;transform:rotate(45deg);}
-nav a{margin:0 8px;text-decoration:none;color:#111;font-size:14px;}
-nav a:hover{color:#16a34a;}
-.btn{background:#16a34a;color:#fff;padding:8px 10px;border:none;border-radius:8px;cursor:pointer;font-weight:700;}
-.hero{text-align:center;padding:45px;background:#f8fafc;}
-.hero h1{font-size:38px;color:#16a34a;}
-.hero p{color:#475569;}
-.container{max-width:1100px;margin:auto;padding:20px;}
-.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;}
-input,select{padding:10px;border:1px solid #ddd;border-radius:8px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px;}
-.card{border:1px solid #eee;border-radius:12px;overflow:hidden;cursor:pointer;transition:0.2s;background:#fff;}
-.card:hover{transform:translateY(-4px);}
-.card img{width:100%;height:160px;object-fit:cover;}
-.card-content{padding:10px;}
-.price{color:#16a34a;font-weight:800;}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;}
-.modal-content{background:#fff;padding:20px;border-radius:12px;max-width:520px;width:92%;}
-#paypal-button-container{margin-top:15px;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FootballJerseyONE</title>
+
+  <!-- PayPal SDK (Client-ID später ersetzen) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=EUR"></script>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#0f172a;
+      color:white;
+    }
+
+    header{
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      background:radial-gradient(circle at top,#1e293b,#0f172a);
+    }
+
+    .logo{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:20px;
+      font-size:40px;
+      color:#0f172a;
+      font-weight:bold;
+    }
+
+    h1{font-size:3rem;margin-bottom:10px;}
+    p{opacity:.8;margin-bottom:20px;}
+
+    .btn{
+      padding:12px 20px;
+      background:#22c55e;
+      border:none;
+      border-radius:10px;
+      color:white;
+      cursor:pointer;
+      font-size:1rem;
+      transition:.2s;
+    }
+
+    .btn:hover{background:#16a34a;}
+
+    nav{
+      position:sticky;
+      top:0;
+      background:#0b1220;
+      display:flex;
+      justify-content:space-between;
+      padding:15px 20px;
+      align-items:center;
+      z-index:1000;
+    }
+
+    nav a{
+      color:white;
+      margin:0 10px;
+      text-decoration:none;
+    }
+
+    .container{padding:40px 20px;}
+
+    .section-title{font-size:2rem;margin:30px 0 20px;}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;
+    }
+
+    .card{
+      background:#111827;
+      border-radius:15px;
+      padding:15px;
+      text-align:center;
+      transition:.2s;
+    }
+
+    .card:hover{transform:translateY(-5px);}
+
+    .card img{
+      width:100%;
+      border-radius:10px;
+      height:200px;
+      object-fit:cover;
+    }
+
+    .price{margin:10px 0;font-weight:bold;}
+
+    .cart-btn{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      background:#22c55e;
+      padding:15px;
+      border-radius:50px;
+      cursor:pointer;
+      font-size:18px;
+    }
+
+    .cart-panel{
+      position:fixed;
+      right:0;
+      top:0;
+      width:320px;
+      height:100%;
+      background:#0b1220;
+      padding:20px;
+      overflow-y:auto;
+      display:none;
+    }
+
+    .paypal-container{
+      margin-top:20px;
+    }
+
+    .remove{
+      color:red;
+      cursor:pointer;
+      font-size:12px;
+    }
+  </style>
 </head>
 <body>
+
 <header>
-<div class="logo"><div class="logo-box"></div>FootballJerseyONE</div>
-<nav><a href="#">Home</a><a href="#">Shop</a></nav>
-<button class="btn" onclick="openCart()">Warenkorb (<span id="cartCount">0</span>)</button>
+  <div class="logo">⚽</div>
+  <h1>FootballJerseyONE</h1>
+  <p>Nationalteams • Vereine • Retro Trikots</p>
+  <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop öffnen</button>
 </header>
-<section class="hero">
-<h1>FootballJerseyONE</h1>
-<p>Offizieller Fußball Trikot Shop • National • Club • Retro</p>
-</section>
-<div class="container">
-<div class="tools">
-<input id="search" placeholder="Suche..." oninput="render()" />
-<select id="filter" onchange="render()">
-<option value="all">Alle</option>
-<option value="national">National</option>
-<option value="club">Vereine</option>
-<option value="retro">Retro</option>
-</select>
-</div>
-<div class="grid" id="grid"></div>
-</div>
 
-<div class="modal" id="cartModal">
-<div class="modal-content">
-<h2>Warenkorb</h2>
-<div id="cartItems"></div>
-<p id="shipping"></p>
-<h3 id="total"></h3>
+<nav>
+  <div><strong>FootballJerseyONE</strong></div>
+  <div>
+    <a href="#national">Nationalteams</a>
+    <a href="#clubs">Vereine</a>
+    <a href="#retro">Retro</a>
+  </div>
+</nav>
 
-<div id="paypal-button-container"></div>
+<div class="container" id="shop">
 
-<button onclick="closeCart()" class="btn" style="margin-top:10px;">Schließen</button>
-</div>
+  <h2 class="section-title" id="national">Nationalmannschaften</h2>
+  <div class="grid" id="nationalGrid"></div>
+
+  <h2 class="section-title" id="clubs">Vereinsmannschaften</h2>
+  <div class="grid" id="clubGrid"></div>
+
+  <h2 class="section-title" id="retro">Retro Trikots</h2>
+  <div class="grid" id="retroGrid"></div>
+
 </div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=EUR"></script>
+<div class="cart-btn" onclick="toggleCart()">🛒</div>
+
+<div class="cart-panel" id="cartPanel">
+  <h2>Warenkorb</h2>
+  <div id="cartItems"></div>
+  <h3 id="total">Total: 0€</h3>
+
+  <div class="paypal-container" id="paypal-button-container"></div>
+</div>
 
 <script>
-let products=[
-{name:"Deutschland 2024",price:89.99,cat:"national"},
-{name:"Frankreich Home",price:89.99,cat:"national"},
-{name:"Real Madrid",price:94.99,cat:"club"},
-{name:"Barcelona Retro",price:99.99,cat:"club"},
-{name:"Brasil 2002",price:119.99,cat:"retro"}
-];
+let cart = [];
 
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
+const products = {
+  national:[
+    {name:"Deutschland Heim",price:89,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
+    {name:"Brasilien Heim",price:89,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
+  ],
+  clubs:[
+    {name:"FC Barcelona",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
+    {name:"Real Madrid",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"}
+  ],
+  retro:[
+    {name:"Deutschland 1990",price:120,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
+    {name:"Brasilien 2002",price:120,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
+  ]
+};
 
-function render(){
-let grid=document.getElementById("grid");
-let s=document.getElementById("search").value.toLowerCase();
-let f=document.getElementById("filter").value;
-
-grid.innerHTML="";
-products.filter(p=>(f=="all"||p.cat==f)&&p.name.toLowerCase().includes(s)).forEach((p,i)=>{
-let div=document.createElement("div");
-div.className="card";
-div.innerHTML=`<img src='https://images.unsplash.com/photo-1521412644187-c49fa049e84d'><div class='card-content'><h3>${p.name}</h3><p class='price'>${p.price}€</p><button class='btn' onclick='addToCart(${i})'>In Warenkorb</button></div>`;
-grid.appendChild(div);
-});
+function renderGrid(id,items){
+  const el=document.getElementById(id);
+  el.innerHTML="";
+  items.forEach(p=>{
+    el.innerHTML+=`
+      <div class='card'>
+        <img src='${p.img}'/>
+        <h3>${p.name}</h3>
+        <div class='price'>${p.price}€</div>
+        <button class='btn' onclick='addToCart("${p.name}",${p.price})'>In den Warenkorb</button>
+      </div>
+    `;
+  });
 }
 
-function addToCart(i){
-cart.push(products[i]);
-localStorage.setItem("cart",JSON.stringify(cart));
-document.getElementById("cartCount").innerText=cart.length;
+function addToCart(name,price){
+  cart.push({name,price});
+  updateCart();
 }
 
-function openCart(){
-renderCart();
-document.getElementById("cartModal").style.display="flex";
-renderPayPal();
+function removeItem(index){
+  cart.splice(index,1);
+  updateCart();
 }
 
-function closeCart(){
-docum
+function updateCart(){
+  const el=document.getElementById("cartItems");
+  el.innerHTML="";
+  let total=0;
+
+  cart.forEach((item,i)=>{
+    total+=item.price;
+    el.innerHTML+=`
+      <p>${item.name} - ${item.price}€ <span class='remove' onclick='removeItem(${i})'>X</span></p>
+    `;
+  });
+
+  document.getElementById("total").innerText="Total: "+total+"€";
+
+  renderPayPal(total);
+}
+
+function toggleCart(){
+  const panel=document.getElementById("cartPanel");
+  panel.style.display=panel.style.display==="block"?"none":"block";
+}
+
+function renderPayPal(total){
+  const container=document.getElementById("paypal-button-container");
+  container.innerHTML="";
+
+  if(total<=0) return;
+
+  paypal.Buttons({
+    createOrder:function(data,actions){
+      return actions.order.create({
+        purchase_units:[{
+          amount:{value:total.toFixed(2)}
+        }]
+      });
+    },
+    onApprove:function(data,actions){
+      return actions.order.capture().then(function(details){
+        alert('Zahlung erfolgreich von '+details.payer.name.given_name);
+        cart=[];
+        updateCart();
+      });
+    }
+  }).render('#paypal-button-container');
+}
+
+renderGrid("nationalGrid",products.national);
+renderGrid("clubGrid",products.clubs);
+renderGrid("retroGrid",products.retro);
+</script>
+
+</body>
+</html>
