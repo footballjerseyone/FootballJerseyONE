@@ -6,29 +6,7 @@
 <title>FootballJerseyONE</title>
 
 <script src="https://www.paypal.com/sdk/js?client-id=AVmx5KkGcuZr3ye1nLyNzvB5RhZXyrpnU8t71ZpFZyLyTO9Xt14jSULuXKjmPBNZw1kWigduGZTYXhii&currency=EUR"></script>
-{
-    return actions.order.create({
-      purchase_units: [{
-        amount: {
-          value: calc().toFixed(2)
-        }
-      }]
-    });
-  },
 
-  onApprove: function(data, actions) {
-    return actions.order.capture().then(function(details) {
-      alert('Zahlung erfolgreich von ' + details.payer.name.given_name);
-
-      // Warenkorb leeren
-      cart = [];
-      save();
-      renderCart();
-      closeCart();
-    });
-  }
-
-}).render('#paypal-button-container');
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
