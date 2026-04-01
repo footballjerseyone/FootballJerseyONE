@@ -135,7 +135,15 @@ ${c.number ? 'Nr: ' + c.number + '<br>' : ''}
 ${(c.p * c.qty).toFixed(2)}€</div>
 <button class='btn' onclick='remove(${i})'>X</button>
 </div>`).join('');
-document.getElementById('total').innerHTML="Gesamt: "+calc().toFixed(2)+"€";
+document.getElementById('total').innerHTML=let subtotal = cart.reduce((a,b)=>a+(b.p * b.qty),0);
+let shipping = cart.length ? SHIPPING : 0;
+let total = subtotal + shipping;
+
+document.getElementById('total').innerHTML = `
+Zwischensumme: ${subtotal.toFixed(2)}€ <br>
+Versand: ${shipping.toFixed(2)}€ <br>
+<b>Gesamt: ${total.toFixed(2)}€</b>
+`;
 }
 
 // 🌍 COUNTRIES EXPANDED
