@@ -9,17 +9,8 @@
   <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=EUR"></script>
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, Helvetica, sans-serif;
-    }
-
-    body{
-      background:#0f172a;
-      color:white;
-    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;}
+    body{background:#0f172a;color:white;}
 
     header{
       height:100vh;
@@ -72,14 +63,9 @@
       z-index:1000;
     }
 
-    nav a{
-      color:white;
-      margin:0 10px;
-      text-decoration:none;
-    }
+    nav a{color:white;margin:0 10px;text-decoration:none;}
 
     .container{padding:40px 20px;}
-
     .section-title{font-size:2rem;margin:30px 0 20px;}
 
     .grid{
@@ -130,15 +116,9 @@
       display:none;
     }
 
-    .paypal-container{
-      margin-top:20px;
-    }
+    .paypal-container{margin-top:20px;}
 
-    .remove{
-      color:red;
-      cursor:pointer;
-      font-size:12px;
-    }
+    .remove{color:red;cursor:pointer;font-size:12px;}
   </style>
 </head>
 <body>
@@ -146,7 +126,7 @@
 <header>
   <div class="logo">⚽</div>
   <h1>FootballJerseyONE</h1>
-  <p>Nationalteams • Vereine • Retro Trikots</p>
+  <p>Top Vereine weltweit • Nationalteams • Retro</p>
   <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop öffnen</button>
 </header>
 
@@ -164,7 +144,7 @@
   <h2 class="section-title" id="national">Nationalmannschaften</h2>
   <div class="grid" id="nationalGrid"></div>
 
-  <h2 class="section-title" id="clubs">Vereinsmannschaften</h2>
+  <h2 class="section-title" id="clubs">Vereinsmannschaften (Top 10 Ligen)</h2>
   <div class="grid" id="clubGrid"></div>
 
   <h2 class="section-title" id="retro">Retro Trikots</h2>
@@ -178,7 +158,6 @@
   <h2>Warenkorb</h2>
   <div id="cartItems"></div>
   <h3 id="total">Total: 0€</h3>
-
   <div class="paypal-container" id="paypal-button-container"></div>
 </div>
 
@@ -190,10 +169,46 @@ const products = {
     {name:"Deutschland Heim",price:89,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
     {name:"Brasilien Heim",price:89,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
   ],
+
   clubs:[
+    // Premier League
+    {name:"Manchester City",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
+    {name:"Liverpool FC",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
+    {name:"Arsenal FC",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
+
+    // La Liga
+    {name:"Real Madrid",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
     {name:"FC Barcelona",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
-    {name:"Real Madrid",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"}
+    {name:"Atletico Madrid",price:94,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"},
+
+    // Serie A
+    {name:"Juventus",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
+    {name:"Inter Mailand",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
+    {name:"AC Milan",price:94,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"},
+
+    // Bundesliga
+    {name:"Bayern München",price:94,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
+    {name:"Borussia Dortmund",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
+
+    // Ligue 1
+    {name:"Paris Saint-Germain",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
+
+    // Eredivisie
+    {name:"Ajax Amsterdam",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
+
+    // Primeira Liga
+    {name:"Benfica",price:94,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"},
+
+    // Brasil
+    {name:"Flamengo",price:94,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
+
+    // MLS
+    {name:"Inter Miami",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"},
+
+    // Türkei
+    {name:"Galatasaray",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"}
   ],
+
   retro:[
     {name:"Deutschland 1990",price:120,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
     {name:"Brasilien 2002",price:120,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
@@ -232,9 +247,7 @@ function updateCart(){
 
   cart.forEach((item,i)=>{
     total+=item.price;
-    el.innerHTML+=`
-      <p>${item.name} - ${item.price}€ <span class='remove' onclick='removeItem(${i})'>X</span></p>
-    `;
+    el.innerHTML+=`<p>${item.name} - ${item.price}€ <span class='remove' onclick='removeItem(${i})'>X</span></p>`;
   });
 
   document.getElementById("total").innerText="Total: "+total+"€";
@@ -256,9 +269,7 @@ function renderPayPal(total){
   paypal.Buttons({
     createOrder:function(data,actions){
       return actions.order.create({
-        purchase_units:[{
-          amount:{value:total.toFixed(2)}
-        }]
+        purchase_units:[{amount:{value:total.toFixed(2)}}]
       });
     },
     onApprove:function(data,actions){
