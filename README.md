@@ -138,12 +138,16 @@ ${(c.p * c.qty).toFixed(2)}€</div>
 document.getElementById('total').innerHTML=let subtotal = cart.reduce((a,b)=>a+(b.p * b.qty),0);
 let shipping = cart.length ? SHIPPING : 0;
 let total = subtotal + shipping;
+let subtotal = cart.reduce((a,b)=>a+(b.p * b.qty),0);
+let shipping = cart.length ? SHIPPING : 0;
+let total = subtotal + shipping;
 
 document.getElementById('total').innerHTML = `
 Zwischensumme: ${subtotal.toFixed(2)}€ <br>
 Versand: ${shipping.toFixed(2)}€ <br>
 <b>Gesamt: ${total.toFixed(2)}€</b>
 `;
+
 }
 
 // 🌍 COUNTRIES EXPANDED
