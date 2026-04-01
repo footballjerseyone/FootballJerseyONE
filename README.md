@@ -59,7 +59,10 @@ let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 const SHIPPING=4.99;
 
 function save(){localStorage.setItem('cart',JSON.stringify(cart));document.getElementById('cartCount').innerText=cart.length;}
-function add(n,p,img,size){cart.push({n,p,img,size});save();}
+function add(n,p,img,size,qty){
+cart.push({n,p,img,size,qty});
+save();
+}
 function remove(i){cart.splice(i,1);save();renderCart();}
 function calc(){return cart.reduce((a,b)=>a+b.p,0)+(cart.length?SHIPPING:0);}
 function openCart(){document.getElementById('cartModal').style.display='flex';renderCart();}
