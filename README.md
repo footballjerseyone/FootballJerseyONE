@@ -23,6 +23,7 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 .card img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:6px;}
 .btn{padding:6px 10px;background:#22c55e;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-top:6px;}
 .flag{width:24px;height:16px;object-fit:cover;border-radius:3px;margin-right:6px;vertical-align:middle;}
+select,input{padding:6px;border-radius:6px;border:1px solid #ccc;margin-top:5px;}
 .cartModal{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:none;flex-direction:column;z-index:9999;}
 .cartHeader{display:flex;justify-content:space-between;padding:15px;background:#f5f5f5;}
 .cartBody{padding:20px;flex:1;overflow:auto;}
@@ -59,7 +60,7 @@ let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 const SHIPPING=4.99;
 
 function save(){localStorage.setItem('cart',JSON.stringify(cart));document.getElementById('cartCount').innerText=cart.length;}
-function add(n,p=99,img="https://placehold.co/400x400"){cart.push({n,p,img});save();}
+function add(n,p,img,size){cart.push({n,p,img,size});save();}
 function remove(i){cart.splice(i,1);save();renderCart();}
 function calc(){return cart.reduce((a,b)=>a+b.p,0)+(cart.length?SHIPPING:0);}
 function openCart(){document.getElementById('cartModal').style.display='flex';renderCart();}
@@ -71,7 +72,7 @@ if(!cart.length){b.innerHTML="Leer";return;}
 b.innerHTML=cart.map((c,i)=>`
 <div class='cartItem'>
 <img src='${c.img}' width='50'>
-<div style='flex:1;margin-left:10px'>${c.n}<br>${c.p}€</div>
+<div style='flex:1;margin-left:10px'>${c.n}<br>Größe: ${c.size || "-"}<br>${c.p}€</div>
 <button class='btn' onclick='remove(${i})'>X</button>
 </div>`).join('');
 document.getElementById('total').innerHTML="Gesamt: "+calc().toFixed(2)+"€";
@@ -84,73 +85,41 @@ if(window.paypalRendered) return;
 window.paypalRendered=true;
 paypal.Buttons({
 createOrder:(d,a)=>a.order.create({purchase_units:[{amount:{value:calc().toFixed(2)}}]}),
-onApprove:(d,a)=>a.order.capture().then(()=>{alert('Bestellung ok');cart=[];save();renderCart();window.paypalRendered=false;})
+onApprove:(d,a)=>a.order.capture().then(()=>{alert('Bestellung erfolgreich');cart=[];save();renderCart();window.paypalRendered=false;})
 }).render('#paypal-button-container');
 }
 
-// 🌍 EXPANDED COUNTRIES
-const countries={
-de:"Deutschland",fr:"Frankreich",es:"Spanien",gb:"England",it:"Italien",pt:"Portugal",nl:"Niederlande",be:"Belgien",ch:"Schweiz",at:"Österreich",dk:"Dänemark",se:"Schweden",no:"Norwegen",pl:"Polen",cz:"Tschechien",fi:"Finnland",ie:"Irland",sc:"Schottland",hr:"Kroatien",rs:"Serbien",gr:"Griechenland",
-br:"Brasilien",ar:"Argentinien",uy:"Uruguay",co:"Kolumbien",cl:"Chile",pe:"Peru",
-ng:"Nigeria",ma:"Marokko",sn:"Senegal",gh:"Ghana",dz:"Algerien",tn:"Tunesien",cm:"Kamerun",ci:"Elfenbeinküste",ml:"Mali",
-jp:"Japan",kr:"Südkorea",cn:"China",qa:"Qatar",sa:"Saudi Arabien",ae:"UAE",th:"Thailand",vn:"Vietnam",id:"Indonesien",
-us:"USA",mx:"Mexiko",ca:"Kanada",cr:"Costa Rica",hn:"Honduras",jm:"Jamaika",
-au:"Australien",nz:"Neuseeland",fj:"Fidschi"
-};
-
-const continents={
-"Europa":["de","fr","es","gb","it","pt","nl","be","ch","at","dk","se","no","pl","cz","fi","ie","sc","hr","rs","gr"],
-"Südamerika":["br","ar","uy","co","cl","pe"],
-"Afrika":["ng","ma","sn","gh","dz","tn","cm","ci","ml"],
-"Asien":["jp","kr","cn","qa","sa","ae","th","vn","id"],
-"Nordamerika":["us","mx","ca","cr","hn","jm"],
-"Ozeanien":["au","nz","fj"]
-};
-
-// 🏟 CLUBS (EXPANDED)
-const leagues={
-"Premier League":["Manchester United","Manchester City","Liverpool","Chelsea","Arsenal","Tottenham","Newcastle","Aston Villa","West Ham","Brighton"],
-"La Liga":["Real Madrid","Barcelona","Atletico Madrid","Sevilla","Valencia","Betis","Villarreal","Athletic Bilbao","Real Sociedad","Girona"],
-"Bundesliga":["Bayern München","Dortmund","Leipzig","Leverkusen","Frankfurt","Stuttgart","Freiburg","Wolfsburg","Gladbach","Hoffenheim"],
-"Serie A":["Juventus","Inter","AC Milan","Napoli","Roma","Lazio","Atalanta","Fiorentina","Torino","Bologna"],
-"Ligue 1":["PSG","Marseille","Lyon","Monaco","Lille","Nice","Rennes","Lens"],
-"Eredivisie":["Ajax","PSV","Feyenoord","AZ Alkmaar","Twente","Utrecht"],
-"MLS":["Inter Miami","LA Galaxy","LAFC","Seattle Sounders","NYCFC","Atlanta United"],
-"Brasileirão":["Flamengo","Palmeiras","Sao Paulo","Corinthians","Fluminense","Gremio"],
-"Argentina":["Boca Juniors","River Plate","Racing","Independiente","San Lorenzo"],
-"Primeira Liga":["Benfica","Porto","Sporting CP","Braga","Boavista","Guimaraes","Famalicao","Casa Pia","Estoril","Rio Ave"]
-};
-
-const retro=["Deutschland 1990","Brasilien 2002","Frankreich 1998","Italien 2006"];
+// 🌍 DATA
+const countries={de:"Deutschland",fr:"Frankreich",es:"Spanien",gb:"England",it:"Italien",pt:"Portugal",nl:"Niederlande",be:"Belgien",ch:"Schweiz",at:"Österreich"};
+const leagues={"Premier League":["Manchester United","Manchester City","Liverpool"],"Bundesliga":["Bayern München","Dortmund","Leipzig"],"La Liga":["Real Madrid","Barcelona","Atletico Madrid"],"Serie A":["Juventus","Inter","AC Milan"],"Primeira Liga":["Benfica","Porto","Sporting CP"]};
+const retro=["Deutschland 1990","Brasilien 2002"];
 
 function go(p){location.hash=p;render();}
 window.onhashchange=render;
 function back(){history.back();}
 function openTeam(n){location.hash='team-'+encodeURIComponent(n);}
 
-function searchAll(q){
-q=q.toLowerCase();if(!q){render();return;}
-let r=[];
+// 🔍 IMPROVED IMAGE (NO MORE BAD FALLBACK)
+async function getImg(team,type){
+try{
+let res=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(team+' jersey')}`);
+let d=await res.json();
+if(d.thumbnail?.source) return d.thumbnail.source;
+res=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(team)}`);
+d=await res.json();
+return d.thumbnail?.source || "https://placehold.co/400x400?text=Football";
+}catch(e){return "https://placehold.co/400x400?text=Football";}
+}
+
+function searchAll(q){q=q.toLowerCase();if(!q){render();return;}let r=[];
 Object.values(leagues).flat().forEach(t=>{if(t.toLowerCase().includes(q))r.push({n:t,t:"Club"});});
 Object.values(countries).forEach(c=>{if(c.toLowerCase().includes(q))r.push({n:c,t:"Nation"});});
 retro.forEach(x=>{if(x.toLowerCase().includes(q))r.push({n:x,t:"Retro"});});
 const app=document.getElementById('app');
-app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅</span> Suche</div>`+
-r.map(x=>`<div class='card' onclick="openTeam('${x.n}')">${x.n}<br><small>${x.t}</small></div>`).join('');
+app.innerHTML=r.map(x=>`<div class='card' onclick="openTeam('${x.n}')">${x.n}<br><small>${x.t}</small></div>`).join('');
 }
 
-function kit(team,type){
-return `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(team+' '+type)}`;
-}
-
-async function getImg(team,type){
-try{
-let res=await fetch(kit(team,type));
-let d=await res.json();
-return d.thumbnail?.source || "https://placehold.co/400x400?text=Kit";
-}catch(e){return "https://placehold.co/400x400?text=Kit";}
-}
-
+// 🧠 TEAM PAGE WITH SIZE + PRICE
 async function render(){
 document.getElementById('cartCount').innerText=cart.length;
 const app=document.getElementById('app');
@@ -158,51 +127,44 @@ const h=location.hash.replace('#','')||'clubs';
 
 if(h.startsWith('team-')){
 let name=decodeURIComponent(h.replace('team-',''));
-let home=await getImg(name,'home');
-let away=await getImg(name,'away');
+let img=await getImg(name);
 app.innerHTML=`
 <div class='title'><span class='back' onclick='back()'>⬅ Zurück</span>${name}</div>
-<div class='grid'>
 <div class='card'>
-<img src='${home}'/>
-<h3>Home Kit</h3>
-<button class='btn' onclick="add('${name} Home')">Kaufen</button>
-</div>
-<div class='card'>
-<img src='${away}'/>
-<h3>Away Kit</h3>
-<button class='btn' onclick="add('${name} Away')">Kaufen</button>
-</div>
+<img src='${img}'/>
+<h3>${name}</h3>
+<p>Preis: 89.99€</p>
+<select id='size'>
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
+</select><br>
+<button class='btn' onclick="add('${name}',89.99,'${img}',document.getElementById('size').value)">In Warenkorb</button>
 </div>`;
 return;
 }
 
 if(h==='national'){
-app.innerHTML=Object.entries(continents).map(([c,a])=>`
-<div class='sub'>${c}</div>
-<div class='grid'>${a.map(x=>`
-<div class='card' onclick="openTeam('${countries[x]}')">
-<img class='flag' src='https://flagcdn.com/w80/${x}.png'/>
-${countries[x]}
-</div>`).join('')}</div>`).join('');
+app.innerHTML=Object.entries(countries).map(([k,v])=>`
+<div class='card' onclick="openTeam('${v}')">${v}</div>`).join('');
 return;
 }
 
 if(h==='clubs'){
 app.innerHTML=Object.entries(leagues).map(([l,t])=>`
 <div class='sub'>${l}</div>
-<div class='grid'>${t.map(x=>`
-<div class='card' onclick="openTeam('${x}')">${x}</div>`).join('')}</div>`).join('');
+<div class='grid'>${t.map(x=>`<div class='card' onclick="openTeam('${x}')">${x}</div>`).join('')}</div>`).join('');
 return;
 }
 
 if(h==='retro'){
-app.innerHTML=retro.map(x=>`
-<div class='card' onclick="openTeam('${x}')">${x}</div>`).join('');
+app.innerHTML=retro.map(x=>`<div class='card' onclick="openTeam('${x}')">${x}</div>`).join('');
 }
 }
 
 render();
 </script>
+
 </body>
 </html>
