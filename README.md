@@ -40,15 +40,12 @@ transition:.2s;
 }
 .back:hover{opacity:0.8;transform:translateX(-2px);}
 
-.sub{font-size:1.2rem;margin:10px 0;color:#555;display:flex;align-items:center;gap:8px;}
+.sub{font-size:1.2rem;margin:10px 0;color:#555;display:flex;align-items:center;gap:8px;font-weight:600;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
 
-.card{background:#f3f3f3;padding:10px;border-radius:10px;cursor:pointer;text-align:center;transition:.2s;}
+.card{background:#f3f3f3;padding:10px;border-radius:10px;text-align:center;transition:.2s;}
 .card:hover{transform:scale(1.03);}
 .card img{width:100%;height:110px;object-fit:cover;border-radius:8px;margin-bottom:6px;}
-
-.product{border:1px solid #ddd;border-radius:10px;padding:10px;text-align:center;background:#fff;}
-.product img{width:100%;height:120px;object-fit:cover;border-radius:8px;}
 
 .btn{padding:6px 10px;background:#22c55e;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-top:6px;}
 .badge{background:#22c55e;color:#fff;padding:2px 8px;border-radius:10px;font-size:12px;}
@@ -58,7 +55,7 @@ transition:.2s;
 .cartBody{padding:20px;flex:1;overflow:auto;}
 .cartItem{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #ddd;align-items:center;}
 .checkoutBox{padding:15px;border-top:1px solid #ddd;}
-.flag{width:22px;height:16px;object-fit:cover;border-radius:3px;margin-right:6px;vertical-align:middle;}
+.flag{width:24px;height:16px;object-fit:cover;border-radius:3px;margin-right:6px;vertical-align:middle;}
 </style>
 </head>
 <body>
@@ -66,7 +63,7 @@ transition:.2s;
 <nav>
 <div><b>FootballJerseyONE</b></div>
 <div>
-<input class="search" id="searchInput" placeholder="Suche..." oninput="search(this.value)" />
+<input class="search" placeholder="Suche..." oninput="search(this.value)" />
 <a onclick="go('national')">National</a>
 <a onclick="go('clubs')">Vereine</a>
 <a onclick="go('retro')">Retro</a>
@@ -131,13 +128,13 @@ onApprove:(d,a)=>a.order.capture().then(()=>{alert('Bestellung erfolgreich');car
 
 const flag=(c)=>`https://flagcdn.com/w40/${c}.png`;
 
-const national={
-"Europa|de":["Deutschland","Frankreich","Spanien","England","Italien","Portugal","Niederlande","Belgien","Schweiz","Österreich"],
-"Südamerika|br":["Brasilien","Argentinien","Uruguay","Kolumbien","Chile"],
-"Afrika|ng":["Nigeria","Marokko","Senegal","Ghana","Ägypten"],
-"Asien|jp":["Japan","Südkorea","China","Qatar"],
-"Nordamerika|us":["USA","Mexiko","Kanada"],
-"Ozeanien|au":["Australien","Neuseeland"]
+// COUNTRY NAMES FIX
+const countries = {
+"de":"Deutschland","fr":"Frankreich","es":"Spanien","gb":"England","it":"Italien","pt":"Portugal","nl":"Niederlande","be":"Belgien","ch":"Schweiz","at":"Österreich",
+"br":"Brasilien","ar":"Argentinien","uy":"Uruguay","co":"Kolumbien","cl":"Chile",
+"ng":"Nigeria","ma":"Marokko","sn":"Senegal","gh":"Ghana",
+"jp":"Japan","kr":"Südkorea","cn":"China","qa":"Qatar",
+"us":"USA","mx":"Mexiko","ca":"Kanada","au":"Australien","nz":"Neuseeland"
 };
 
 const leagues={
@@ -180,24 +177,22 @@ const h=location.hash.replace('#','')||'clubs';
 
 if(h==='national'){
 app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurück</span> Nationalteams</div>`+
-Object.entries(national).map(([k,v])=>{
-let [title,code]=k.split('|');
-return `<div class='sub'><img class='flag' src='${flag(code)}'/>${title}</div>
-<div class='grid'>${v.map(n=>`
+`<div class='grid'>`+
+Object.entries(countries).map(([code,name])=>`
 <div class='card'>
-<img src='https://images.unsplash.com/photo-1521412644187-c49fa049e84d'/>
-${n}<br>
-<button class='btn' onclick="add('${n} Heim')">🏠</button>
-<button class='btn' onclick="add('${n} Auswärts')">✈</button>
-</div>`).join('')}</div>`;
-}).join('');
+<img class='flag' src='https://flagcdn.com/w80/${code}.png'/>
+<div style='margin-top:6px;font-weight:600'>${name}</div>
+<button class='btn' onclick="add('${name} Heim')">🏠 Heim</button>
+<button class='btn' onclick="add('${name} Auswärts')">✈ Auswärts</button>
+</div>`).join('')+
+`</div>`;
 }
 
 else if(h==='clubs'){
 app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurück</span> Ligen</div>`+
 Object.entries(leagues).map(([l,teams])=>{
 let [title,code]=l.split('|');
-return `<div class='sub'><img class='flag' src='${flag(code)}'/>${title}</div>
+return `<div class='sub'><img class='flag' src='https://flagcdn.com/w40/${code}.png'/>${title}</div>
 <div class='grid'>${teams.map(t=>`
 <div class='card'>
 <img src='https://images.unsplash.com/photo-1521412644187-c49fa049e84d'/>
