@@ -6,6 +6,31 @@
 <title>FootballJerseyONE</title>
 
 <script src="https://www.paypal.com/sdk/js?client-id=AVmx5KkGcuZr3ye1nLyNzvB5RhZXyrpnU8t71ZpFZyLyTO9Xt14jSULuXKjmPBNZw1kWigduGZTYXhii&currency=EUR"></script>
+<div id="paypal-button-container"></div>
+paypal.Buttons({
+  createOrder: function(data, actions) {
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          value: calc().toFixed(2)
+        }
+      }]
+    });
+  },
+
+  onApprove: function(data, actions) {
+    return actions.order.capture().then(function(details) {
+      alert('Zahlung erfolgreich von ' + details.payer.name.given_name);
+
+      // Warenkorb leeren
+      cart = [];
+      save();
+      renderCart();
+      closeCart();
+    });
+  }
+
+}).render('#paypal-button-container');
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
@@ -67,7 +92,40 @@ function remove(i){cart.splice(i,1);save();renderCart();}
 function calc(){
 return cart.reduce((a,b)=>a+(b.p * b.qty),0)+(cart.length?SHIPPING:0);
 }
-function openCart(){document.getElementById('cartModal').style.display='flex';renderCart();}
+let paypalLoaded = false;
+
+function openCart(){
+document.getElementById('cartModal').style.display='flex';
+renderCart();
+
+if(!paypalLoaded){
+paypalLoaded = true;
+
+paypal.Buttons({
+  createOrder: function(data, actions) {
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          value: calc().toFixed(2)
+        }
+      }]
+    });
+  },
+
+  onApprove: function(data, actions) {
+    return actions.order.capture().then(function(details) {
+      alert('Zahlung erfolgreich von ' + details.payer.name.given_name);
+      cart = [];
+      save();
+      renderCart();
+      closeCart();
+    });
+  }
+
+}).render('#paypal-button-container');
+
+}
+}  
 function closeCart(){document.getElementById('cartModal').style.display='none';}
 
 function renderCart(){
