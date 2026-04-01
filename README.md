@@ -8,7 +8,7 @@
   <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=EUR"></script>
 
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
     body{background:#0f172a;color:white;}
 
     header{
@@ -18,7 +18,7 @@
       justify-content:center;
       align-items:center;
       text-align:center;
-      background:radial-gradient(circle at top,#1e293b,#0f172a);
+      background:radial-gradient(circle,#1e293b,#0f172a);
     }
 
     .logo{
@@ -33,18 +33,19 @@
     .btn{
       padding:12px 20px;
       background:#22c55e;border:none;border-radius:10px;
-      color:white;cursor:pointer;font-size:1rem;
+      color:white;cursor:pointer;
     }
 
     nav{
       position:sticky;top:0;background:#0b1220;
       display:flex;justify-content:space-between;
-      padding:15px 20px;align-items:center;z-index:1000;
+      padding:15px 20px;z-index:1000;
     }
 
     nav a{color:white;margin:0 10px;text-decoration:none;}
 
     .container{padding:40px 20px;}
+
     .section-title{font-size:2rem;margin:30px 0 20px;}
 
     .grid{
@@ -57,16 +58,21 @@
       background:#111827;
       border-radius:15px;
       padding:15px;
+      cursor:pointer;
+      transition:.2s;
       text-align:center;
     }
 
+    .card:hover{transform:scale(1.03);}
+
     .card img{width:100%;height:200px;object-fit:cover;border-radius:10px;}
+
     .price{margin:10px 0;font-weight:bold;}
 
     .cart-btn{
       position:fixed;right:20px;bottom:20px;
       background:#22c55e;padding:15px;border-radius:50px;
-      cursor:pointer;font-size:18px;
+      cursor:pointer;
     }
 
     .cart-panel{
@@ -79,22 +85,20 @@
 
     .cart-panel.open{transform:translateX(0);}
 
-    .remove{color:red;cursor:pointer;font-size:12px;margin-left:10px;}
-
-    .qty-btn{margin:0 5px;cursor:pointer;color:#22c55e;}
-
-    .paypal-container{margin-top:20px;}
-
-    .clear{
-      margin-top:10px;
-      background:red;
+    .back-btn{
+      margin-bottom:15px;
+      background:#334155;
       padding:8px;
       border:none;
-      border-radius:8px;
       color:white;
+      border-radius:8px;
       cursor:pointer;
-      width:100%;
     }
+
+    .detail-img{
+      width:100%;border-radius:15px;margin-bottom:15px;
+    }
+
   </style>
 </head>
 <body>
@@ -102,28 +106,38 @@
 <header>
   <div class="logo">⚽</div>
   <h1>FootballJerseyONE</h1>
-  <p>Nationalteams • Vereine • Retro Trikots</p>
-  <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop öffnen</button>
+  <p>National • Vereine • Retro</p>
+  <button class="btn" onclick="scrollShop()">Shop öffnen</button>
 </header>
 
 <nav>
   <div><strong>FootballJerseyONE</strong></div>
   <div>
-    <a href="#national">National</a>
-    <a href="#clubs">Vereine</a>
-    <a href="#retro">Retro</a>
+    <a href="#shop">Shop</a>
   </div>
 </nav>
 
 <div class="container" id="shop">
-  <h2 class="section-title">Nationalmannschaften</h2>
-  <div class="grid" id="nationalGrid"></div>
 
-  <h2 class="section-title">Vereine</h2>
-  <div class="grid" id="clubGrid"></div>
+  <div id="shopView">
+    <h2 class="section-title">Nationalteams</h2>
+    <div class="grid" id="nationalGrid"></div>
 
-  <h2 class="section-title">Retro</h2>
-  <div class="grid" id="retroGrid"></div>
+    <h2 class="section-title">Vereine</h2>
+    <div class="grid" id="clubGrid"></div>
+
+    <h2 class="section-title">Retro</h2>
+    <div class="grid" id="retroGrid"></div>
+  </div>
+
+  <div id="productView" style="display:none;">
+    <button class="back-btn" onclick="backToShop()">⬅ Zurück</button>
+    <img id="pImg" class="detail-img" />
+    <h2 id="pName"></h2>
+    <h3 id="pPrice"></h3>
+    <button class="btn" onclick="addCurrentToCart()">In den Warenkorb</button>
+  </div>
+
 </div>
 
 <div class="cart-btn" onclick="toggleCart()">🛒</div>
@@ -132,114 +146,87 @@
   <h2>Warenkorb</h2>
   <div id="cartItems"></div>
   <h3 id="total">Total: 0€</h3>
-
-  <button class="clear" onclick="clearCart()">Warenkorb leeren</button>
-
-  <div class="paypal-container" id="paypal-button-container"></div>
 </div>
 
 <script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart=[];
+let currentProduct=null;
 
-const products = {
+const products={
   national:[
-    {name:"Deutschland Heim",price:89,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
-    {name:"Brasilien Heim",price:89,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
+    {id:1,name:"Deutschland Heim",price:89,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
+    {id:2,name:"Brasilien Heim",price:89,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
   ],
   clubs:[
-    {name:"Real Madrid",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
-    {name:"FC Barcelona",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"}
+    {id:3,name:"Real Madrid",price:94,img:"https://images.unsplash.com/photo-1517649763962-0c623066013b"},
+    {id:4,name:"FC Barcelona",price:94,img:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2"}
   ],
   retro:[
-    {name:"Deutschland 1990",price:120,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
-    {name:"Brasilien 2002",price:120,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
+    {id:5,name:"Deutschland 1990",price:120,img:"https://images.unsplash.com/photo-1521412644187-c49fa049e84d"},
+    {id:6,name:"Brasilien 2002",price:120,img:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6"}
   ]
 };
 
-function renderGrid(id,items){
-  document.getElementById(id).innerHTML = items.map(p=>`
-    <div class='card'>
+function allProducts(){
+  return [...products.national,...products.clubs,...products.retro];
+}
+
+function renderGrid(list,el){
+  el.innerHTML=list.map(p=>`
+    <div class='card' onclick='openProduct(${p.id})'>
       <img src='${p.img}'/>
       <h3>${p.name}</h3>
       <div class='price'>${p.price}€</div>
-      <button class='btn' onclick='addToCart("${p.name}",${p.price})'>In den Warenkorb</button>
     </div>
   `).join('');
 }
 
-function addToCart(name,price){
-  let item = cart.find(i=>i.name===name);
-  if(item){item.qty++}
-  else cart.push({name,price,qty:1});
-  save();
+function openProduct(id){
+  const p=allProducts().find(x=>x.id===id);
+  currentProduct=p;
+
+  document.getElementById("shopView").style.display="none";
+  document.getElementById("productView").style.display="block";
+
+  document.getElementById("pImg").src=p.img;
+  document.getElementById("pName").innerText=p.name;
+  document.getElementById("pPrice").innerText=p.price+"€";
 }
 
-function removeItem(name){
-  cart = cart.filter(i=>i.name!==name);
-  save();
+function backToShop(){
+  document.getElementById("shopView").style.display="block";
+  document.getElementById("productView").style.display="none";
 }
 
-function changeQty(name,delta){
-  let item = cart.find(i=>i.name===name);
-  if(!item) return;
-  item.qty += delta;
-  if(item.qty<=0) removeItem(name);
-  save();
-}
-
-function clearCart(){
-  cart=[];
-  save();
-}
-
-function save(){
-  localStorage.setItem("cart",JSON.stringify(cart));
+function addCurrentToCart(){
+  cart.push(currentProduct);
   updateCart();
-}
-
-function updateCart(){
-  let el=document.getElementById("cartItems");
-  el.innerHTML="";
-  let total=0;
-
-  cart.forEach(i=>{
-    total += i.price * i.qty;
-    el.innerHTML += `
-      <p>
-        ${i.name} (${i.qty})
-        <span class='qty-btn' onclick='changeQty("${i.name}",1)'>+</span>
-        <span class='qty-btn' onclick='changeQty("${i.name}",-1)'>-</span>
-        <span class='remove' onclick='removeItem("${i.name}")'>X</span>
-      </p>`;
-  });
-
-  document.getElementById("total").innerText="Total: "+total.toFixed(2)+"€";
-  renderPayPal(total);
+  alert("Hinzugefügt!");
 }
 
 function toggleCart(){
   document.getElementById("cartPanel").classList.toggle("open");
 }
 
-function renderPayPal(total){
-  const c=document.getElementById("paypal-button-container");
-  c.innerHTML="";
-  if(total<=0) return;
+function updateCart(){
+  let el=document.getElementById("cartItems");
+  let total=0;
 
-  paypal.Buttons({
-    createOrder:(d,a)=>a.order.create({purchase_units:[{amount:{value:total.toFixed(2)}}]}),
-    onApprove:(d,a)=>a.order.capture().then(()=>{
-      alert("Zahlung erfolgreich!");
-      cart=[];
-      save();
-    })
-  }).render("#paypal-button-container");
+  el.innerHTML=cart.map(i=>{
+    total+=i.price;
+    return `<p>${i.name} - ${i.price}€</p>`;
+  }).join('');
+
+  document.getElementById("total").innerText="Total: "+total+"€";
 }
 
-renderGrid("nationalGrid",products.national);
-renderGrid("clubGrid",products.clubs);
-renderGrid("retroGrid",products.retro);
-updateCart();
+function scrollShop(){
+  document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+}
+
+renderGrid(products.national,document.getElementById("nationalGrid"));
+renderGrid(products.clubs,document.getElementById("clubGrid"));
+renderGrid(products.retro,document.getElementById("retroGrid"));
 </script>
 
 </body>
