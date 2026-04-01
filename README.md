@@ -6,9 +6,7 @@
 <title>FootballJerseyONE</title>
 
 <script src="https://www.paypal.com/sdk/js?client-id=AVmx5KkGcuZr3ye1nLyNzvB5RhZXyrpnU8t71ZpFZyLyTO9Xt14jSULuXKjmPBNZw1kWigduGZTYXhii&currency=EUR"></script>
-<div id="paypal-button-container"></div>
-paypal.Buttons({
-  createOrder: function(data, actions) {
+{
     return actions.order.create({
       purchase_units: [{
         amount: {
@@ -242,22 +240,25 @@ ${name}
 <img src="${homeImg}" />
 <b>${name} Heimtrikot</b>
 <div>29.99€</div>
+
 <select id="size-home">
-  <option>S</option>
-  <option>M</option>
-  <option>L</option>
-  <option>XL</option>
+<option>S</option><option>M</option><option>L</option><option>XL</option>
 </select>
 
-<input id="qty-home" type="number" value="1" min="1" style="width:60px;">
+<input id="qty-home" type="number" value="1" min="1">
+
+<input id="player-home" placeholder="Name">
+<input id="number-home" type="number" placeholder="Nr.">
 
 <button class='btn' onclick="
 add(
-  '${name} Heimtrikot',
-  29.99,
-  '${homeImg}',
-  document.getElementById('size-home').value,
-  parseInt(document.getElementById('qty-home').value)
+'${name} Heimtrikot',
+29.99,
+'${homeImg}',
+document.getElementById('size-home').value,
+parseInt(document.getElementById('qty-home').value),
+document.getElementById('player-home').value,
+document.getElementById('number-home').value
 )">
 In den Warenkorb
 </button>
@@ -267,60 +268,31 @@ In den Warenkorb
 <img src="${awayImg}" />
 <b>${name} Auswärtstrikot</b>
 <div>29.99€</div>
+
 <select id="size-away">
-  <option>S</option>
-  <option>M</option>
-  <option>L</option>
-  <option>XL</option>
+<option>S</option><option>M</option><option>L</option><option>XL</option>
 </select>
 
-<input id="qty-away" type="number" value="1" min="1" style="width:60px;">
+<input id="qty-away" type="number" value="1" min="1">
+
+<input id="player-away" placeholder="Name">
+<input id="number-away" type="number" placeholder="Nr.">
 
 <button class='btn' onclick="
 add(
-  '${name} Heimtrikot',
-  29.99,
-  '${homeImg}',
-  document.getElementById('size-home').value,
-  parseInt(document.getElementById('qty-home').value)
+'${name} Auswärtstrikot',
+29.99,
+'${awayImg}',
+document.getElementById('size-away').value,
+parseInt(document.getElementById('qty-away').value),
+document.getElementById('player-away').value,
+document.getElementById('number-away').value
 )">
 In den Warenkorb
 </button>
 </div>
 
 </div>
-
-<input id="player-home" placeholder="Name (optional)" style="margin-top:5px;">
-<input id="number-home" type="number" placeholder="Nr." style="width:60px;">
-
-<button class='btn' onclick="
-add(
-  '${name} Heimtrikot',
-  29.99,
-  '${homeImg}',
-  document.getElementById('size-home').value,
-  parseInt(document.getElementById('qty-home').value),
-  document.getElementById('player-home').value,
-  document.getElementById('number-home').value
-)">
-In den Warenkorb
-</button>
-
-<input id="player-away" placeholder="Name (optional)" style="margin-top:5px;">
-<input id="number-away" type="number" placeholder="Nr." style="width:60px;">
-
-<button class='btn' onclick="
-add(
-  '${name} Heimtrikot',
-  29.99,
-  '${homeImg}',
-  document.getElementById('size-home').value,
-  parseInt(document.getElementById('qty-home').value),
-  document.getElementById('player-home').value,
-  document.getElementById('number-home').value
-)">
-In den Warenkorb
-</button>
 `;
 }
 }
