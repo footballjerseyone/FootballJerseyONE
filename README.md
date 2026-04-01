@@ -136,8 +136,6 @@ ${(c.p * c.qty).toFixed(2)}€</div>
 <button class='btn' onclick='remove(${i})'>X</button>
 </div>`).join('');
 
-let shipping = cart.length ? SHIPPING : 0;
-let total = subtotal + shipping;
 let subtotal = cart.reduce((a,b)=>a+(b.p * b.qty),0);
 let shipping = cart.length ? SHIPPING : 0;
 let total = subtotal + shipping;
