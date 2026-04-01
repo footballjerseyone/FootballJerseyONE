@@ -118,23 +118,31 @@ renderPayPal();
 }
 
 function renderPayPal(){
-document.getElementById('paypal-button-container').innerHTML="";
 if(!cart.length)return;
+
+document.getElementById('paypal-button-container').innerHTML="";
 paypal.Buttons({
 createOrder:(d,a)=>a.order.create({purchase_units:[{amount:{value:calcTotal().toFixed(2)}}]}),
 onApprove:(d,a)=>a.order.capture().then(()=>{alert('Bestellung erfolgreich');cart=[];saveCart();renderCart();})
 }).render('#paypal-button-container');
 }
 
-const flag=(c)=>`https://flagcdn.com/w40/${c}.png`;
-
-// COUNTRY NAMES FIX
 const countries = {
-"de":"Deutschland","fr":"Frankreich","es":"Spanien","gb":"England","it":"Italien","pt":"Portugal","nl":"Niederlande","be":"Belgien","ch":"Schweiz","at":"Österreich",
-"br":"Brasilien","ar":"Argentinien","uy":"Uruguay","co":"Kolumbien","cl":"Chile",
-"ng":"Nigeria","ma":"Marokko","sn":"Senegal","gh":"Ghana",
-"jp":"Japan","kr":"Südkorea","cn":"China","qa":"Qatar",
-"us":"USA","mx":"Mexiko","ca":"Kanada","au":"Australien","nz":"Neuseeland"
+de:"Deutschland", fr:"Frankreich", es:"Spanien", gb:"England", it:"Italien", pt:"Portugal", nl:"Niederlande", be:"Belgien", ch:"Schweiz", at:"Österreich",
+br:"Brasilien", ar:"Argentinien", uy:"Uruguay", co:"Kolumbien", cl:"Chile",
+ng:"Nigeria", ma:"Marokko", sn:"Senegal", gh:"Ghana",
+jp:"Japan", kr:"Südkorea", cn:"China", qa:"Qatar",
+us:"USA", mx:"Mexiko", ca:"Kanada",
+au:"Australien", nz:"Neuseeland"
+};
+
+const continents = {
+"Europa": ["de","fr","es","gb","it","pt","nl","be","ch","at"],
+"Südamerika": ["br","ar","uy","co","cl"],
+"Afrika": ["ng","ma","sn","gh"],
+"Asien": ["jp","kr","cn","qa"],
+"Nordamerika": ["us","mx","ca"],
+"Ozeanien": ["au","nz"]
 };
 
 const leagues={
@@ -158,7 +166,6 @@ const retro=[
 function go(p){location.hash=p;render();}
 window.onhashchange=render;
 function back(){history.back();}
-function openLeague(l){location.hash='league-'+encodeURIComponent(l);}
 
 function search(q){
 q=q.toLowerCase();
@@ -177,15 +184,16 @@ const h=location.hash.replace('#','')||'clubs';
 
 if(h==='national'){
 app.innerHTML=`<div class='title'><span class='back' onclick='back()'>⬅ Zurück</span> Nationalteams</div>`+
-`<div class='grid'>`+
-Object.entries(countries).map(([code,name])=>`
+Object.entries(continents).map(([cont,codes])=>{
+return `<div class='sub'>${cont}</div>
+<div class='grid'>${codes.map(code=>`
 <div class='card'>
 <img class='flag' src='https://flagcdn.com/w80/${code}.png'/>
-<div style='margin-top:6px;font-weight:600'>${name}</div>
-<button class='btn' onclick="add('${name} Heim')">🏠 Heim</button>
-<button class='btn' onclick="add('${name} Auswärts')">✈ Auswärts</button>
-</div>`).join('')+
-`</div>`;
+<div style='margin-top:6px;font-weight:600'>${countries[code]}</div>
+<button class='btn' onclick="add('${countries[code]} Heim')">Heim</button>
+<button class='btn' onclick="add('${countries[code]} Auswärts')">Auswärts</button>
+</div>`).join('')}</div>`;
+}).join('');
 }
 
 else if(h==='clubs'){
@@ -197,8 +205,8 @@ return `<div class='sub'><img class='flag' src='https://flagcdn.com/w40/${code}.
 <div class='card'>
 <img src='https://images.unsplash.com/photo-1521412644187-c49fa049e84d'/>
 ${t}<br>
-<button class='btn' onclick="add('${t} Heim')">🏠</button>
-<button class='btn' onclick="add('${t} Auswärts')">✈</button>
+<button class='btn' onclick="add('${t} Heim')">Heim</button>
+<button class='btn' onclick="add('${t} Auswärts')">Auswärts</button>
 </div>`).join('')}</div>`;
 }).join('');
 }
