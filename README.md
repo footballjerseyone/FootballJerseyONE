@@ -145,13 +145,3 @@ document.getElementById("cartCount").innerText=cart.length;
 </script>
 </body>
 </html>
-
-  }
-}
-
-updateCart();
-renderProducts();
-</script>
-
-</body>
-</html>
