@@ -64,7 +64,9 @@ cart.push({n,p,img,size,qty});
 save();
 }
 function remove(i){cart.splice(i,1);save();renderCart();}
-function calc(){return cart.reduce((a,b)=>a+b.p,0)+(cart.length?SHIPPING:0);}
+function calc(){
+return cart.reduce((a,b)=>a+(b.p * b.qty),0)+(cart.length?SHIPPING:0);
+}
 function openCart(){document.getElementById('cartModal').style.display='flex';renderCart();}
 function closeCart(){document.getElementById('cartModal').style.display='none';}
 
@@ -74,7 +76,10 @@ if(!cart.length){b.innerHTML="Leer";return;}
 b.innerHTML=cart.map((c,i)=>`
 <div class='cartItem'>
 <img src='${c.img}' width='50'>
-<div style='flex:1;margin-left:10px'>${c.n}<br>${c.p}€</div>
+<div style='flex:1;margin-left:10px'>${c.n}<br>
+Größe: ${c.size}<br>
+Menge: ${c.qty}<br>
+${(c.p * c.qty).toFixed(2)}€</div>
 <button class='btn' onclick='remove(${i})'>X</button>
 </div>`).join('');
 document.getElementById('total').innerHTML="Gesamt: "+calc().toFixed(2)+"€";
@@ -177,7 +182,23 @@ ${name}
 <img src="${homeImg}" />
 <b>${name} Heimtrikot</b>
 <div>29.99€</div>
-<button class='btn' onclick="add('${name} Heimtrikot',29.99,'${homeImg}','M')">
+<select id="size-home">
+  <option>S</option>
+  <option>M</option>
+  <option>L</option>
+  <option>XL</option>
+</select>
+
+<input id="qty-home" type="number" value="1" min="1" style="width:60px;">
+
+<button class='btn' onclick="
+add(
+  '${name} Heimtrikot',
+  29.99,
+  '${homeImg}',
+  document.getElementById('size-home').value,
+  parseInt(document.getElementById('qty-home').value)
+)">
 In den Warenkorb
 </button>
 </div>
@@ -186,7 +207,23 @@ In den Warenkorb
 <img src="${awayImg}" />
 <b>${name} Auswärtstrikot</b>
 <div>29.99€</div>
-<button class='btn' onclick="add('${name} Auswärtstrikot',29.99,'${awayImg}','M')">
+<select id="size-away">
+  <option>S</option>
+  <option>M</option>
+  <option>L</option>
+  <option>XL</option>
+</select>
+
+<input id="qty-away" type="number" value="1" min="1" style="width:60px;">
+
+<button class='btn' onclick="
+add(
+  '${name} Heimtrikot',
+  29.99,
+  '${homeImg}',
+  document.getElementById('size-home').value,
+  parseInt(document.getElementById('qty-home').value)
+)">
 In den Warenkorb
 </button>
 </div>
