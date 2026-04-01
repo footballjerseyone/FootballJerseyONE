@@ -51,6 +51,11 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 <div class="cartBody" id="cartBody"></div>
 <div class="checkoutBox">
 <div id="total"></div>
+
+<input id="cust-name" placeholder="Dein Name" style="width:100%;margin:5px 0;">
+<input id="cust-email" placeholder="E-Mail" style="width:100%;margin:5px 0;">
+<input id="cust-address" placeholder="Adresse" style="width:100%;margin:5px 0;">
+
 <div id="paypal-button-container"></div>
 </div>
 </div>
@@ -90,7 +95,19 @@ paypal.Buttons({
 
   onApprove: function(data, actions) {
     return actions.order.capture().then(function(details) {
-      alert('Zahlung erfolgreich von ' + details.payer.name.given_name);
+     let customer = {
+  name: document.getElementById('cust-name').value,
+  email: document.getElementById('cust-email').value,
+  address: document.getElementById('cust-address').value
+};
+
+console.log("BESTELLUNG:", {
+  customer: customer,
+  cart: cart,
+  total: calc()
+});
+
+alert("Danke für deine Bestellung, " + customer.name + "!");
       cart = [];
       save();
       renderCart();
