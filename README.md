@@ -59,8 +59,8 @@ let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 const SHIPPING=4.99;
 
 function save(){localStorage.setItem('cart',JSON.stringify(cart));document.getElementById('cartCount').innerText=cart.length;}
-function add(n,p,img,size,qty){
-cart.push({n,p,img,size,qty});
+function add(n,p,img,size,qty,player,number){
+cart.push({n,p,img,size,qty,player,number});
 save();
 }
 function remove(i){cart.splice(i,1);save();renderCart();}
@@ -79,6 +79,8 @@ b.innerHTML=cart.map((c,i)=>`
 <div style='flex:1;margin-left:10px'>${c.n}<br>
 Größe: ${c.size}<br>
 Menge: ${c.qty}<br>
+${c.player ? 'Name: ' + c.player + '<br>' : ''}
+${c.number ? 'Nr: ' + c.number + '<br>' : ''}
 ${(c.p * c.qty).toFixed(2)}€</div>
 <button class='btn' onclick='remove(${i})'>X</button>
 </div>`).join('');
@@ -229,6 +231,38 @@ In den Warenkorb
 </div>
 
 </div>
+
+<input id="player-home" placeholder="Name (optional)" style="margin-top:5px;">
+<input id="number-home" type="number" placeholder="Nr." style="width:60px;">
+
+<button class='btn' onclick="
+add(
+  '${name} Heimtrikot',
+  29.99,
+  '${homeImg}',
+  document.getElementById('size-home').value,
+  parseInt(document.getElementById('qty-home').value),
+  document.getElementById('player-home').value,
+  document.getElementById('number-home').value
+)">
+In den Warenkorb
+</button>
+
+<input id="player-away" placeholder="Name (optional)" style="margin-top:5px;">
+<input id="number-away" type="number" placeholder="Nr." style="width:60px;">
+
+<button class='btn' onclick="
+add(
+  '${name} Heimtrikot',
+  29.99,
+  '${homeImg}',
+  document.getElementById('size-home').value,
+  parseInt(document.getElementById('qty-home').value),
+  document.getElementById('player-home').value,
+  document.getElementById('number-home').value
+)">
+In den Warenkorb
+</button>
 `;
 }
 }
