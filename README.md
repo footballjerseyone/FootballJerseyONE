@@ -113,6 +113,24 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 const SHIPPING=4.99;
 
+function remove(i){
+  cart.splice(i,1);
+  save();
+  renderCart();
+}
+
+function changeQty(i, change){
+  cart[i].qty += change;
+
+  if(cart[i].qty <= 0){
+    remove(i);
+    return;
+  }
+
+  save();
+  renderCart();
+}
+  
 function save(){localStorage.setItem('cart',JSON.stringify(cart));document.getElementById('cartCount').innerText=cart.length;}
 function add(n,p,img,size,qty,player,number){
 cart.push({n,p,img,size,qty,player,number});
@@ -196,23 +214,7 @@ b.innerHTML=cart.map((c,i)=>`
 </div>
 `).join('');
 
- function remove(i){
-  cart.splice(i,1);
-  save();
-  renderCart();
-}
-
-function changeQty(i, change){   // ✅ JETZT GLOBAL
-  cart[i].qty += change;
-
-  if(cart[i].qty <= 0){
-    remove(i);
-    return;
-  }
-
-  save();
-  renderCart();
-}
+ 
 
 let subtotal = cart.reduce((a,b)=>a+(b.p * b.qty),0);
 let shipping = cart.length ? SHIPPING : 0;
