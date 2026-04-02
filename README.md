@@ -553,7 +553,13 @@ ${name}
 
 <div style="font-size:18px;font-weight:700;">29.99€</div>
 
-<div style="color:#16a34a;font-size:13px;">✔ Auf Lager</div>
+<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
+✔ Auf Lager
+</div>
+
+<div style="color:#ef4444;font-size:13px;font-weight:600;">
+⚠ Nur noch 3 verfügbar
+</div></div>
 
 <div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
 
@@ -569,7 +575,20 @@ ${name}
 <button class='btn' onclick="
 add(
 '${name} Heimtrikot',
-29.99,
+<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;">
+29.99€
+</div>
+
+<div style="font-size:20px;font-weight:800;color:#22c55e;">
+11.99€
+</div>
+
+<div style="color:#ef4444;font-size:13px;font-weight:600;">
+🔥 -60% Rabatt
+</div>,
+<div style="font-size:12px;color:#facc15;">
+⭐ 4.8/5 (124 Bewertungen)
+</div>
 '${homeImg}',
 document.getElementById('size-home').value,
 parseInt(document.getElementById('qty-home').value),
@@ -586,7 +605,13 @@ document.getElementById('number-home').value
 
 <div style="font-size:18px;font-weight:700;">29.99€</div>
 
-<div style="color:#16a34a;font-size:13px;">✔ Auf Lager</div>
+<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
+✔ Auf Lager
+</div>
+
+<div style="color:#ef4444;font-size:13px;font-weight:600;">
+⚠ Nur noch 3 verfügbar
+</div></div>
 
 <div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
 
@@ -602,7 +627,20 @@ document.getElementById('number-home').value
 <button class='btn' onclick="
 add(
 '${name} Auswärtstrikot',
-29.99,
+<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;">
+29.99€
+</div>
+
+<div style="font-size:20px;font-weight:800;color:#22c55e;">
+11.99€
+</div>
+
+<div style="color:#ef4444;font-size:13px;font-weight:600;">
+🔥 -60% Rabatt
+</div>,
+<div style="font-size:12px;color:#facc15;">
+⭐ 4.8/5 (124 Bewertungen)
+</div>
 '${awayImg}',
 document.getElementById('size-away').value,
 parseInt(document.getElementById('qty-away').value),
