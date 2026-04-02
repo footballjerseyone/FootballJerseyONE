@@ -222,15 +222,27 @@ function showPopup(){
     "Türkei":"🇹🇷","VAE":"🇦🇪","Japan":"🇯🇵","USA":"🇺🇸"
   };
 
-  const text = `${flags[random.country]} ${random.name} aus ${random.city} hat vor ${minutes} Min bestellt`;
+ const teams = ["Real Madrid","Barcelona","Bayern München","PSG","Liverpool","Juventus"];
+
+const randomTeam = teams[Math.floor(Math.random()*teams.length)];
+
+const text = `${flags[random.country]} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
 
   const popup = document.getElementById("popup");
   popup.innerText = text;
   popup.style.display = "block";
+setTimeout(()=>{
+  popup.style.opacity = "1";
+  popup.style.transform = "translateY(0)";
+}, 10);
 
   setTimeout(()=>{
-    popup.style.display = "none";
-  }, 4000);
+    popup.style.opacity = "0";
+popup.style.transform = "translateY(20px)";
+setTimeout(()=>{
+  popup.style.display = "none";
+}, 400);
+  
 }
 
 setInterval(showPopup, 6000);
@@ -685,7 +697,9 @@ color:#fff;
 padding:12px 16px;
 border-radius:12px;
 box-shadow:0 10px 30px rgba(0,0,0,0.6);
-display:none;
+opacity:0;
+transform:translateY(20px);
+transition:0.4s;
 z-index:99999;
 font-size:14px;
 "></div>
