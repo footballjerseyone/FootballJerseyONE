@@ -196,7 +196,13 @@ b.innerHTML=cart.map((c,i)=>`
 </div>
 `).join('');
 
-  function changeQty(i, change){
+ function remove(i){
+  cart.splice(i,1);
+  save();
+  renderCart();
+}
+
+function changeQty(i, change){   // ✅ JETZT GLOBAL
   cart[i].qty += change;
 
   if(cart[i].qty <= 0){
