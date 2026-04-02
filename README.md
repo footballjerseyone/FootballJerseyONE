@@ -10,7 +10,9 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
-body{background:#fff;color:#111;}
+
+
+  
 nav{position:sticky;top:0;background:#f5f5f5;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;z-index:10;}
 nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 .search{padding:6px;border:1px solid #ccc;border-radius:6px;}
@@ -19,7 +21,7 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 .back{cursor:pointer;padding:6px 12px;border-radius:8px;background:#111;color:#fff;font-size:13px;}
 .sub{font-size:1.2rem;margin:10px 0;color:#555;font-weight:600;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
-.card{background:#f3f3f3;padding:10px;border-radius:10px;text-align:center;cursor:pointer;transition:.2s;}
+
   .cartImg{
   width:90px;
   height:90px;
@@ -27,23 +29,26 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
   background:#f5f5f5;
   padding:5px;
 }
-.card:hover{transform:scale(1.03);}
+
 .card img{
   width:100%;
   height:auto;
   max-height:250px;
   object-fit:contain;
 }
-.btn{padding:6px 10px;background:#22c55e;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-top:6px;}
+
 .flag{width:24px;height:16px;object-fit:cover;border-radius:3px;margin-right:6px;vertical-align:middle;}
 .cartModal{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:none;flex-direction:column;z-index:9999;}
 .cartHeader{display:flex;justify-content:space-between;padding:15px;background:#f5f5f5;}
 .cartBody{padding:20px;flex:1;overflow:auto;}
 .cartItem{
-  display:flex;        
-  align-items:flex-start;
+  display:flex;
   gap:15px;
-  margin-bottom:15px;
+  padding:12px;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 3px 10px rgba(0,0,0,0.05);
+  margin-bottom:12px;
 }
 .cartImg{
   width:140px;
@@ -77,7 +82,13 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
   font-size:18px;
   cursor:pointer;
 }
-.checkoutBox{padding:15px;border-top:1px solid #ddd;}
+.checkoutBox{
+  padding:15px;
+  border-top:1px solid #ddd;
+  position:sticky;
+  bottom:0;
+  background:#fff;
+}
 </style>
 </head>
 <body>
@@ -92,7 +103,17 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 <span onclick="openCart()" style="cursor:pointer">🛒 <span id="cartCount">0</span></span>
 </div>
 </nav>
-
+<div style="
+position:absolute;
+top:8px;
+left:8px;
+background:#ef4444;
+color:#fff;
+padding:3px 6px;
+border-radius:6px;
+font-size:12px;">
+Bestseller
+</div>
 <div class="container" id="app"></div>
 
 <div class="cartModal" id="cartModal">
@@ -108,6 +129,51 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 <div id="paypal-button-container"></div>
 </div>
 </div>
+
+body{
+  background:#f9fafb;
+  color:#111;
+}
+
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  transition:0.25s;
+  position:relative;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.btn{
+  width:100%;
+  padding:10px;
+  background:#111;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:8px;
+  font-weight:600;
+}
+
+.btn:hover{
+  background:#000;
+}
+
+input, select{
+  width:100%;
+  padding:8px;
+  margin-top:6px;
+  border-radius:6px;
+  border:1px solid #ddd;
+}
 
 <script>
 let cart=JSON.parse(localStorage.getItem('cart')||'[]');
@@ -135,6 +201,8 @@ function save(){localStorage.setItem('cart',JSON.stringify(cart));document.getEl
 function add(n,p,img,size,qty,player,number){
 cart.push({n,p,img,size,qty,player,number});
 save();
+
+alert("✔ Zum Warenkorb hinzugefügt");
 }
 function remove(i){cart.splice(i,1);save();renderCart();}
 function calc(){
@@ -430,8 +498,13 @@ ${name}
 
 <div class='card'>
 <img src="${homeImg}" />
-<b>${name} Heimtrikot</b>
-<div>29.99€</div>
+<b style="font-size:14px;">${name} Heimtrikot 25/26</b>
+
+<div style="font-size:18px;font-weight:700;">29.99€</div>
+
+<div style="color:#16a34a;font-size:13px;">✔ Auf Lager</div>
+
+<div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
 
 <select id="size-home">
 <option>S</option><option>M</option><option>L</option><option>XL</option>
@@ -458,8 +531,13 @@ In den Warenkorb
 
 <div class='card'>
 <img src="${awayImg}" />
-<b>${name} Auswärtstrikot</b>
-<div>29.99€</div>
+<b style="font-size:14px;">${name} Auswärtstrikot 25/26</b>
+
+<div style="font-size:18px;font-weight:700;">29.99€</div>
+
+<div style="color:#16a34a;font-size:13px;">✔ Auf Lager</div>
+
+<div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
 
 <select id="size-away">
 <option>S</option><option>M</option><option>L</option><option>XL</option>
