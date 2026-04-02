@@ -39,7 +39,50 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 .cartModal{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:none;flex-direction:column;z-index:9999;}
 .cartHeader{display:flex;justify-content:space-between;padding:15px;background:#f5f5f5;}
 .cartBody{padding:20px;flex:1;overflow:auto;}
-.cartItem{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #ddd;align-items:center;}
+.cartItem{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+  border-bottom:1px solid #ddd;
+}
+
+.cartImg{
+  width:80px;
+  height:80px;
+  object-fit:contain;
+  background:#f5f5f5;
+  border-radius:8px;
+  padding:5px;
+}
+
+.cartInfo{
+  flex:1;
+  font-size:14px;
+}
+
+.qtyBox{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:6px 0;
+}
+
+.qtyBox button{
+  padding:4px 8px;
+  border:none;
+  background:#111;
+  color:#fff;
+  cursor:pointer;
+  border-radius:4px;
+}
+
+.removeBtn{
+  background:none;
+  border:none;
+  font-size:18px;
+  cursor:pointer;
+}
 .checkoutBox{padding:15px;border-top:1px solid #ddd;}
 </style>
 </head>
@@ -138,15 +181,38 @@ let b=document.getElementById('cartBody');
 if(!cart.length){b.innerHTML="Leer";return;}
 b.innerHTML=cart.map((c,i)=>`
 <div class='cartItem'>
-<img src='${c.img}' class='cartImg'>
-<div style='flex:1;margin-left:10px'>${c.n}<br>
-Größe: ${c.size}<br>
-Menge: ${c.qty}<br>
-${c.player ? 'Name: ' + c.player + '<br>' : ''}
-${c.number ? 'Nr: ' + c.number + '<br>' : ''}
-${(c.p * c.qty).toFixed(2)}€</div>
-<button class='btn' onclick='remove(${i})'>X</button>
-</div>`).join('');
+
+  <img src='${c.img}' class='cartImg'>
+
+  <div class='cartInfo'>
+    <b>${c.n}</b><br>
+    Größe: ${c.size}<br>
+
+    <div class='qtyBox'>
+      <button onclick='changeQty(${i}, -1)'>-</button>
+      <span>${c.qty}</span>
+      <button onclick='changeQty(${i}, 1)'>+</button>
+    </div>
+
+    <b>${(c.p * c.qty).toFixed(2)}€</b>
+  </div>
+
+  <button class='removeBtn' onclick='remove(${i})'>✖</button>
+
+</div>
+`).join('');
+
+  function changeQty(i, change){
+  cart[i].qty += change;
+
+  if(cart[i].qty <= 0){
+    remove(i);
+    return;
+  }
+
+  save();
+  renderCart();
+}
 
 let subtotal = cart.reduce((a,b)=>a+(b.p * b.qty),0);
 let shipping = cart.length ? SHIPPING : 0;
