@@ -11,7 +11,50 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
 
+body{
+  background:#f9fafb;
+  color:#111;
+}
 
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  transition:0.25s;
+  position:relative;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.btn{
+  width:100%;
+  padding:10px;
+  background:#111;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:8px;
+  font-weight:600;
+}
+
+.btn:hover{
+  background:#000;
+}
+
+input, select{
+  width:100%;
+  padding:8px;
+  margin-top:6px;
+  border-radius:6px;
+  border:1px solid #ddd;
+}
   
 nav{position:sticky;top:0;background:#f5f5f5;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;z-index:10;}
 nav a{margin:0 6px;cursor:pointer;font-size:14px;}
@@ -130,60 +173,13 @@ Bestseller
 </div>
 </div>
 
-body{
-  background:#f9fafb;
-  color:#111;
-}
 
-.card{
-  background:#fff;
-  border-radius:14px;
-  padding:12px;
-  text-align:center;
-  cursor:pointer;
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
-  transition:0.25s;
-  position:relative;
-}
-
-.card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 8px 20px rgba(0,0,0,0.08);
-}
-
-.btn{
-  width:100%;
-  padding:10px;
-  background:#111;
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  margin-top:8px;
-  font-weight:600;
-}
-
-.btn:hover{
-  background:#000;
-}
-
-input, select{
-  width:100%;
-  padding:8px;
-  margin-top:6px;
-  border-radius:6px;
-  border:1px solid #ddd;
-}
 
 <script>
 let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 const SHIPPING=4.99;
 
-function remove(i){
-  cart.splice(i,1);
-  save();
-  renderCart();
-}
+
 
 function changeQty(i, change){
   cart[i].qty += change;
