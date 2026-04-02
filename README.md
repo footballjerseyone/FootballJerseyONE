@@ -235,13 +235,16 @@ setTimeout(()=>{
   popup.style.opacity = "1";
   popup.style.transform = "translateY(0)";
 }, 10);
+.transform = "translateY(20px)";
 
-  setTimeout(()=>{
-    popup.style.opacity = "0";
-popup.style.transform = "translateY(20px)";
 setTimeout(()=>{
-  popup.style.display = "none";
-}, 400);
+  popup.style.opacity = "0";
+  popup.style.transform = "translateY(20px)";
+  setTimeout(()=>{
+    popup.style.display = "none";
+  }, 400);
+}, 4000);
+}
   
 }
 
@@ -392,7 +395,7 @@ b.innerHTML=cart.map((c,i)=>`
  
 
 let subtotal = cart.reduce((a,b)=>a+(b.p * b.qty),0);
-let shipping = cart.length ? SHIPPING : 0;
+let shipping = cart.reduce((a,b)=>a+b.qty,0) ? SHIPPING : 0;
 let total = subtotal + shipping;
 
 document.getElementById('total').innerHTML = `
@@ -607,7 +610,7 @@ ${name}
 <img src="${homeImg}" />
 <b style="font-size:14px;">${name} Heimtrikot 25/26</b>
 
-<div style="font-size:18px;font-weight:700;">29.99€</div>
+<div style="font-size:18px;font-weight:700;">11.99€</div>
 
 <div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
 ✔ Auf Lager
@@ -646,7 +649,7 @@ document.getElementById('number-home').value
 <img src="${awayImg}" />
 <b style="font-size:14px;">${name} Auswärtstrikot 25/26</b>
 
-<div style="font-size:18px;font-weight:700;">29.99€</div>
+<div style="font-size:18px;font-weight:700;">11.99€</div>
 
 <div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
 ✔ Auf Lager
@@ -671,11 +674,11 @@ document.getElementById('number-home').value
 add(
 '${name} Auswärtstrikot',
 11.99,
-'${homeImg}',
-document.getElementById('size-home').value,
-parseInt(document.getElementById('qty-home').value),
-document.getElementById('player-home').value,
-document.getElementById('number-home').value
+'${awayImg}',
+document.getElementById('size-away').value,
+parseInt(document.getElementById('qty-away').value),
+document.getElementById('player-away').value,
+document.getElementById('number-away').value
 )">
 🛒 Jetzt kaufen
 </button>
