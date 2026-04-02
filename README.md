@@ -190,7 +190,7 @@ const retro=["Deutschland 1990","Brasilien 2002","Frankreich 1998","Italien 2006
 const teamImages = {
 
   // Premier League
-  "Manchester United": { home: "https://www.adidas.de/en/manchester-united-25-26-home-jersey/JI7428.html", away: "https://www.adidas.de/en/manchester-united-25-26-away-jersey/JI7423.html" },
+  "Manchester United": { home: "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/341ec36583354390854e7ad4fd2a02dd_9366/Manchester_United_25-26_Home_Jersey_Red_JI7428_01_laydown.jpg", away: "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/e1a2021d272842b0b7e9cdc61055e9ed_9366/Manchester_United_25-26_Away_Jersey_White_JI7423_01_laydown.jpg" },
   "Manchester City": { home: "", away: "" },
   "Liverpool": { home: "", away: "" },
   "Chelsea": { home: "", away: "" },
