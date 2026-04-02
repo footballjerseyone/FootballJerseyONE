@@ -337,8 +337,8 @@ return;
 if(h.startsWith('team-')){
 let name=decodeURIComponent(h.replace('team-',''));
 
-let homeImg = `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
-let awayImg = `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
+let homeImg = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
+let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
 
 app.innerHTML=`
 <div class='title'>
