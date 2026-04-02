@@ -189,6 +189,58 @@ input, select{
 }
 </style>
 </head>
+const data = [
+  {name:"Max", city:"Berlin", country:"Deutschland"},
+  {name:"Luca", city:"Mailand", country:"Italien"},
+  {name:"Noah", city:"Paris", country:"Frankreich"},
+  {name:"Oliver", city:"London", country:"England"},
+  {name:"Mateo", city:"Madrid", country:"Spanien"},
+  {name:"Elias", city:"Wien", country:"Österreich"},
+  {name:"Jonas", city:"Zürich", country:"Schweiz"},
+  {name:"Lucas", city:"Amsterdam", country:"Niederlande"},
+  {name:"Milan", city:"Prag", country:"Tschechien"},
+  {name:"Ivan", city:"Zagreb", country:"Kroatien"},
+  {name:"Leo", city:"Buenos Aires", country:"Argentinien"},
+  {name:"João", city:"Rio de Janeiro", country:"Brasilien"},
+  {name:"Ali", city:"Istanbul", country:"Türkei"},
+  {name:"Omar", city:"Dubai", country:"VAE"},
+  {name:"Kenji", city:"Tokio", country:"Japan"},
+  {name:"Ethan", city:"New York", country:"USA"}
+];
+
+function showPopup(){
+  const random = data[Math.floor(Math.random()*data.length)];
+  const minutes = Math.floor(Math.random()*5)+1;
+
+const flags = {
+  "Deutschland":"🇩🇪",
+  "Italien":"🇮🇹",
+  "Frankreich":"🇫🇷",
+  "England":"🇬🇧",
+  "Spanien":"🇪🇸",
+  "Österreich":"🇦🇹",
+  "Schweiz":"🇨🇭",
+  "Niederlande":"🇳🇱",
+  "Tschechien":"🇨🇿",
+  "Kroatien":"🇭🇷",
+  "Argentinien":"🇦🇷",
+  "Brasilien":"🇧🇷",
+  "Türkei":"🇹🇷",
+  "VAE":"🇦🇪",
+  "Japan":"🇯🇵",
+  "USA":"🇺🇸"
+};
+
+const text = `${flags[random.country]} ${random.name} aus ${random.city} hat vor ${minutes} Min bestellt`;
+
+  const popup = document.getElementById("popup");
+  popup.innerText = text;
+  popup.style.display = "block";
+
+  setTimeout(()=>{
+    popup.style.display = "none";
+  }, 4000);
+}
 <body>
 
 <nav>
