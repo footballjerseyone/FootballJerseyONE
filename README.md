@@ -186,6 +186,113 @@ const leagues={
 
 const retro=["Deutschland 1990","Brasilien 2002","Frankreich 1998","Italien 2006"];
 
+// 🖼️ BILDER FÜR ALLE TEAMS (HIER NUR LINKS ÄNDERN)
+const teamImages = {
+
+  // Premier League
+  "Manchester United": { home: "https://www.adidas.de/en/manchester-united-25-26-home-jersey/JI7428.html", away: "https://www.adidas.de/en/manchester-united-25-26-away-jersey/JI7423.html" },
+  "Manchester City": { home: "", away: "" },
+  "Liverpool": { home: "", away: "" },
+  "Chelsea": { home: "", away: "" },
+  "Arsenal": { home: "", away: "" },
+  "Tottenham": { home: "", away: "" },
+  "Newcastle": { home: "", away: "" },
+  "Aston Villa": { home: "", away: "" },
+  "West Ham": { home: "", away: "" },
+  "Brighton": { home: "", away: "" },
+
+  // La Liga
+  "Real Madrid": { home: "", away: "" },
+  "Barcelona": { home: "", away: "" },
+  "Atletico Madrid": { home: "", away: "" },
+  "Sevilla": { home: "", away: "" },
+  "Valencia": { home: "", away: "" },
+  "Betis": { home: "", away: "" },
+  "Villarreal": { home: "", away: "" },
+  "Real Sociedad": { home: "", away: "" },
+  "Athletic Bilbao": { home: "", away: "" },
+  "Girona": { home: "", away: "" },
+
+  // Bundesliga
+  "Bayern München": { home: "", away: "" },
+  "Dortmund": { home: "", away: "" },
+  "Leipzig": { home: "", away: "" },
+  "Leverkusen": { home: "", away: "" },
+  "Frankfurt": { home: "", away: "" },
+  "Stuttgart": { home: "", away: "" },
+  "Freiburg": { home: "", away: "" },
+  "Wolfsburg": { home: "", away: "" },
+  "Gladbach": { home: "", away: "" },
+  "Hoffenheim": { home: "", away: "" },
+
+  // Serie A
+  "Juventus": { home: "", away: "" },
+  "Inter": { home: "", away: "" },
+  "AC Milan": { home: "", away: "" },
+  "Napoli": { home: "", away: "" },
+  "Roma": { home: "", away: "" },
+  "Lazio": { home: "", away: "" },
+  "Atalanta": { home: "", away: "" },
+  "Fiorentina": { home: "", away: "" },
+  "Torino": { home: "", away: "" },
+  "Bologna": { home: "", away: "" },
+
+  // Ligue 1
+  "PSG": { home: "", away: "" },
+  "Marseille": { home: "", away: "" },
+  "Lyon": { home: "", away: "" },
+  "Monaco": { home: "", away: "" },
+  "Lille": { home: "", away: "" },
+  "Nice": { home: "", away: "" },
+  "Rennes": { home: "", away: "" },
+  "Lens": { home: "", away: "" },
+
+  // Portugal
+  "Benfica": { home: "", away: "" },
+  "Porto": { home: "", away: "" },
+  "Sporting CP": { home: "", away: "" },
+  "Braga": { home: "", away: "" },
+  "Boavista": { home: "", away: "" },
+  "Guimaraes": { home: "", away: "" },
+  "Famalicao": { home: "", away: "" },
+  "Rio Ave": { home: "", away: "" },
+
+  // Niederlande
+  "Ajax": { home: "", away: "" },
+  "PSV": { home: "", away: "" },
+  "Feyenoord": { home: "", away: "" },
+  "AZ Alkmaar": { home: "", away: "" },
+  "Twente": { home: "", away: "" },
+  "Utrecht": { home: "", away: "" },
+
+  // MLS
+  "Inter Miami": { home: "", away: "" },
+  "LA Galaxy": { home: "", away: "" },
+  "LAFC": { home: "", away: "" },
+  "Seattle Sounders": { home: "", away: "" },
+  "NYCFC": { home: "", away: "" },
+
+  // Brasilien
+  "Flamengo": { home: "", away: "" },
+  "Palmeiras": { home: "", away: "" },
+  "Corinthians": { home: "", away: "" },
+  "Fluminense": { home: "", away: "" },
+  "Sao Paulo": { home: "", away: "" },
+
+  // Saudi
+  "Al Hilal": { home: "", away: "" },
+  "Al Nassr": { home: "", away: "" },
+  "Al Ittihad": { home: "", away: "" },
+  "Al Ahli": { home: "", away: "" },
+
+  // Türkei
+  "Galatasaray": { home: "", away: "" },
+  "Fenerbahce": { home: "", away: "" },
+  "Besiktas": { home: "", away: "" },
+  "Trabzonspor": { home: "", away: "" }
+
+};
+  
 function go(p){location.hash=p;render();}
 window.onhashchange=render;
 function back(){history.back();}
