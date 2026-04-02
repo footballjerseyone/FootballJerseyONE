@@ -189,6 +189,9 @@ input, select{
 }
 </style>
 </head>
+
+<body>
+<script>
 const data = [
   {name:"Max", city:"Berlin", country:"Deutschland"},
   {name:"Luca", city:"Mailand", country:"Italien"},
@@ -212,26 +215,14 @@ function showPopup(){
   const random = data[Math.floor(Math.random()*data.length)];
   const minutes = Math.floor(Math.random()*5)+1;
 
-const flags = {
-  "Deutschland":"🇩🇪",
-  "Italien":"🇮🇹",
-  "Frankreich":"🇫🇷",
-  "England":"🇬🇧",
-  "Spanien":"🇪🇸",
-  "Österreich":"🇦🇹",
-  "Schweiz":"🇨🇭",
-  "Niederlande":"🇳🇱",
-  "Tschechien":"🇨🇿",
-  "Kroatien":"🇭🇷",
-  "Argentinien":"🇦🇷",
-  "Brasilien":"🇧🇷",
-  "Türkei":"🇹🇷",
-  "VAE":"🇦🇪",
-  "Japan":"🇯🇵",
-  "USA":"🇺🇸"
-};
+  const flags = {
+    "Deutschland":"🇩🇪","Italien":"🇮🇹","Frankreich":"🇫🇷","England":"🇬🇧",
+    "Spanien":"🇪🇸","Österreich":"🇦🇹","Schweiz":"🇨🇭","Niederlande":"🇳🇱",
+    "Tschechien":"🇨🇿","Kroatien":"🇭🇷","Argentinien":"🇦🇷","Brasilien":"🇧🇷",
+    "Türkei":"🇹🇷","VAE":"🇦🇪","Japan":"🇯🇵","USA":"🇺🇸"
+  };
 
-const text = `${flags[random.country]} ${random.name} aus ${random.city} hat vor ${minutes} Min bestellt`;
+  const text = `${flags[random.country]} ${random.name} aus ${random.city} hat vor ${minutes} Min bestellt`;
 
   const popup = document.getElementById("popup");
   popup.innerText = text;
@@ -241,8 +232,9 @@ const text = `${flags[random.country]} ${random.name} aus ${random.city} hat vor
     popup.style.display = "none";
   }, 4000);
 }
-<body>
 
+setInterval(showPopup, 6000);
+</script>
 <nav>
 <div style="display:flex;align-items:center;gap:8px;"><span>⚽</span><b>FootballJerseyONE</b></div>
 <div>
@@ -633,12 +625,6 @@ document.getElementById('size-home').value,
 parseInt(document.getElementById('qty-home').value),
 document.getElementById('player-home').value,
 document.getElementById('number-home').value
-)
-'${homeImg}',
-document.getElementById('size-home').value,
-parseInt(document.getElementById('qty-home').value),
-document.getElementById('player-home').value,
-document.getElementById('number-home').value
 )">
 🛒 Jetzt kaufen
 </button>
@@ -673,17 +659,11 @@ document.getElementById('number-home').value
 add(
 '${name} Auswärtstrikot',
 11.99,
-'${awayImg}',
-document.getElementById('size-away').value,
-parseInt(document.getElementById('qty-away').value),
-document.getElementById('player-away').value,
-document.getElementById('number-away').value
-)
-'${awayImg}',
-document.getElementById('size-away').value,
-parseInt(document.getElementById('qty-away').value),
-document.getElementById('player-away').value,
-document.getElementById('number-away').value
+'${homeImg}',
+document.getElementById('size-home').value,
+parseInt(document.getElementById('qty-home').value),
+document.getElementById('player-home').value,
+document.getElementById('number-home').value
 )">
 🛒 Jetzt kaufen
 </button>
@@ -696,5 +676,18 @@ document.getElementById('number-away').value
 
 render();
 </script>
+<div id="popup" style="
+position:fixed;
+bottom:20px;
+left:20px;
+background:#020617;
+color:#fff;
+padding:12px 16px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+display:none;
+z-index:99999;
+font-size:14px;
+"></div>
 </body>
 </html>
