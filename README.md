@@ -197,7 +197,8 @@ const teamImages = {
 
   // Premier League
   "Manchester United": { home: "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/341ec36583354390854e7ad4fd2a02dd_9366/Manchester_United_25-26_Home_Jersey_Red_JI7428_01_laydown.jpg", away: "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/e1a2021d272842b0b7e9cdc61055e9ed_9366/Manchester_United_25-26_Away_Jersey_White_JI7423_01_laydown.jpg" },
-  "Manchester City": { home: "", away: "" },
+  "Manchester City": { home: "<img width="550" height="550" alt="image" src="https://github.com/user-attachments/assets/a36e3371-748e-4e39-b5d7-9e546f76029e" />
+", away: "" },
   "Liverpool": { home: "", away: "" },
   "Chelsea": { home: "", away: "" },
   "Arsenal": { home: "", away: "" },
