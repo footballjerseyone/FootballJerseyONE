@@ -575,20 +575,13 @@ ${name}
 <button class='btn' onclick="
 add(
 '${name} Heimtrikot',
-<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;">
-29.99€
-</div>
-
-<div style="font-size:20px;font-weight:800;color:#22c55e;">
-11.99€
-</div>
-
-<div style="color:#ef4444;font-size:13px;font-weight:600;">
-🔥 -60% Rabatt
-</div>,
-<div style="font-size:12px;color:#facc15;">
-⭐ 4.8/5 (124 Bewertungen)
-</div>
+11.99,
+'${homeImg}',
+document.getElementById('size-home').value,
+parseInt(document.getElementById('qty-home').value),
+document.getElementById('player-home').value,
+document.getElementById('number-home').value
+)
 '${homeImg}',
 document.getElementById('size-home').value,
 parseInt(document.getElementById('qty-home').value),
@@ -627,20 +620,13 @@ document.getElementById('number-home').value
 <button class='btn' onclick="
 add(
 '${name} Auswärtstrikot',
-<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;">
-29.99€
-</div>
-
-<div style="font-size:20px;font-weight:800;color:#22c55e;">
-11.99€
-</div>
-
-<div style="color:#ef4444;font-size:13px;font-weight:600;">
-🔥 -60% Rabatt
-</div>,
-<div style="font-size:12px;color:#facc15;">
-⭐ 4.8/5 (124 Bewertungen)
-</div>
+11.99,
+'${awayImg}',
+document.getElementById('size-away').value,
+parseInt(document.getElementById('qty-away').value),
+document.getElementById('player-away').value,
+document.getElementById('number-away').value
+)
 '${awayImg}',
 document.getElementById('size-away').value,
 parseInt(document.getElementById('qty-away').value),
