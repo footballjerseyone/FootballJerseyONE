@@ -40,9 +40,11 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 .cartHeader{display:flex;justify-content:space-between;padding:15px;background:#f5f5f5;}
 .cartBody{padding:20px;flex:1;overflow:auto;}
 .cartItem{
+  display:flex;        
   align-items:flex-start;
+  gap:15px;
+  margin-bottom:15px;
 }
-
 .cartImg{
   width:140px;
   height:140px;
