@@ -23,10 +23,9 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 .card:hover{transform:scale(1.03);}
 .card img{
   width:100%;
-  height:160px;
+  height:auto;
+  max-height:250px;
   object-fit:contain;
-  background:#f9f9f9;
-  padding:5px;
 }
 .btn{padding:6px 10px;background:#22c55e;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-top:6px;}
 .flag{width:24px;height:16px;object-fit:cover;border-radius:3px;margin-right:6px;vertical-align:middle;}
