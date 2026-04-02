@@ -20,6 +20,13 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 .sub{font-size:1.2rem;margin:10px 0;color:#555;font-weight:600;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
 .card{background:#f3f3f3;padding:10px;border-radius:10px;text-align:center;cursor:pointer;transition:.2s;}
+  .cartImg{
+  width:90px;
+  height:90px;
+  object-fit:contain;
+  background:#f5f5f5;
+  padding:5px;
+}
 .card:hover{transform:scale(1.03);}
 .card img{
   width:100%;
@@ -131,7 +138,7 @@ let b=document.getElementById('cartBody');
 if(!cart.length){b.innerHTML="Leer";return;}
 b.innerHTML=cart.map((c,i)=>`
 <div class='cartItem'>
-<img src='${c.img}' width='50'>
+<img src='${c.img}' class='cartImg'>
 <div style='flex:1;margin-left:10px'>${c.n}<br>
 Größe: ${c.size}<br>
 Menge: ${c.qty}<br>
