@@ -21,7 +21,13 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
 .card{background:#f3f3f3;padding:10px;border-radius:10px;text-align:center;cursor:pointer;transition:.2s;}
 .card:hover{transform:scale(1.03);}
-.card img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:6px;}
+.card img{
+  width:100%;
+  height:160px;
+  object-fit:contain;
+  background:#f9f9f9;
+  padding:5px;
+}
 .btn{padding:6px 10px;background:#22c55e;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-top:6px;}
 .flag{width:24px;height:16px;object-fit:cover;border-radius:3px;margin-right:6px;vertical-align:middle;}
 .cartModal{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:none;flex-direction:column;z-index:9999;}
