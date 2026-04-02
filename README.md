@@ -40,20 +40,12 @@ nav a{margin:0 6px;cursor:pointer;font-size:14px;}
 .cartHeader{display:flex;justify-content:space-between;padding:15px;background:#f5f5f5;}
 .cartBody{padding:20px;flex:1;overflow:auto;}
 .cartItem{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:10px;
-  border-bottom:1px solid #ddd;
+  align-items:flex-start;
 }
 
 .cartImg{
-  width:80px;
-  height:80px;
-  object-fit:contain;
-  background:#f5f5f5;
-  border-radius:8px;
-  padding:5px;
+  width:140px;
+  height:140px;
 }
 
 .cartInfo{
