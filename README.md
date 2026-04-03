@@ -17,29 +17,18 @@
 }
 
 body{
-  background:#0f172a;
-  color:#fff;
+  background:#ffffff;
+  color:#111;
 }
 
 /* NAVBAR */
 nav{
-  position:sticky;
-  top:0;
-  background:#020617;
-  padding:14px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  z-index:100;
-  border-bottom:1px solid #1e293b;
+  background:#ffffff;
+  border-bottom:1px solid #e5e7eb;
 }
 
 nav a{
-  margin:0 8px;
-  cursor:pointer;
-  font-size:14px;
-  color:#cbd5f5;
+  color:#333;
 }
 
 nav a:hover{
@@ -47,8 +36,8 @@ nav a:hover{
 }
 
 .search{
-  padding:6px;
-  width:100%;
+  background:#f1f5f9;
+  color:#111;
 }
 
 /* CONTAINER */
@@ -79,13 +68,13 @@ nav a:hover{
 }
 /* CARD */
 .card{
-  background:#020617;
+  background:#ffffff;
   border-radius:18px;
   padding:14px;
   text-align:center;
   cursor:pointer;
   transition:0.3s;
-  border:1px solid #1e293b;
+  border:1px solid #e5e7eb;
 }
 
 .card:hover{
@@ -130,15 +119,8 @@ input, select{
 
 /* CART */
 .cartModal{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:#020617;
-  display:none;
-  flex-direction:column;
-  z-index:9999;
+  background:#ffffff;
+  color:#111;
 }
 
 .cartHeader{
@@ -149,13 +131,8 @@ input, select{
 }
 
 .cartItem{
-  display:flex;
-  gap:15px;
-  padding:12px;
-  border-radius:12px;
-  background:#020617;
-  border:1px solid #1e293b;
-  margin-bottom:12px;
+  background:#ffffff;
+  border:1px solid #e5e7eb;
 }
 
 .cartImg{
