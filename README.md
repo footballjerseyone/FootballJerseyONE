@@ -215,37 +215,29 @@ function showPopup(){
   const random = data[Math.floor(Math.random()*data.length)];
   const minutes = Math.floor(Math.random()*5)+1;
 
-  const flags = {
-    "Deutschland":"🇩🇪","Italien":"🇮🇹","Frankreich":"🇫🇷","England":"🇬🇧",
-    "Spanien":"🇪🇸","Österreich":"🇦🇹","Schweiz":"🇨🇭","Niederlande":"🇳🇱",
-    "Tschechien":"🇨🇿","Kroatien":"🇭🇷","Argentinien":"🇦🇷","Brasilien":"🇧🇷",
-    "Türkei":"🇹🇷","VAE":"🇦🇪","Japan":"🇯🇵","USA":"🇺🇸"
-  };
+  const flags = { ... };
 
- const teams = ["Real Madrid","Barcelona","Bayern München","PSG","Liverpool","Juventus"];
+  const teams = ["Real Madrid","Barcelona","Bayern München","PSG","Liverpool","Juventus"];
+  const randomTeam = teams[Math.floor(Math.random()*teams.length)];
 
-const randomTeam = teams[Math.floor(Math.random()*teams.length)];
-
-const text = `${flags[random.country]} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
+  const text = `${flags[random.country]} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
 
   const popup = document.getElementById("popup");
   popup.innerText = text;
   popup.style.display = "block";
-setTimeout(()=>{
-  popup.style.opacity = "1";
-  popup.style.transform = "translateY(0)";
-}, 10);
-.transform = "translateY(20px)";
 
-setTimeout(()=>{
-  popup.style.opacity = "0";
- popup.style.transform = "translateY(20px)";
   setTimeout(()=>{
-    popup.style.display = "none";
-  }, 400);
-}, 4000);
-}
-  
+    popup.style.opacity = "1";
+    popup.style.transform = "translateY(0)";
+  }, 10);
+
+  setTimeout(()=>{
+    popup.style.opacity = "0";
+    popup.style.transform = "translateY(20px)";
+    setTimeout(()=>{
+      popup.style.display = "none";
+    }, 400);
+  }, 4000);
 }
 
 setInterval(showPopup, Math.random()*8000 + 5000);
