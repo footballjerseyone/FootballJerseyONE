@@ -47,11 +47,8 @@ nav a:hover{
 }
 
 .search{
-  padding:8px;
-  border-radius:8px;
-  border:none;
-  background:#1e293b;
-  color:#fff;
+  padding:6px;
+  width:100%;
 }
 
 /* CONTAINER */
@@ -77,10 +74,9 @@ nav a:hover{
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:18px;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
 }
-
 /* CARD */
 .card{
   background:#020617;
@@ -99,7 +95,7 @@ nav a:hover{
 
 .card img{
   width:100%;
-  max-height:260px;
+  height:180px;
   object-fit:contain;
 }
 
@@ -624,6 +620,33 @@ const bestsellers = [
 ];
 
 app.innerHTML = `
+
+<!-- HERO -->
+<div style="
+background:linear-gradient(135deg,#1e293b,#020617);
+padding:30px;
+border-radius:20px;
+margin-bottom:25px;
+text-align:center;
+">
+<h1 style="font-size:2rem;">⚽ FootballJerseyONE</h1>
+<p style="color:#94a3b8;margin-top:10px;">
+Die besten Fußballtrikots 2026 🔥
+</p>
+
+<button class="btn" onclick="go('clubs')" style="max-width:200px;margin-top:15px;">
+Jetzt shoppen
+</button>
+</div>
+
+<!-- TRUST -->
+<div style="display:flex;gap:15px;flex-wrap:wrap;margin-bottom:20px;">
+<div class="card">🚚 Schneller Versand</div>
+<div class="card">💳 Sicher bezahlen</div>
+<div class="card">⭐ Top Qualität</div>
+</div>
+
+<!-- BESTSELLER -->
 <div class='title'>🔥 Bestseller</div>
 
 <div class='grid'>
@@ -633,13 +656,46 @@ let img = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${name
 
 return `
 <div class='card' onclick="openTeam('${name}')">
+
+<div style="
+position:absolute;
+background:#ef4444;
+padding:4px 8px;
+border-radius:6px;
+font-size:12px;">
+Bestseller
+</div>
+
 <img src="${img}" />
+
 <b>${name}</b>
+
+<div style="color:#22c55e;font-size:13px;">✔ Auf Lager</div>
+<div style="color:#ef4444;font-size:12px;">⚠ Nur noch wenige!</div>
+
+<div style="font-weight:700;margin-top:5px;">11.99€</div>
+
+<button class='btn'>Jetzt ansehen</button>
+
 </div>
 `;
 
 }).join('')}
 </div>
+
+<!-- CTA -->
+<div style="
+margin-top:30px;
+padding:20px;
+background:#020617;
+border-radius:15px;
+text-align:center;
+border:1px solid #1e293b;
+">
+<h2>🔥 Verpasse keine Angebote</h2>
+<p style="color:#94a3b8;">Neue Trikots jede Woche</p>
+</div>
+
 `;
 
 return;
