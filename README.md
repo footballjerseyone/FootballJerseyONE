@@ -299,10 +299,30 @@ function changeQty(i, change){
   renderCart();
 }
   
-function save(){localStorage.setItem('cart',JSON.stringify(cart));document.getElementById('cartCount').innerText=cart.length;}
+function save(){
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  const count = cart.reduce((a,b)=>a + b.qty, 0);
+  document.getElementById('cartCount').innerText = count;
+}
 function add(n,p,img,size,qty,player,number){
-cart.push({n,p,img,size,qty,player,number});
+
+let existing = cart.find(item =>
+  item.n === n &&
+  item.size === size &&
+  item.player === player &&
+  item.number === number
+);
+
+if(existing){
+  existing.qty += qty;
+}else{
+  cart.push({n,p,img,size,qty,player,number});
+}
+
 save();
+renderCart();
+openCart(); // optional aber sehr nice
 
 alert("✔ Zum Warenkorb hinzugefügt");
 }
@@ -358,10 +378,16 @@ alert("Danke für deine Bestellung, " + customer.name + "!");
 }  
 function closeCart(){document.getElementById('cartModal').style.display='none';}
 
-function renderCart(){
-let b=document.getElementById('cartBody');
-if(!cart.length){b.innerHTML="Leer";return;}
-b.innerHTML=cart.map((c,i)=>`
+  function renderCart(){
+let b = document.getElementById('cartBody');
+
+if(!cart.length){
+  b.innerHTML = "<p style='padding:20px'>🛒 Dein Warenkorb ist leer</p>";
+  document.getElementById('total').innerHTML = "";
+  return;
+}
+
+b.innerHTML = cart.map((c,i)=>`
 <div class='cartItem'>
 
   <img src='${c.img}' class='cartImg'>
@@ -369,6 +395,8 @@ b.innerHTML=cart.map((c,i)=>`
   <div class='cartInfo'>
     <b>${c.n}</b><br>
     Größe: ${c.size}<br>
+    ${c.player ? `Name: ${c.player}<br>` : ""}
+    ${c.number ? `Nr: ${c.number}<br>` : ""}
 
     <div class='qtyBox'>
       <button onclick='changeQty(${i}, -1)'>-</button>
@@ -384,18 +412,21 @@ b.innerHTML=cart.map((c,i)=>`
 </div>
 `).join('');
 
- 
-
 let subtotal = cart.reduce((a,b)=>a+(b.p * b.qty),0);
-let shipping = cart.reduce((a,b)=>a+b.qty,0) ? SHIPPING : 0;
+let totalQty = cart.reduce((a,b)=>a + b.qty,0);
+let shipping = totalQty ? SHIPPING : 0;
 let total = subtotal + shipping;
 
 document.getElementById('total').innerHTML = `
+<div style="font-size:14px;color:#94a3b8">
+Artikel: ${totalQty}
+</div>
+
 Zwischensumme: ${subtotal.toFixed(2)}€ <br>
 Versand: ${shipping.toFixed(2)}€ <br>
-<b>Gesamt: ${total.toFixed(2)}€</b>
-`;
 
+<b style="font-size:18px;">Gesamt: ${total.toFixed(2)}€</b>
+`;
 }
 
 // 🌍 COUNTRIES EXPANDED
@@ -557,7 +588,7 @@ app.innerHTML=r.map(x=>`<div class='card' onclick="openTeam('${x.n}')">${x.n}<br
 }
 
 function render(){
-document.getElementById('cartCount').innerText=cart.length;
+save();
 const app=document.getElementById('app');
 const h=location.hash.replace('#','')||'clubs';
 
