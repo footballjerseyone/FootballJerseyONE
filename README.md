@@ -25,6 +25,14 @@ body{
 nav{
   background:#ffffff;
   border-bottom:1px solid #e5e7eb;
+  padding:12px 15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 
 nav a{
@@ -42,7 +50,9 @@ nav a:hover{
 
 /* CONTAINER */
 .container{
-  padding:20px;
+  padding:15px;
+  max-width:1200px;
+  margin:auto;
 }
 
 /* TITLES */
@@ -67,19 +77,12 @@ nav a:hover{
   gap:12px;
 }
 /* CARD */
-.card{
-  background:#ffffff;
-  border-radius:18px;
-  padding:14px;
-  text-align:center;
-  cursor:pointer;
-  transition:0.3s;
-  border:1px solid #e5e7eb;
-}
+<img width="534" height="596" alt="image" src="https://github.com/user-attachments/assets/946236e2-1641-49ba-aab4-c9d635f14c28" />
+
 
 .card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.6);
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
 .card img{
@@ -92,18 +95,17 @@ nav a:hover{
 .btn{
   width:100%;
   padding:12px;
-  background:#22c55e;
+  background:#111;
   border:none;
   border-radius:10px;
   color:#fff;
-  font-weight:700;
+  font-weight:600;
   margin-top:10px;
   cursor:pointer;
   transition:0.2s;
 }
-
 .btn:hover{
-  background:#16a34a;
+  background:#333;
 }
 
 /* INPUTS */
@@ -112,9 +114,9 @@ input, select{
   padding:10px;
   margin-top:8px;
   border-radius:8px;
-  border:none;
-  background:#1e293b;
-  color:#fff;
+  border:1px solid #ddd;
+  background:#fff;
+  color:#111;
 }
 
 /* CART */
@@ -160,6 +162,29 @@ input, select{
   padding:15px;
   border-top:1px solid #1e293b;
 }
+
+  @media(max-width:600px){
+
+.title{
+  font-size:1.5rem;
+}
+
+.card img{
+  height:140px;
+}
+
+nav{
+  flex-direction:column;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.search{
+  width:100%;
+}
+
+}
+  
 </style>
 </head>
 
@@ -216,14 +241,24 @@ function showPopup(){
 setInterval(showPopup, Math.random()*8000 + 5000);
 </script>
 <nav>
-<div style="display:flex;align-items:center;gap:8px;"><span>⚽</span><b>FootballJerseyONE</b></div>
-<div>
-<input class="search" placeholder="Suche Teams, Länder, Retro..." oninput="searchAll(this.value)" />
-<a onclick="go('national')">National</a>
-<a onclick="go('clubs')">Vereine</a>
-<a onclick="go('retro')">Retro</a>
-<span onclick="openCart()" style="cursor:pointer">🛒 <span id="cartCount">0</span></span>
+
+<div style="display:flex;align-items:center;gap:8px;">
+  <span>⚽</span>
+  <b>FootballJerseyONE</b>
 </div>
+
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+  <input class="search" placeholder="Suche..." oninput="searchAll(this.value)" style="padding:6px 10px;border-radius:8px;border:1px solid #ddd;" />
+
+  <a onclick="go('national')">🌍</a>
+  <a onclick="go('clubs')">🏟</a>
+  <a onclick="go('retro')">🕰</a>
+
+  <span onclick="openCart()" style="cursor:pointer">
+    🛒 <span id="cartCount">0</span>
+  </span>
+</div>
+
 </nav>
 <div style="
 position:absolute;
@@ -600,14 +635,15 @@ app.innerHTML = `
 
 <!-- HERO -->
 <div style="
-background:linear-gradient(135deg,#1e293b,#020617);
+background:linear-gradient(135deg,#ffffff,#f1f5f9);
+color:#111;
 padding:30px;
 border-radius:20px;
 margin-bottom:25px;
 text-align:center;
 ">
 <h1 style="font-size:2rem;">⚽ FootballJerseyONE</h1>
-<p style="color:#94a3b8;margin-top:10px;">
+<p style="color:#555;margin-top:10px;">
 Die besten Fußballtrikots 2026 🔥
 </p>
 
