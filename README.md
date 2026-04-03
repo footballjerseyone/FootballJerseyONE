@@ -239,7 +239,7 @@ setTimeout(()=>{
 
 setTimeout(()=>{
   popup.style.opacity = "0";
-  popup.style.transform = "translateY(20px)";
+ popup.style.transform = "translateY(20px)";
   setTimeout(()=>{
     popup.style.display = "none";
   }, 400);
