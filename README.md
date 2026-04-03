@@ -307,6 +307,24 @@ function save(){
 }
 function add(n,p,img,size,qty,player,number){
 
+// ❌ VALIDIERUNG
+if(!size){
+  alert("Bitte Größe auswählen");
+  return;
+}
+
+if(!qty || qty < 1){
+  alert("Ungültige Menge");
+  return;
+}
+
+// optional: Name nur wenn Nummer gesetzt
+if(number && !player){
+  alert("Bitte Namen zum Trikot eingeben");
+  return;
+}
+
+// ✅ Produkt zusammenführen
 let existing = cart.find(item =>
   item.n === n &&
   item.size === size &&
@@ -322,10 +340,10 @@ if(existing){
 
 save();
 renderCart();
-openCart(); // optional aber sehr nice
-
-alert("✔ Zum Warenkorb hinzugefügt");
+openCart();
 }
+
+
 function remove(i){cart.splice(i,1);save();renderCart();}
 function calc(){
 return cart.reduce((a,b)=>a+(b.p * b.qty),0)+(cart.length?SHIPPING:0);
@@ -350,27 +368,31 @@ paypal.Buttons({
     });
   },
 
-  onApprove: function(data, actions) {
-    return actions.order.capture().then(function(details) {
-     let customer = {
-  name: document.getElementById('cust-name').value,
-  email: document.getElementById('cust-email').value,
-  address: document.getElementById('cust-address').value
-};
+ onApprove: function(data, actions) {
 
-console.log("BESTELLUNG:", {
-  customer: customer,
-  cart: cart,
-  total: calc()
+let name = document.getElementById('cust-name').value.trim();
+let email = document.getElementById('cust-email').value.trim();
+let address = document.getElementById('cust-address').value.trim();
+
+if(!name || !email || !address){
+  alert("Bitte alle Felder ausfüllen!");
+  return;
+}
+
+return actions.order.capture().then(function(details) {
+
+document.getElementById('cartBody').innerHTML = `
+<div style="padding:30px;text-align:center">
+<h2>🎉 Bestellung erfolgreich!</h2>
+<p>Danke ${name} ❤️</p>
+</div>
+`;
+
+cart = [];
+save();
+
 });
-
-alert("Danke für deine Bestellung, " + customer.name + "!");
-      cart = [];
-      save();
-      renderCart();
-      closeCart();
-    });
-  }
+}
 
 }).render('#paypal-button-container');
 
@@ -378,7 +400,7 @@ alert("Danke für deine Bestellung, " + customer.name + "!");
 }  
 function closeCart(){document.getElementById('cartModal').style.display='none';}
 
-  function renderCart(){
+function renderCart(){
 let b = document.getElementById('cartBody');
 
 if(!cart.length){
@@ -407,7 +429,7 @@ b.innerHTML = cart.map((c,i)=>`
     <b>${(c.p * c.qty).toFixed(2)}€</b>
   </div>
 
-  <button class='removeBtn' onclick='remove(${i})'>✖</button>
+  <button onclick='remove(${i})'>✖</button>
 
 </div>
 `).join('');
@@ -418,14 +440,10 @@ let shipping = totalQty ? SHIPPING : 0;
 let total = subtotal + shipping;
 
 document.getElementById('total').innerHTML = `
-<div style="font-size:14px;color:#94a3b8">
-Artikel: ${totalQty}
-</div>
-
+Artikel: ${totalQty}<br>
 Zwischensumme: ${subtotal.toFixed(2)}€ <br>
 Versand: ${shipping.toFixed(2)}€ <br>
-
-<b style="font-size:18px;">Gesamt: ${total.toFixed(2)}€</b>
+<b>Gesamt: ${total.toFixed(2)}€</b>
 `;
 }
 
