@@ -608,8 +608,43 @@ app.innerHTML=r.map(x=>`<div class='card' onclick="openTeam('${x.n}')">${x.n}<br
 function render(){
 save();
 const app=document.getElementById('app');
-const h=location.hash.replace('#','')||'clubs';
+const h=location.hash.replace('#','')||'home';
 
+if(h==='home'){
+
+const bestsellers = [
+"PSG",
+"Real Madrid",
+"Frankreich",
+"Deutschland",
+"Liverpool",
+"Barcelona",
+"Bayern München",
+"Juventus"
+];
+
+app.innerHTML = `
+<div class='title'>🔥 Bestseller</div>
+
+<div class='grid'>
+${bestsellers.map(name => {
+
+let img = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${name} jersey`;
+
+return `
+<div class='card' onclick="openTeam('${name}')">
+<img src="${img}" />
+<b>${name}</b>
+</div>
+`;
+
+}).join('')}
+</div>
+`;
+
+return;
+}
+  
 if(h==='national'){
 app.innerHTML=Object.entries(continents).map(([c,list])=>`
 <div class='sub'>${c}</div>
