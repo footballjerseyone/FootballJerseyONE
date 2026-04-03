@@ -248,7 +248,7 @@ setTimeout(()=>{
   
 }
 
-setInterval(showPopup, 6000);
+setInterval(showPopup, Math.random()*8000 + 5000);
 </script>
 <nav>
 <div style="display:flex;align-items:center;gap:8px;"><span>⚽</span><b>FootballJerseyONE</b></div>
