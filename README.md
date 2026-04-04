@@ -739,11 +739,11 @@ let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${
 app.innerHTML=`
 <div class='title'>
 <span class='back' onclick='back()'>⬅ Zurück</span>
-<img src="${homeImg}">
+<img src="https://www.textilwirtschaft.de/news/media/23/ADdias-Trikots-227790.jpeg">
 ${name}
 </div>
 
-<img src="${homeImg}" style="
+<img src="https://media.gq-magazin.de/photos/690b73094fa0fed19422f786/3:2/w_2562,h_1708,c_limit/WC26_Product_Shoot_16x9_HighRes_Hero.jpg" style="
 width:100%;
 height:250px;
 object-fit:cover;
