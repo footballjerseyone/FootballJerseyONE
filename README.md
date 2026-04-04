@@ -40,9 +40,8 @@ nav a{
 }
 
 nav a:hover{
-  color:#fff;
+  color:#22c55e;
 }
-
 .search{
   background:#f1f5f9;
   color:#111;
@@ -250,27 +249,16 @@ setInterval(showPopup, Math.random()*8000 + 5000);
 <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
   <input class="search" placeholder="Suche..." oninput="searchAll(this.value)" style="padding:6px 10px;border-radius:8px;border:1px solid #ddd;" />
 
-  <a onclick="go('national')">🌍</a>
-  <a onclick="go('clubs')">🏟</a>
-  <a onclick="go('retro')">🕰</a>
-
+  <a onclick="go('national')">National</a>
+<a onclick="go('clubs')">Vereine</a>
+<a onclick="go('retro')">Retro</a>
   <span onclick="openCart()" style="cursor:pointer">
     🛒 <span id="cartCount">0</span>
   </span>
 </div>
 
 </nav>
-<div style="
-position:absolute;
-top:8px;
-left:8px;
-background:#ef4444;
-color:#fff;
-padding:3px 6px;
-border-radius:6px;
-font-size:12px;">
-Bestseller
-</div>
+
 <div class="container" id="app"></div>
 
 <div class="cartModal" id="cartModal">
