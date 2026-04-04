@@ -63,10 +63,10 @@ nav a:hover{
   gap:10px;
 }
 
-.sub{
-  font-size:1.3rem;
-  margin:20px 0 10px;
-  color:#94a3b8;
+.title img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
 }
 
 /* GRID */
@@ -76,12 +76,17 @@ nav a:hover{
   gap:12px;
 }
 /* CARD */
-<img width="534" height="596" alt="image" src="https://github.com/user-attachments/assets/946236e2-1641-49ba-aab4-c9d635f14c28" />
 
+
+
+.card{
+  transition:0.2s;
+  cursor:pointer;
+}
 
 .card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  transform:scale(1.05);
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
 .card img{
@@ -734,8 +739,17 @@ let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${
 app.innerHTML=`
 <div class='title'>
 <span class='back' onclick='back()'>⬅ Zurück</span>
+<img src="${homeImg}">
 ${name}
 </div>
+
+<img src="${homeImg}" style="
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:15px;
+margin-bottom:20px;
+">
 
 <div class='grid'>
 
