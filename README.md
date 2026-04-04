@@ -125,8 +125,15 @@ input, select{
 
 /* CART */
 .cartModal{
-  background:#ffffff;
-  color:#111;
+  position:fixed;
+  top:0;
+  right:0;
+  width:100%;
+  max-width:400px;
+  height:100%;
+  display:none;
+  flex-direction:column;
+  z-index:9999;
 }
 
 .cartHeader{
@@ -217,7 +224,24 @@ function showPopup(){
   const random = data[Math.floor(Math.random()*data.length)];
   const minutes = Math.floor(Math.random()*5)+1;
 
-  const flags = { ... };
+const flags = {
+  "Deutschland": "🇩🇪",
+  "Italien": "🇮🇹",
+  "Frankreich": "🇫🇷",
+  "England": "🏴",
+  "Spanien": "🇪🇸",
+  "Österreich": "🇦🇹",
+  "Schweiz": "🇨🇭",
+  "Niederlande": "🇳🇱",
+  "Tschechien": "🇨🇿",
+  "Kroatien": "🇭🇷",
+  "Argentinien": "🇦🇷",
+  "Brasilien": "🇧🇷",
+  "Türkei": "🇹🇷",
+  "VAE": "🇦🇪",
+  "Japan": "🇯🇵",
+  "USA": "🇺🇸"
+};
 
   const teams = ["Real Madrid","Barcelona","Bayern München","PSG","Liverpool","Juventus"];
   const randomTeam = teams[Math.floor(Math.random()*teams.length)];
@@ -242,8 +266,11 @@ function showPopup(){
   }, 4000);
 }
 
-setInterval(showPopup, Math.random()*8000 + 5000);
-</script>
+function loopPopup(){
+  showPopup();
+  setTimeout(loopPopup, Math.random()*8000 + 5000);
+}
+loopPopup();
 <nav>
 
 <div style="display:flex;align-items:center;gap:8px;">
@@ -273,7 +300,7 @@ setInterval(showPopup, Math.random()*8000 + 5000);
 <div id="total"></div>
 
 <input id="cust-name" placeholder="Dein Name" style="width:100%;margin:5px 0;">
-<input id="cust-email" placeholder="E-Mail" style="width:100%;margin:5px 0;">
+<input id="cust-email" required> placeholder="E-Mail" style="width:100%;margin:5px 0;">
 <input id="cust-address" placeholder="Adresse" style="width:100%;margin:5px 0;">
 
 <div id="paypal-button-container"></div>
@@ -342,6 +369,7 @@ if(existing){
 save();
 renderCart();
 openCart();
+  alert("Zum Warenkorb hinzugefügt!");
 }
 
 
@@ -661,7 +689,7 @@ ${bestsellers.map(name => {
 let img = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${name} jersey`;
 
 return `
-<div class='card' onclick="openTeam('${name}')">
+<div class='card' onclick="openTeam(${JSON.stringify(name)})">
 
 <div style="
 position:absolute;
@@ -709,7 +737,11 @@ return;
   
 if(h==='national'){
 app.innerHTML=Object.entries(continents).map(([c,list])=>`
-<div class='sub'>${c}</div>
+.sub{
+  font-size:1.4rem;
+  margin:20px 0 10px;
+  font-weight:600;
+}
 <div class='grid'>${list.map(code=>`
 <div class='card' onclick="openTeam('${countries[code]}')">
 <img class='flag' src='https://flagcdn.com/w80/${code}.png'/>
@@ -720,7 +752,11 @@ return;
 
 if(h==='clubs'){
 app.innerHTML=Object.entries(leagues).map(([l,t])=>`
-<div class='sub'>${l}</div>
+.sub{
+  font-size:1.4rem;
+  margin:20px 0 10px;
+  font-weight:600;
+}
 <div class='grid'>${t.map(x=>`<div class='card' onclick="openTeam('${x}')">${x}</div>`).join('')}</div>`).join('');
 return;
 }
@@ -759,10 +795,9 @@ margin-bottom:20px;
 
 <div style="font-size:18px;font-weight:700;">11.99€</div>
 
-<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
+<div style="color:#22c55e;font-size:13px;">
 ✔ Auf Lager
 </div>
-
 <div style="color:#ef4444;font-size:13px;font-weight:600;">
 ⚠ Nur noch 3 verfügbar
 </div></div>
