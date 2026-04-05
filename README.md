@@ -910,6 +910,7 @@ if(h==='retro'){
 app.innerHTML=retro.map(x=>`<div class='card' onclick="openTeam('${x}')">${x}</div>`).join('');
 return;
 }
+// ✅ RETRO FIX
 if(retro.includes(name)){
   let img = `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey')}`;
 
