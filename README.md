@@ -248,18 +248,24 @@ function changeQty(i, change){
   renderCart();
 }
   
-function save(){localStorage.setItem('cart',JSON.stringify(cart));document.getElementById('cartCount').innerText=cart.length;}
+function save(){
+  localStorage.setItem('cart',JSON.stringify(cart));
+
+  let count = cart.reduce((a,b)=>a + b.qty, 0);
+  document.getElementById('cartCount').innerText = count;
+}
 function add(n,p,img,size,qty,player,number){
 cart.push({n,p,img,size,qty,player,number});
 save();
 
-alert("✔ Zum Warenkorb hinzugefügt");
+console.log("Hinzugefügt");
 }
 function remove(i){cart.splice(i,1);save();renderCart();}
 function calc(){
 return cart.reduce((a,b)=>a+(b.p * b.qty),0)+(cart.length?SHIPPING:0);
 }
-let paypalLoaded = false;
+if(!paypalLoaded){
+paypalLoaded = true;}
 
 function openCart(){
 document.getElementById('cartModal').style.display='flex';
@@ -281,7 +287,15 @@ paypal.Buttons({
 
   onApprove: function(data, actions) {
     return actions.order.capture().then(function(details) {
-     let customer = {
+
+      if(!document.getElementById('cust-name').value ||
+   !document.getElementById('cust-email').value ||
+   !document.getElementById('cust-address').value){
+  alert("Bitte alle Felder ausfüllen");
+  return;
+}
+      
+    let customer = {
   name: document.getElementById('cust-name').value,
   email: document.getElementById('cust-email').value,
   address: document.getElementById('cust-address').value
@@ -309,7 +323,11 @@ function closeCart(){document.getElementById('cartModal').style.display='none';}
 
 function renderCart(){
 let b=document.getElementById('cartBody');
-if(!cart.length){b.innerHTML="Leer";return;}
+if(!cart.length){
+  b.innerHTML="Leer";
+  document.getElementById('total').innerHTML="";
+  return;
+}
 b.innerHTML=cart.map((c,i)=>`
 <div class='cartItem'>
 
@@ -502,7 +520,7 @@ Object.values(leagues).flat().forEach(t=>{if(t.toLowerCase().includes(q))r.push(
 Object.values(countries).forEach(c=>{if(c.toLowerCase().includes(q))r.push({n:c,t:"Nation"});});
 retro.forEach(x=>{if(x.toLowerCase().includes(q))r.push({n:x,t:"Retro"});});
 const app=document.getElementById('app');
-app.innerHTML=r.map(x=>`<div class='card' onclick="openTeam('${x.n}')">${x.n}<br><small>${x.t}</small></div>`).join('');
+app.innerHTML=r.map(x=>`<div class='card' onclick="openTeam('${encodeURIComponent(x.n)}')">${x.n}<br><small>${x.t}</small></div>`).join('');
 }
 
 function render(){
