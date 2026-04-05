@@ -1,4 +1,3 @@
-
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
@@ -221,6 +220,14 @@ span[onclick]:active {
 nav a:focus {
   outline: none;
   border: 2px solid #22c55e;
+}
+  .btn {
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 </style>
 </head>
@@ -659,15 +666,48 @@ const bestsellers = [
 
 app.innerHTML = `
 
-<!-- HERO -->
+<!-- HERO IMAGE FULL -->
 <div style="
-background:linear-gradient(135deg,#ffffff,#f1f5f9);
-color:#111;
-padding:30px;
+position:relative;
+height:400px;
 border-radius:20px;
+overflow:hidden;
 margin-bottom:25px;
-text-align:center;
 ">
+
+<img src="https://media.gq-magazin.de/photos/690b73094fa0fed19422f786/3:2/w_2562,h_1708,c_limit/WC26_Product_Shoot_16x9_HighRes_Hero.jpg"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(0.6);
+">
+
+<div style="
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+color:#fff;
+">
+
+<h1 style="font-size:2.5rem;">⚽ FootballJerseyONE</h1>
+
+<p style="margin-top:10px;font-size:1.2rem;">
+Die besten Fußballtrikots 2026 🔥
+</p>
+
+<button class="btn" onclick="go('clubs')" style="
+margin-top:20px;
+background:#22c55e;
+">
+Jetzt shoppen
+</button>
+
+</div>
+
+</div>
 <div style="
 display:flex;
 align-items:center;
