@@ -668,11 +668,34 @@ border-radius:20px;
 margin-bottom:25px;
 text-align:center;
 ">
+<div style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+flex-wrap:wrap;
+">
+
+<div>
 <h1 style="font-size:2rem;">⚽ FootballJerseyONE</h1>
 <p style="color:#555;margin-top:10px;">
 Die besten Fußballtrikots 2026 🔥
 </p>
 
+<button class="btn" onclick="go('clubs')" style="max-width:200px;margin-top:15px;">
+Jetzt shoppen
+</button>
+</div>
+
+<img src="https://media.gq-magazin.de/photos/690b73094fa0fed19422f786/3:2/w_2562,h_1708,c_limit/WC26_Product_Shoot_16x9_HighRes_Hero.jpg"
+style="
+width:100%;
+max-width:500px;
+border-radius:15px;
+object-fit:cover;
+">
+
+</div>
 <button class="btn" onclick="go('clubs')" style="max-width:200px;margin-top:15px;">
 Jetzt shoppen
 </button>
