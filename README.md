@@ -6,7 +6,7 @@
 <title>FootballJerseyONE</title>
 
 <script src="https://www.paypal.com/sdk/js?client-id=AVmx5KkGcuZr3ye1nLyNzvB5RhZXyrpnU8t71ZpFZyLyTO9Xt14jSULuXKjmPBNZw1kWigduGZTYXhii&currency=EUR"></script>
-let paypalLoaded = false;
+
 
 <style>
 *{
