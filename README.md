@@ -910,52 +910,7 @@ if(h==='retro'){
 app.innerHTML=retro.map(x=>`<div class='card' onclick="openTeam('${x}')">${x}</div>`).join('');
 return;
 }
-// ✅ RETRO FIX
-if(retro.includes(name)){
-  let img = `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey')}`;
 
-  app.innerHTML=`
-  <div class='title'>
-  <span class='back' onclick='back()'>⬅ Zurück</span>
-  ${name}
-  </div>
-
-  <div class='grid'>
-
-  <div class='card'>
-  <img src="${img}" />
-
-  <b>${name} Retro Trikot</b>
-
-  <div style="font-size:18px;font-weight:700;">11.99€</div>
-
-  <div style="color:#22c55e;">✔ Auf Lager</div>
-
-  <select id="size-retro">
-  <option>S</option><option>M</option><option>L</option><option>XL</option>
-  </select>
-
-  <input id="qty-retro" type="number" value="1" min="1">
-
-  <button class='btn' onclick="
-  add(
-  '${name} Retro',
-  11.99,
-  '${img}',
-  document.getElementById('size-retro').value,
-  parseInt(document.getElementById('qty-retro').value),
-  '',
-  ''
-  )">
-  🛒 Jetzt kaufen
-  </button>
-
-  </div>
-
-  </div>
-  `;
-  return;
-}
 if(h.startsWith('team-')){
 let name=decodeURIComponent(h.replace('team-',''));
 
@@ -1051,9 +1006,7 @@ parseInt(document.getElementById('qty-away').value),'','')">
 </div>
 `;
 }
-`;
-}
-}
+
 
 render();
 </script>
