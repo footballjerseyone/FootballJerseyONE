@@ -959,6 +959,52 @@ if(retro.includes(name)){
 if(h.startsWith('team-')){
 let name=decodeURIComponent(h.replace('team-',''));
 
+// ✅ RETRO PRODUKT (NUR 1 TRIKOT)
+if(retro.includes(name)){
+  let img = `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey')}`;
+
+  app.innerHTML=`
+  <div class='title'>
+    <span class='back' onclick='back()'>⬅ Zurück</span>
+    ${name}
+  </div>
+
+  <div class='grid'>
+    <div class='card'>
+      <img src="${img}" />
+
+      <b>${name} Retro Trikot</b>
+
+      <div style="font-size:18px;font-weight:700;">11.99€</div>
+
+      <div style="color:#22c55e;">✔ Auf Lager</div>
+
+      <select id="size-retro">
+        <option>S</option><option>M</option><option>L</option><option>XL</option>
+      </select>
+
+      <input id="qty-retro" type="number" value="1" min="1">
+
+      <button class='btn' onclick="
+      add(
+      '${name} Retro',
+      11.99,
+      '${img}',
+      document.getElementById('size-retro').value,
+      parseInt(document.getElementById('qty-retro').value),
+      '',
+      ''
+      )">
+      🛒 Jetzt kaufen
+      </button>
+
+    </div>
+  </div>
+  `;
+  return;
+}
+
+// ✅ NORMALE TEAMS (HEIM + AUSWÄRTS)
 let homeImg = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
 let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
 
@@ -972,83 +1018,39 @@ ${name}
 
 <div class='card'>
 <img src="${homeImg}" />
-<b style="font-size:14px;">${name} Heimtrikot 25/26</b>
-
+<b>${name} Heimtrikot 25/26</b>
 <div style="font-size:18px;font-weight:700;">11.99€</div>
-
-<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
-✔ Auf Lager
-</div>
-
-<div style="color:#ef4444;font-size:13px;font-weight:600;">
-⚠ Nur noch 3 verfügbar
-</div></div>
-
-<div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
-
 <select id="size-home">
 <option>S</option><option>M</option><option>L</option><option>XL</option>
 </select>
-
 <input id="qty-home" type="number" value="1" min="1">
-
-<input id="player-home" placeholder="Name">
-<input id="number-home" type="number" placeholder="Nr.">
-
 <button class='btn' onclick="
-add(
-'${name} Heimtrikot',
-11.99,
-'${homeImg}',
+add('${name} Heimtrikot',11.99,'${homeImg}',
 document.getElementById('size-home').value,
-parseInt(document.getElementById('qty-home').value),
-document.getElementById('player-home').value,
-document.getElementById('number-home').value
-)">
-🛒 Jetzt kaufen
+parseInt(document.getElementById('qty-home').value),'','')">
+🛒 Kaufen
 </button>
 </div>
 
 <div class='card'>
 <img src="${awayImg}" />
-<b style="font-size:14px;">${name} Auswärtstrikot 25/26</b>
-
+<b>${name} Auswärtstrikot 25/26</b>
 <div style="font-size:18px;font-weight:700;">11.99€</div>
-
-<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
-✔ Auf Lager
-</div>
-
-<div style="color:#ef4444;font-size:13px;font-weight:600;">
-⚠ Nur noch 3 verfügbar
-</div></div>
-
-<div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
-
 <select id="size-away">
 <option>S</option><option>M</option><option>L</option><option>XL</option>
 </select>
-
 <input id="qty-away" type="number" value="1" min="1">
-
-<input id="player-away" placeholder="Name">
-<input id="number-away" type="number" placeholder="Nr.">
-
 <button class='btn' onclick="
-add(
-'${name} Auswärtstrikot',
-11.99,
-'${awayImg}',
+add('${name} Auswärtstrikot',11.99,'${awayImg}',
 document.getElementById('size-away').value,
-parseInt(document.getElementById('qty-away').value),
-document.getElementById('player-away').value,
-document.getElementById('number-away').value
-)">
-🛒 Jetzt kaufen
+parseInt(document.getElementById('qty-away').value),'','')">
+🛒 Kaufen
 </button>
 </div>
 
 </div>
+`;
+}
 `;
 }
 }
