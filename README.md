@@ -17,46 +17,41 @@
 }
 
 body{
-  background:#0f172a;
-  color:#fff;
+  background:#ffffff;
+  color:#111;
 }
 
 /* NAVBAR */
 nav{
-  position:sticky;
-  top:0;
-  background:#020617;
-  padding:14px 20px;
+  background:#ffffff;
+  border-bottom:1px solid #e5e7eb;
+  padding:12px 15px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   flex-wrap:wrap;
-  z-index:100;
-  border-bottom:1px solid #1e293b;
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 
 nav a{
-  margin:0 8px;
-  cursor:pointer;
-  font-size:14px;
-  color:#cbd5f5;
+  color:#333;
 }
 
 nav a:hover{
-  color:#fff;
+  color:#22c55e;
 }
-
 .search{
-  padding:8px;
-  border-radius:8px;
-  border:none;
-  background:#1e293b;
-  color:#fff;
+  background:#f1f5f9;
+  color:#111;
 }
 
 /* CONTAINER */
 .container{
-  padding:20px;
+  padding:15px;
+  max-width:1200px;
+  margin:auto;
 }
 
 /* TITLES */
@@ -77,29 +72,21 @@ nav a:hover{
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:18px;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
 }
-
 /* CARD */
-.card{
-  background:#020617;
-  border-radius:18px;
-  padding:14px;
-  text-align:center;
-  cursor:pointer;
-  transition:0.3s;
-  border:1px solid #1e293b;
-}
+<img width="534" height="596" alt="image" src="https://github.com/user-attachments/assets/946236e2-1641-49ba-aab4-c9d635f14c28" />
+
 
 .card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.6);
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
 .card img{
   width:100%;
-  max-height:260px;
+  height:180px;
   object-fit:contain;
 }
 
@@ -107,18 +94,17 @@ nav a:hover{
 .btn{
   width:100%;
   padding:12px;
-  background:#22c55e;
+  background:#111;
   border:none;
   border-radius:10px;
   color:#fff;
-  font-weight:700;
+  font-weight:600;
   margin-top:10px;
   cursor:pointer;
   transition:0.2s;
 }
-
 .btn:hover{
-  background:#16a34a;
+  background:#333;
 }
 
 /* INPUTS */
@@ -127,22 +113,15 @@ input, select{
   padding:10px;
   margin-top:8px;
   border-radius:8px;
-  border:none;
-  background:#1e293b;
-  color:#fff;
+  border:1px solid #ddd;
+  background:#fff;
+  color:#111;
 }
 
 /* CART */
 .cartModal{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:#020617;
-  display:none;
-  flex-direction:column;
-  z-index:9999;
+  background:#ffffff;
+  color:#111;
 }
 
 .cartHeader{
@@ -153,13 +132,8 @@ input, select{
 }
 
 .cartItem{
-  display:flex;
-  gap:15px;
-  padding:12px;
-  border-radius:12px;
-  background:#020617;
-  border:1px solid #1e293b;
-  margin-bottom:12px;
+  background:#ffffff;
+  border:1px solid #e5e7eb;
 }
 
 .cartImg{
@@ -187,31 +161,104 @@ input, select{
   padding:15px;
   border-top:1px solid #1e293b;
 }
+
+  @media(max-width:600px){
+
+.title{
+  font-size:1.5rem;
+}
+
+.card img{
+  height:140px;
+}
+
+nav{
+  flex-direction:column;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.search{
+  width:100%;
+}
+
+}
+  
 </style>
 </head>
-<body>
 
+<body>
+<script>
+const data = [
+  {name:"Max", city:"Berlin", country:"Deutschland"},
+  {name:"Luca", city:"Mailand", country:"Italien"},
+  {name:"Noah", city:"Paris", country:"Frankreich"},
+  {name:"Oliver", city:"London", country:"England"},
+  {name:"Mateo", city:"Madrid", country:"Spanien"},
+  {name:"Elias", city:"Wien", country:"Österreich"},
+  {name:"Jonas", city:"Zürich", country:"Schweiz"},
+  {name:"Lucas", city:"Amsterdam", country:"Niederlande"},
+  {name:"Milan", city:"Prag", country:"Tschechien"},
+  {name:"Ivan", city:"Zagreb", country:"Kroatien"},
+  {name:"Leo", city:"Buenos Aires", country:"Argentinien"},
+  {name:"João", city:"Rio de Janeiro", country:"Brasilien"},
+  {name:"Ali", city:"Istanbul", country:"Türkei"},
+  {name:"Omar", city:"Dubai", country:"VAE"},
+  {name:"Kenji", city:"Tokio", country:"Japan"},
+  {name:"Ethan", city:"New York", country:"USA"}
+];
+
+function showPopup(){
+  const random = data[Math.floor(Math.random()*data.length)];
+  const minutes = Math.floor(Math.random()*5)+1;
+
+  const flags = { ... };
+
+  const teams = ["Real Madrid","Barcelona","Bayern München","PSG","Liverpool","Juventus"];
+  const randomTeam = teams[Math.floor(Math.random()*teams.length)];
+
+  const text = `${flags[random.country]} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
+
+  const popup = document.getElementById("popup");
+  popup.innerText = text;
+  popup.style.display = "block";
+
+  setTimeout(()=>{
+    popup.style.opacity = "1";
+    popup.style.transform = "translateY(0)";
+  }, 10);
+
+  setTimeout(()=>{
+    popup.style.opacity = "0";
+    popup.style.transform = "translateY(20px)";
+    setTimeout(()=>{
+      popup.style.display = "none";
+    }, 400);
+  }, 4000);
+}
+
+setInterval(showPopup, Math.random()*8000 + 5000);
+</script>
 <nav>
-<div style="display:flex;align-items:center;gap:8px;"><span>⚽</span><b>FootballJerseyONE</b></div>
-<div>
-<input class="search" placeholder="Suche Teams, Länder, Retro..." oninput="searchAll(this.value)" />
-<a onclick="go('national')">National</a>
+
+<div style="display:flex;align-items:center;gap:8px;">
+  <span>⚽</span>
+  <b>FootballJerseyONE</b>
+</div>
+
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+  <input class="search" placeholder="Suche..." oninput="searchAll(this.value)" style="padding:6px 10px;border-radius:8px;border:1px solid #ddd;" />
+
+  <a onclick="go('national')">National</a>
 <a onclick="go('clubs')">Vereine</a>
 <a onclick="go('retro')">Retro</a>
-<span onclick="openCart()" style="cursor:pointer">🛒 <span id="cartCount">0</span></span>
+  <span onclick="openCart()" style="cursor:pointer">
+    🛒 <span id="cartCount">0</span>
+  </span>
 </div>
+
 </nav>
-<div style="
-position:absolute;
-top:8px;
-left:8px;
-background:#ef4444;
-color:#fff;
-padding:3px 6px;
-border-radius:6px;
-font-size:12px;">
-Bestseller
-</div>
+
 <div class="container" id="app"></div>
 
 <div class="cartModal" id="cartModal">
@@ -231,9 +278,6 @@ Bestseller
 
 
 <script>
-<script>
-let paypalLoaded = false;   // 👈 HIER EINFÜGTEN (ganz oben)
-
 let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 const SHIPPING=4.99;
 
@@ -252,75 +296,99 @@ function changeQty(i, change){
 }
   
 function save(){
-  localStorage.setItem('cart',JSON.stringify(cart));
+  localStorage.setItem('cart', JSON.stringify(cart));
 
-  let count = cart.reduce((a,b)=>a + b.qty, 0);
+  const count = cart.reduce((a,b)=>a + b.qty, 0);
   document.getElementById('cartCount').innerText = count;
 }
 function add(n,p,img,size,qty,player,number){
-cart.push({n,p,img,size,qty,player,number});
-save();
 
-console.log("Hinzugefügt");
+// ❌ VALIDIERUNG
+if(!size){
+  alert("Bitte Größe auswählen");
+  return;
 }
+
+if(!qty || qty < 1){
+  alert("Ungültige Menge");
+  return;
+}
+
+// optional: Name nur wenn Nummer gesetzt
+if(number && !player){
+  alert("Bitte Namen zum Trikot eingeben");
+  return;
+}
+
+// ✅ Produkt zusammenführen
+let existing = cart.find(item =>
+  item.n === n &&
+  item.size === size &&
+  item.player === player &&
+  item.number === number
+);
+
+if(existing){
+  existing.qty += qty;
+}else{
+  cart.push({n,p,img,size,qty,player,number});
+}
+
+save();
+renderCart();
+openCart();
+}
+
+
 function remove(i){cart.splice(i,1);save();renderCart();}
 function calc(){
 return cart.reduce((a,b)=>a+(b.p * b.qty),0)+(cart.length?SHIPPING:0);
 }
-if(!paypalLoaded){
-paypalLoaded = true;}
+let paypalLoaded = false;
 
 function openCart(){
 document.getElementById('cartModal').style.display='flex';
 renderCart();
 
-let paypalLoaded = false;
+if(!paypalLoaded){
+paypalLoaded = true;
 
-function openCart(){
-  document.getElementById('cartModal').style.display='flex';
-  renderCart();
-
-  if(paypalLoaded) return;
-
-  paypalLoaded = true;
-
-  paypal.Buttons({
-    ...
-  }).render('#paypal-button-container');
-}
+paypal.Buttons({
+  createOrder: function(data, actions) {
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          value: calc().toFixed(2)
+        }
       }]
     });
-  ,
+  },
 
-  onApprove: function(data, actions) {
-    return actions.order.capture().then(function(details) {
+ onApprove: function(data, actions) {
 
-      if(!document.getElementById('cust-name').value ||
-   !document.getElementById('cust-email').value ||
-   !document.getElementById('cust-address').value){
-  alert("Bitte alle Felder ausfüllen");
+let name = document.getElementById('cust-name').value.trim();
+let email = document.getElementById('cust-email').value.trim();
+let address = document.getElementById('cust-address').value.trim();
+
+if(!name || !email || !address){
+  alert("Bitte alle Felder ausfüllen!");
   return;
 }
-      
-    let customer = {
-  name: document.getElementById('cust-name').value,
-  email: document.getElementById('cust-email').value,
-  address: document.getElementById('cust-address').value
-};
 
-console.log("BESTELLUNG:", {
-  customer: customer,
-  cart: cart,
-  total: calc()
+return actions.order.capture().then(function(details) {
+
+document.getElementById('cartBody').innerHTML = `
+<div style="padding:30px;text-align:center">
+<h2>🎉 Bestellung erfolgreich!</h2>
+<p>Danke ${name} ❤️</p>
+</div>
+`;
+
+cart = [];
+save();
+
 });
-
-alert("Danke für deine Bestellung, " + customer.name + "!");
-      cart = [];
-      save();
-      renderCart();
-      closeCart();
-    });
-  }
+}
 
 }).render('#paypal-button-container');
 
@@ -329,13 +397,15 @@ alert("Danke für deine Bestellung, " + customer.name + "!");
 function closeCart(){document.getElementById('cartModal').style.display='none';}
 
 function renderCart(){
-let b=document.getElementById('cartBody');
+let b = document.getElementById('cartBody');
+
 if(!cart.length){
-  b.innerHTML="Leer";
-  document.getElementById('total').innerHTML="";
+  b.innerHTML = "<p style='padding:20px'>🛒 Dein Warenkorb ist leer</p>";
+  document.getElementById('total').innerHTML = "";
   return;
 }
-b.innerHTML=cart.map((c,i)=>`
+
+b.innerHTML = cart.map((c,i)=>`
 <div class='cartItem'>
 
   <img src='${c.img}' class='cartImg'>
@@ -343,6 +413,8 @@ b.innerHTML=cart.map((c,i)=>`
   <div class='cartInfo'>
     <b>${c.n}</b><br>
     Größe: ${c.size}<br>
+    ${c.player ? `Name: ${c.player}<br>` : ""}
+    ${c.number ? `Nr: ${c.number}<br>` : ""}
 
     <div class='qtyBox'>
       <button onclick='changeQty(${i}, -1)'>-</button>
@@ -353,23 +425,22 @@ b.innerHTML=cart.map((c,i)=>`
     <b>${(c.p * c.qty).toFixed(2)}€</b>
   </div>
 
-  <button class='removeBtn' onclick='remove(${i})'>✖</button>
+  <button onclick='remove(${i})'>✖</button>
 
 </div>
 `).join('');
 
- 
-
 let subtotal = cart.reduce((a,b)=>a+(b.p * b.qty),0);
-let shipping = cart.length ? SHIPPING : 0;
+let totalQty = cart.reduce((a,b)=>a + b.qty,0);
+let shipping = totalQty ? SHIPPING : 0;
 let total = subtotal + shipping;
 
 document.getElementById('total').innerHTML = `
+Artikel: ${totalQty}<br>
 Zwischensumme: ${subtotal.toFixed(2)}€ <br>
 Versand: ${shipping.toFixed(2)}€ <br>
 <b>Gesamt: ${total.toFixed(2)}€</b>
 `;
-
 }
 
 // 🌍 COUNTRIES EXPANDED
@@ -527,15 +598,110 @@ Object.values(leagues).flat().forEach(t=>{if(t.toLowerCase().includes(q))r.push(
 Object.values(countries).forEach(c=>{if(c.toLowerCase().includes(q))r.push({n:c,t:"Nation"});});
 retro.forEach(x=>{if(x.toLowerCase().includes(q))r.push({n:x,t:"Retro"});});
 const app=document.getElementById('app');
-app.innerHTML=r.map(x=>`<div class='card' onclick="openTeam('${encodeURIComponent(x.n)}')">${x.n}<br><small>${x.t}</small></div>`).join('');
+app.innerHTML=r.map(x=>`<div class='card' onclick="openTeam('${x.n}')">${x.n}<br><small>${x.t}</small></div>`).join('');
 }
 
 function render(){
-let count = cart.reduce((a,b)=>a + b.qty, 0);
-document.getElementById('cartCount').innerText = count;
+save();
 const app=document.getElementById('app');
-const h=location.hash.replace('#','')||'clubs';
+const h=location.hash.replace('#','')||'home';
 
+if(h==='home'){
+
+const bestsellers = [
+"PSG",
+"Real Madrid",
+"Frankreich",
+"Deutschland",
+"Liverpool",
+"Barcelona",
+"Bayern München",
+"Juventus"
+];
+
+app.innerHTML = `
+
+<!-- HERO -->
+<div style="
+background:linear-gradient(135deg,#ffffff,#f1f5f9);
+color:#111;
+padding:30px;
+border-radius:20px;
+margin-bottom:25px;
+text-align:center;
+">
+<h1 style="font-size:2rem;">⚽ FootballJerseyONE</h1>
+<p style="color:#555;margin-top:10px;">
+Die besten Fußballtrikots 2026 🔥
+</p>
+
+<button class="btn" onclick="go('clubs')" style="max-width:200px;margin-top:15px;">
+Jetzt shoppen
+</button>
+</div>
+
+<!-- TRUST -->
+<div style="display:flex;gap:15px;flex-wrap:wrap;margin-bottom:20px;">
+<div class="card">🚚 Schneller Versand</div>
+<div class="card">💳 Sicher bezahlen</div>
+<div class="card">⭐ Top Qualität</div>
+</div>
+
+<!-- BESTSELLER -->
+<div class='title'>🔥 Bestseller</div>
+
+<div class='grid'>
+${bestsellers.map(name => {
+
+let img = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${name} jersey`;
+
+return `
+<div class='card' onclick="openTeam('${name}')">
+
+<div style="
+position:absolute;
+background:#ef4444;
+padding:4px 8px;
+border-radius:6px;
+font-size:12px;">
+Bestseller
+</div>
+
+<img src="${img}" />
+
+<b>${name}</b>
+
+<div style="color:#22c55e;font-size:13px;">✔ Auf Lager</div>
+<div style="color:#ef4444;font-size:12px;">⚠ Nur noch wenige!</div>
+
+<div style="font-weight:700;margin-top:5px;">11.99€</div>
+
+<button class='btn'>Jetzt ansehen</button>
+
+</div>
+`;
+
+}).join('')}
+</div>
+
+<!-- CTA -->
+<div style="
+margin-top:30px;
+padding:20px;
+background:#020617;
+border-radius:15px;
+text-align:center;
+border:1px solid #1e293b;
+">
+<h2>🔥 Verpasse keine Angebote</h2>
+<p style="color:#94a3b8;">Neue Trikots jede Woche</p>
+</div>
+
+`;
+
+return;
+}
+  
 if(h==='national'){
 app.innerHTML=Object.entries(continents).map(([c,list])=>`
 <div class='sub'>${c}</div>
@@ -577,9 +743,15 @@ ${name}
 <img src="${homeImg}" />
 <b style="font-size:14px;">${name} Heimtrikot 25/26</b>
 
-<div style="font-size:18px;font-weight:700;">29.99€</div>
+<div style="font-size:18px;font-weight:700;">11.99€</div>
 
-<div style="color:#16a34a;font-size:13px;">✔ Auf Lager</div>
+<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
+✔ Auf Lager
+</div>
+
+<div style="color:#ef4444;font-size:13px;font-weight:600;">
+⚠ Nur noch 3 verfügbar
+</div></div>
 
 <div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
 
@@ -595,7 +767,7 @@ ${name}
 <button class='btn' onclick="
 add(
 '${name} Heimtrikot',
-29.99,
+11.99,
 '${homeImg}',
 document.getElementById('size-home').value,
 parseInt(document.getElementById('qty-home').value),
@@ -610,9 +782,15 @@ document.getElementById('number-home').value
 <img src="${awayImg}" />
 <b style="font-size:14px;">${name} Auswärtstrikot 25/26</b>
 
-<div style="font-size:18px;font-weight:700;">29.99€</div>
+<div style="font-size:18px;font-weight:700;">11.99€</div>
 
-<div style="color:#16a34a;font-size:13px;">✔ Auf Lager</div>
+<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
+✔ Auf Lager
+</div>
+
+<div style="color:#ef4444;font-size:13px;font-weight:600;">
+⚠ Nur noch 3 verfügbar
+</div></div>
 
 <div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
 
@@ -628,7 +806,7 @@ document.getElementById('number-home').value
 <button class='btn' onclick="
 add(
 '${name} Auswärtstrikot',
-29.99,
+11.99,
 '${awayImg}',
 document.getElementById('size-away').value,
 parseInt(document.getElementById('qty-away').value),
@@ -646,5 +824,20 @@ document.getElementById('number-away').value
 
 render();
 </script>
+<div id="popup" style="
+position:fixed;
+bottom:20px;
+left:20px;
+background:#020617;
+color:#fff;
+padding:12px 16px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+opacity:0;
+transform:translateY(20px);
+transition:0.4s;
+z-index:99999;
+font-size:14px;
+"></div>
 </body>
 </html>
