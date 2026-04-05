@@ -290,7 +290,7 @@ function openCart(){
 }
       }]
     });
-  },
+  ,
 
   onApprove: function(data, actions) {
     return actions.order.capture().then(function(details) {
