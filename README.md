@@ -6,7 +6,7 @@
 <title>FootballJerseyONE</title>
 
 <script src="https://www.paypal.com/sdk/js?client-id=AVmx5KkGcuZr3ye1nLyNzvB5RhZXyrpnU8t71ZpFZyLyTO9Xt14jSULuXKjmPBNZw1kWigduGZTYXhii&currency=EUR"></script>
-
+let paypalLoaded = false;
 
 <style>
 *{
@@ -231,6 +231,9 @@ Bestseller
 
 
 <script>
+<script>
+let paypalLoaded = false;   // 👈 HIER EINFÜGTEN (ganz oben)
+
 let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 const SHIPPING=4.99;
 
@@ -271,16 +274,20 @@ function openCart(){
 document.getElementById('cartModal').style.display='flex';
 renderCart();
 
-if(!paypalLoaded){
-paypalLoaded = true;
+let paypalLoaded = false;
 
-paypal.Buttons({
-  createOrder: function(data, actions) {
-    return actions.order.create({
-      purchase_units: [{
-        amount: {
-          value: calc().toFixed(2)
-        }
+function openCart(){
+  document.getElementById('cartModal').style.display='flex';
+  renderCart();
+
+  if(paypalLoaded) return;
+
+  paypalLoaded = true;
+
+  paypal.Buttons({
+    ...
+  }).render('#paypal-button-container');
+}
       }]
     });
   },
@@ -524,7 +531,8 @@ app.innerHTML=r.map(x=>`<div class='card' onclick="openTeam('${encodeURIComponen
 }
 
 function render(){
-document.getElementById('cartCount').innerText=cart.length;
+let count = cart.reduce((a,b)=>a + b.qty, 0);
+document.getElementById('cartCount').innerText = count;
 const app=document.getElementById('app');
 const h=location.hash.replace('#','')||'clubs';
 
