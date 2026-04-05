@@ -183,7 +183,45 @@ nav{
 }
 
 }
-  
+  /* CLICK FEEDBACK */
+.card,
+.btn,
+nav a,
+.back,
+.cartItem button,
+span[onclick] {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  border-radius: 12px;
+}
+
+.card:hover,
+.btn:hover,
+nav a:hover,
+.back:hover,
+.cartItem button:hover,
+span[onclick]:hover {
+  border: 2px solid #22c55e;
+  background: rgba(34,197,94,0.08);
+}
+
+.card:active,
+.btn:active,
+nav a:active,
+.back:active,
+.cartItem button:active,
+span[onclick]:active {
+  transform: scale(0.97);
+  border: 2px solid #16a34a;
+}
+
+.card:focus,
+.btn:focus,
+nav a:focus {
+  outline: none;
+  border: 2px solid #22c55e;
+}
 </style>
 </head>
 
