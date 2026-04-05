@@ -229,6 +229,74 @@ nav a:focus {
   transform: scale(1.05);
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
+  /* CART MODERN */
+.cartModal{
+  position:fixed;
+  top:0;
+  right:0;
+  width:100%;
+  max-width:400px;
+  height:100%;
+  background:#fff;
+  box-shadow:-10px 0 30px rgba(0,0,0,0.2);
+  display:none;
+  flex-direction:column;
+  z-index:9999;
+}
+
+.cartHeader{
+  font-size:18px;
+  font-weight:700;
+}
+
+.cartBody{
+  flex:1;
+  overflow-y:auto;
+  padding:10px;
+}
+
+/* ITEM */
+.cartItem{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  border-radius:12px;
+  margin-bottom:10px;
+}
+
+.cartInfo{
+  flex:1;
+  font-size:14px;
+}
+
+.cartItem button{
+  background:#ef4444;
+  border:none;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:6px;
+}
+
+/* TOTAL BOX */
+.checkoutBox{
+  background:#f8fafc;
+  border-top:1px solid #e5e7eb;
+}
+
+#total{
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+/* INPUTS schöner */
+.checkoutBox input{
+  margin-top:6px;
+}
+
+/* PAYPAL BUTTON ABSTAND */
+#paypal-button-container{
+  margin-top:10px;
+}
 </style>
 </head>
 
@@ -445,7 +513,7 @@ function renderCart(){
 let b = document.getElementById('cartBody');
 
 if(!cart.length){
-  b.innerHTML = "<p style='padding:20px'>🛒 Dein Warenkorb ist leer</p>";
+  b.innerHTML = "<p style='padding:20px;text-align:center'>🛒 Dein Warenkorb ist leer</p>";
   document.getElementById('total').innerHTML = "";
   return;
 }
@@ -458,11 +526,12 @@ b.innerHTML = cart.map((c,i)=>`
   <div class='cartInfo'>
     <b>${c.n}</b><br>
     Größe: ${c.size}<br>
-    ${c.player ? `Name: ${c.player}<br>` : ""}
-    ${c.number ? `Nr: ${c.number}<br>` : ""}
+
+    ${c.player ? `👤 ${c.player}<br>` : ""}
+    ${c.number ? `🔢 ${c.number}<br>` : ""}
 
     <div class='qtyBox'>
-      <button onclick='changeQty(${i}, -1)'>-</button>
+      <button onclick='changeQty(${i}, -1)'>−</button>
       <span>${c.qty}</span>
       <button onclick='changeQty(${i}, 1)'>+</button>
     </div>
@@ -481,13 +550,13 @@ let shipping = totalQty ? SHIPPING : 0;
 let total = subtotal + shipping;
 
 document.getElementById('total').innerHTML = `
-Artikel: ${totalQty}<br>
-Zwischensumme: ${subtotal.toFixed(2)}€ <br>
-Versand: ${shipping.toFixed(2)}€ <br>
-<b>Gesamt: ${total.toFixed(2)}€</b>
+<b>Artikel:</b> ${totalQty}<br>
+<b>Zwischensumme:</b> ${subtotal.toFixed(2)}€<br>
+<b>Versand:</b> ${shipping.toFixed(2)}€<br>
+<hr style="margin:10px 0">
+<b style="font-size:18px;">Gesamt: ${total.toFixed(2)}€</b>
 `;
 }
-
 // 🌍 COUNTRIES EXPANDED
 const countries={
 de:"Deutschland",fr:"Frankreich",es:"Spanien",gb:"England",it:"Italien",pt:"Portugal",nl:"Niederlande",be:"Belgien",ch:"Schweiz",at:"Österreich",
