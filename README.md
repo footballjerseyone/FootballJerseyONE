@@ -780,7 +780,7 @@ const teamImages = {
  "Frankreich 2006": "LINK"
 };
 
-};
+
   
 function go(p){location.hash=p;render();}
 window.onhashchange=render;
@@ -891,127 +891,7 @@ return;
 if(h.startsWith('team-')){
  let name = decodeURIComponent(h.replace('team-',''));
 
- // ✅ RETRO PRODUKTE (NUR 1 TRIKOT)
- if(retro.includes(name)){
-   let img = retroImages[name] || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey')}`;
 
-   app.innerHTML = `
-   <div class='title'>
-     <span class='back' onclick='back()'>⬅ Zurück</span> ${name}
-   </div>
-
-   <div class='grid'>
-     <div class='card'>
-       <img src="${img}" />
-       <b>${name} Retro Trikot</b>
-
-       <div style="text-decoration:line-through;color:#999;">79.99€</div>
-       <div style="font-weight:700;">11.99€</div>
-
-       <select id="size-retro">
-         <option value="">Größe wählen</option>
-         <option>S</option>
-         <option>M</option>
-         <option>L</option>
-         <option>XL</option>
-       </select>
-
-       <input id="qty-retro" type="number" value="1" min="1">
-
-       <button class='btn' onclick="
-         add(
-           '${name} Retro',
-           11.99,
-           '${img}',
-           document.getElementById('size-retro').value,
-           parseInt(document.getElementById('qty-retro').value),
-           '',
-           ''
-         )
-       ">
-         🛒 Jetzt kaufen
-       </button>
-     </div>
-   </div>
-   `;
-   return;
- }
-
- // ✅ NORMALE TEAMS (WICHTIG: DAS MUSS DRIN BLEIBEN)
- let homeImg = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
- let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
-
- app.innerHTML = `
- <div class='title'>
-   <span class='back' onclick='back()'>⬅ Zurück</span> ${name}
- </div>
-
- <div class='grid'>
-
- <div class='card'>
-   <img src="${homeImg}" />
-   <b>${name} Heimtrikot</b>
-   <div>11.99€</div>
-
-   <select id="size-home-${name}">
-     <option value="">Größe wählen</option>
-     <option>S</option>
-     <option>M</option>
-     <option>L</option>
-     <option>XL</option>
-   </select>
-
-   <input id="qty-home" type="number" value="1" min="1">
-
-   <button class='btn' onclick="
-     add(
-       '${name} Heimtrikot',
-       11.99,
-       '${homeImg}',
-       document.getElementById('size-home-${name}').value
-       parseInt(document.getElementById('qty-home').value),
-       '',
-       ''
-     )
-   ">
-     🛒 Jetzt kaufen
-   </button>
- </div>
-
- <div class='card'>
-   <img src="${awayImg}" />
-   <b>${name} Auswärtstrikot</b>
-   <div>11.99€</div>
-
-   <select id="size-away">
-     <option value="">Größe wählen</option>
-     <option>S</option>
-     <option>M</option>
-     <option>L</option>
-     <option>XL</option>
-   </select>
-
-   <input id="qty-away" type="number" value="1" min="1">
-
-   <button class='btn' onclick="
-     add(
-       '${name} Auswärtstrikot',
-       11.99,
-       '${awayImg}',
-       document.getElementById('size-away').value,
-       parseInt(document.getElementById('qty-away').value),
-       '',
-       ''
-     )
-   ">
-     🛒 Jetzt kaufen
-   </button>
- </div>
-
- </div>
- `;
-}
- // ✅ FALL 2: NORMALE TEAMS (DEIN ALTER CODE BLEIBT)
  
 
 let homeImg = teamImages[name]?.home || "https://via.placeholder.com/300x200";
@@ -1066,7 +946,7 @@ add(
 '${name} Heimtrikot',
 11.99,
 '${homeImg}',
-document.getElementById('size-home-${name}').value
+document.getElementById('size-home-${name}').value,
 parseInt(document.getElementById('qty-home').value),
 document.getElementById('player-home').value,
 document.getElementById('number-home').value
