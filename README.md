@@ -354,7 +354,7 @@ function showPopup(){
   }, 4000);
 }
 
-setInterval(showPopup, Math.random()*8000 + 5000);
+
 </script>
 <nav>
 
@@ -776,22 +776,16 @@ return `
 
 </div>
 `;
-
+}).join('')}
 
 
 
 
 <!-- CTA -->
-<div style="
-margin-top:30px;
-padding:20px;
-background:#020617;
-border-radius:15px;
-text-align:center;
-border:1px solid #1e293b;
-">
-<h2>🔥 Verpasse keine Angebote</h2>
-<p style="color:#94a3b8;">Neue Trikots jede Woche</p>
+
+<div style="margin-top:30px; padding:20px; background:#020617; border-radius:15px; text-align:center;">
+  <h2>🔥 Verpasse keine Angebote</h2>
+  <p style="color:#94a3b8;">Neue Trikots jede Woche</p>
 </div>
 
 `;
