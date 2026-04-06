@@ -9,6 +9,29 @@
 
 
 <style>
+
+  .logoBox{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  position:relative;
+}
+
+.logoImg{
+  width:70px;
+  height:50px;
+  transform:rotate(-8deg);
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+  transform:rotate(-10deg); /* 👉 diagonal */
+  transition:0.3s;
+}
+
+.logoImg:hover{
+  transform:rotate(0deg) scale(1.1);
+}
+  
 *{
   margin:0;
   padding:0;
@@ -241,9 +264,10 @@ setInterval(showPopup, Math.random()*8000 + 5000);
 </script>
 <nav>
 
-<div style="display:flex;align-items:center;gap:8px;">
+<div class="logoBox">
   <span>⚽</span>
   <b>FootballJerseyONE</b>
+  <img src="https://media.gq-magazin.de/photos/690b73094fa0fed19422f786/3:2/w_2562,h_1708,c_limit/WC26_Product_Shoot_16x9_HighRes_Hero.jpg" class="logoImg">
 </div>
 
 <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
