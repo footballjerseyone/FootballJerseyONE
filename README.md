@@ -760,7 +760,7 @@ const teamImages = {
   "Besiktas": { home: "https://www.11teamsports.com/media/09/5b/f8/1757948177/adidas-besiktas-istanbul-trikot-home-25-26-weiss-jd1418-fan-shop-front.png", away: "https://www.11teamsports.com/media/cc/ae/79/1757947959/adidas-besiktas-istanbul-trikot-away-25-26-schwarz-jd1416-fan-shop-front.png" },
   "Trabzonspor": { home: "https://aad216.a-cdn.akinoncloud.com/products/2025/07/23/30424056/01655b97-1c5e-4bb5-a171-05def73cb15a_size2010x2010_cropCenter.jpg", away: "https://cdn.footballkitarchive.com/2025/08/25/ITWMca32Vd2e29j.jpg" }
 
-
+};
   const retroImages = {
  "Deutschland 2014": "LINK",
  "Manchester United 2008": "LINK",
@@ -968,7 +968,7 @@ if(h.startsWith('team-')){
        '${name} Heimtrikot',
        11.99,
        '${homeImg}',
-       document.getElementById(`size-home-${name}`).value,
+       document.getElementById('size-home-${name}').value
        parseInt(document.getElementById('qty-home').value),
        '',
        ''
@@ -1012,8 +1012,7 @@ if(h.startsWith('team-')){
  `;
 }
  // ✅ FALL 2: NORMALE TEAMS (DEIN ALTER CODE BLEIBT)
- let homeImg = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
- let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
+ 
 
 let homeImg = teamImages[name]?.home || "https://via.placeholder.com/300x200";
 let awayImg = teamImages[name]?.away || "https://via.placeholder.com/300x200";
@@ -1067,7 +1066,7 @@ add(
 '${name} Heimtrikot',
 11.99,
 '${homeImg}',
-document.getElementById(`size-home-${name}`).value,
+document.getElementById('size-home-${name}').value
 parseInt(document.getElementById('qty-home').value),
 document.getElementById('player-home').value,
 document.getElementById('number-home').value
@@ -1133,7 +1132,8 @@ document.getElementById('number-away').value
 }
 
 render();
-  setInterval(showPopup, 6000);
+  showPopup();
+setInterval(showPopup, 6000);
 </script>
 <div id="popup" style="
 position:fixed;
