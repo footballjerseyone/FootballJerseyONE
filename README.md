@@ -75,8 +75,13 @@ nav a:hover{
   gap:12px;
 }
 /* CARD */
-<img width="534" height="596" alt="image" src="https://github.com/user-attachments/assets/946236e2-1641-49ba-aab4-c9d635f14c28" />
-
+.card{
+  background:#fff;
+  padding:10px;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  position:relative;
+}
 
 .card:hover{
   transform:translateY(-4px);
@@ -221,9 +226,7 @@ nav a:focus {
   outline: none;
   border: 2px solid #22c55e;
 }
-  .btn {
-  transition: 0.3s;
-}
+ 
 
 .btn:hover {
   transform: scale(1.05);
@@ -325,12 +328,29 @@ function showPopup(){
   const random = data[Math.floor(Math.random()*data.length)];
   const minutes = Math.floor(Math.random()*5)+1;
 
-  const flags = { ... };
+  const flags = {
+  "Deutschland":"🇩🇪",
+  "Italien":"🇮🇹",
+  "Frankreich":"🇫🇷",
+  "England":"🇬🇧",
+  "Spanien":"🇪🇸",
+  "Österreich":"🇦🇹",
+  "Schweiz":"🇨🇭",
+  "Niederlande":"🇳🇱",
+  "Tschechien":"🇨🇿",
+  "Kroatien":"🇭🇷",
+  "Argentinien":"🇦🇷",
+  "Brasilien":"🇧🇷",
+  "Türkei":"🇹🇷",
+  "VAE":"🇦🇪",
+  "Japan":"🇯🇵",
+  "USA":"🇺🇸"
+};
 
   const teams = ["Real Madrid","Barcelona","Bayern München","PSG","Liverpool","Juventus"];
   const randomTeam = teams[Math.floor(Math.random()*teams.length)];
 
-  const text = `${flags[random.country]} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
+  const text = `${flags[random.country] || "🌍"} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
 
   const popup = document.getElementById("popup");
   popup.innerText = text;
@@ -350,7 +370,11 @@ function showPopup(){
   }, 4000);
 }
 
-setInterval(showPopup, Math.random()*8000 + 5000);
+function loopPopup(){
+  showPopup();
+  setTimeout(loopPopup, Math.random()*8000 + 5000);
+}
+loopPopup();
 </script>
 <nav>
 
@@ -793,24 +817,6 @@ Jetzt shoppen
 </div>
 
 </div>
-<div style="
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:20px;
-flex-wrap:wrap;
-">
-
-<div>
-<h1 style="font-size:2rem;">⚽ FootballJerseyONE</h1>
-<p style="color:#555;margin-top:10px;">
-Die besten Fußballtrikots 2026 🔥
-</p>
-
-<button class="btn" onclick="go('clubs')" style="max-width:200px;margin-top:15px;">
-Jetzt shoppen
-</button>
-</div>
 
 <img src="https://media.gq-magazin.de/photos/690b73094fa0fed19422f786/3:2/w_2562,h_1708,c_limit/WC26_Product_Shoot_16x9_HighRes_Hero.jpg"
 style="
@@ -960,9 +966,8 @@ if(retro.includes(name)){
 }
 
 // ✅ NORMALE TEAMS (HEIM + AUSWÄRTS)
-let homeImg = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
-let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
-
+let homeImg = teamImages[name]?.home || "https://via.placeholder.com/300x200?text=Kein+Bild";
+let awayImg = teamImages[name]?.away || "https://via.placeholder.com/300x200?text=Kein+Bild";
 app.innerHTML=`
 <div class='title'>
 <span class='back' onclick='back()'>⬅ Zurück</span>
