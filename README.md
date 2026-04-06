@@ -514,16 +514,18 @@ paypal.Buttons({
     });
   },
 
- onApprove: function(data, actions) {
+onApprove: function(data, actions) {
+
+let name = document.getElementById('cust-name').value.trim();
+let email = document.getElementById('cust-email').value.trim();
+let address = document.getElementById('cust-address').value.trim();
+
 console.log({
   name,
   email,
   address,
   cart
 });
-let name = document.getElementById('cust-name').value.trim();
-let email = document.getElementById('cust-email').value.trim();
-let address = document.getElementById('cust-address').value.trim();
 
 if(!name || !email || !address){
  showToast("Bitte alle Felder ausfüllen!");
@@ -760,7 +762,8 @@ function render(){
 save();
 const app=document.getElementById('app');
 const h=location.hash.replace('#','')||'home';
-if(h==='impressum'){ app.innerHTML= <div class='title'>Impressum</div> <p> Lionel Eiloot<br> Königsallee 27<br> 40212 Düsseldorf<br> Deutschland<br><br> E-Mail: support@footballjerseyone.com </p> ; return; } if(h==='datenschutz'){ app.innerHTML= <div class='title'>Datenschutz</div> <p> Wir speichern deine Daten nur zur Bestellabwicklung. </p> ; return; } if(h==='widerruf'){ app.innerHTML= <div class='title'>Widerrufsrecht</div> <p> Du hast 14 Tage Zeit deine Bestellung zu widerrufen nur wenn es nicht Beschädigt ist, wir haften nicht wenn dein Paket nicht angekommen ist. </p> ; return; }
+if(h==='impressum'){ app.innerHTML= ` <div class='title'>Impressum</div> <p> Lionel Eiloot<br> Königsallee 27<br> 40212 Düsseldorf<br> Deutschland<br><br> E-Mail: support@footballjerseyone.com </p> ` ; return; } if(h==='datenschutz'){ app.innerHTML= ` <div class='title'>Datenschutz</div> <p> Wir speichern deine Daten nur zur Bestellabwicklung. </p> ` ; return; } if(h==='widerruf'){ app.innerHTML= ` <div class='title'>Widerrufsrecht</div> <p> Du hast 14 Tage Zeit deine Bestellung zu widerrufen nur wenn es nicht Beschädigt ist, wir haften nicht wenn dein Paket nicht angekommen ist. </p> ` ; return; }
+
 if(h==='home'){
 
 const bestsellers = [
@@ -813,12 +816,8 @@ return `
 
 </div>
 `;
-}).join('')} `;
-
-
-
-
-// CTA
+}).join('')} 
+</div>
 
 <div style="margin-top:30px; padding:20px; background:#020617; border-radius:15px; text-align:center;">
   <h2>🔥 Verpasse keine Angebote</h2>
@@ -826,7 +825,6 @@ return `
 </div>
 
 `;
-
 return;
 }
   
@@ -881,7 +879,7 @@ ${name}
 
 <div style="color:#ef4444;font-size:13px;font-weight:600;">
 ⚠ Nur noch 3 verfügbar
-</div></div>
+</div>
 
 <div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
 <div style="font-size:12px;color:#16a34a;">
@@ -932,7 +930,7 @@ document.getElementById('number-home').value
 
 <div style="color:#ef4444;font-size:13px;font-weight:600;">
 ⚠ Nur noch 3 verfügbar
-</div></div>
+</div>
 
 <div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
 <div style="font-size:12px;color:#16a34a;">
