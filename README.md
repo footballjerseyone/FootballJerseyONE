@@ -636,7 +636,24 @@ const leagues={
 "Süper Lig":["Galatasaray","Fenerbahçe","Besiktas","Trabzonspor"]
 };
 
-const retro=["Deutschland 1990","Brasilien 2002","Frankreich 1998","Italien 2006"];
+const retro = [
+ "Deutschland 2014",
+ "Manchester United 2008",
+ "Manchester United 2020",
+ "Manchester United 2021",
+ "Real Madrid 2012",
+ "Real Madrid 2013",
+ "Real Madrid 2014",
+ "Real Madrid 2015",
+ "Real Madrid 2016",
+ "Real Madrid 2017",
+ "Real Madrid 2018",
+ "Brasilien 2002",
+ "AC Milan 2006",
+ "FC Barcelona 2015",
+ "Frankreich 1998",
+ "Frankreich 2006"
+];
 
 // 🖼️ BILDER FÜR ALLE TEAMS (HIER NUR LINKS ÄNDERN)
 const teamImages = {
@@ -742,6 +759,26 @@ const teamImages = {
   "Fenerbahce": { home: "https://intersport-de.imgdn.net/fsi/server?type=image&effects=Pad(cc,ffffff),Matte(FFFFFF)&width=1200&height=1200&source=marketplace2025%2Ftradebyte%2F3801%2F10815659-f7b3835000144.jpg", away: "https://intersport-de.imgdn.net/fsi/server?type=image&effects=Pad(cc,ffffff),Matte(FFFFFF)&width=1200&height=1200&source=marketplace2025%2Ftradebyte%2F3801%2F10815671-c826642450805.jpg" },
   "Besiktas": { home: "https://www.11teamsports.com/media/09/5b/f8/1757948177/adidas-besiktas-istanbul-trikot-home-25-26-weiss-jd1418-fan-shop-front.png", away: "https://www.11teamsports.com/media/cc/ae/79/1757947959/adidas-besiktas-istanbul-trikot-away-25-26-schwarz-jd1416-fan-shop-front.png" },
   "Trabzonspor": { home: "https://aad216.a-cdn.akinoncloud.com/products/2025/07/23/30424056/01655b97-1c5e-4bb5-a171-05def73cb15a_size2010x2010_cropCenter.jpg", away: "https://cdn.footballkitarchive.com/2025/08/25/ITWMca32Vd2e29j.jpg" }
+
+
+  const retroImages = {
+ "Deutschland 2014": "LINK",
+ "Manchester United 2008": "LINK",
+ "Manchester United 2020": "LINK",
+ "Manchester United 2021": "LINK",
+ "Real Madrid 2012": "LINK",
+ "Real Madrid 2013": "LINK",
+ "Real Madrid 2014": "LINK",
+ "Real Madrid 2015": "LINK",
+ "Real Madrid 2016": "LINK",
+ "Real Madrid 2017": "LINK",
+ "Real Madrid 2018": "LINK",
+ "Brasilien 2002": "LINK",
+ "AC Milan 2006": "LINK",
+ "FC Barcelona 2015": "LINK",
+ "Frankreich 1998": "LINK",
+ "Frankreich 2006": "LINK"
+};
 
 };
   
@@ -852,11 +889,62 @@ return;
 }
 
 if(h.startsWith('team-')){
-let name=decodeURIComponent(h.replace('team-',''));
+ let name = decodeURIComponent(h.replace('team-',''));
 
-let homeImg = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
-let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
+ // ✅ FALL 1: RETRO PRODUKT
+ if(retro.includes(name)){
+   let img = retroImages[name] || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey')}`;
 
+   app.innerHTML = `
+   <div class='title'>
+     <span class='back' onclick='back()'>⬅ Zurück</span> ${name}
+   </div>
+
+   <div class='grid'>
+     <div class='card'>
+       <img src="${img}" />
+       <b>${name} Retro Trikot</b>
+
+       <div style="text-decoration:line-through;color:#999;">79.99€</div>
+       <div style="font-weight:700;">11.99€</div>
+
+       <select id="size-retro">
+         <option value="">Größe wählen</option>
+         <option>S</option>
+         <option>M</option>
+         <option>L</option>
+         <option>XL</option>
+       </select>
+
+       <input id="qty-retro" type="number" value="1" min="1">
+
+       <button class='btn' onclick="
+         add(
+           '${name} Retro',
+           11.99,
+           '${img}',
+           document.getElementById('size-retro').value,
+           parseInt(document.getElementById('qty-retro').value),
+           '',
+           ''
+         )
+       ">
+         🛒 Jetzt kaufen
+       </button>
+     </div>
+   </div>
+   `;
+   return;
+ }
+
+ // ✅ FALL 2: NORMALE TEAMS (DEIN ALTER CODE BLEIBT)
+ let homeImg = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
+ let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
+
+ app.innerHTML = `
+   <!-- DEIN ALTER CODE HIER -->
+ `;
+}
 app.innerHTML=`
 <div class='title'>
 <span class='back' onclick='back()'>⬅ Zurück</span>
