@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
@@ -75,13 +76,8 @@ nav a:hover{
   gap:12px;
 }
 /* CARD */
-.card{
-  background:#fff;
-  padding:10px;
-  border-radius:12px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.05);
-  position:relative;
-}
+<img width="534" height="596" alt="image" src="https://github.com/user-attachments/assets/946236e2-1641-49ba-aab4-c9d635f14c28" />
+
 
 .card:hover{
   transform:translateY(-4px);
@@ -187,119 +183,7 @@ nav{
 }
 
 }
-  /* CLICK FEEDBACK */
-.card,
-.btn,
-nav a,
-.back,
-.cartItem button,
-span[onclick] {
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 2px solid transparent;
-  border-radius: 12px;
-}
-
-.card:hover,
-.btn:hover,
-nav a:hover,
-.back:hover,
-.cartItem button:hover,
-span[onclick]:hover {
-  border: 2px solid #22c55e;
-  background: rgba(34,197,94,0.08);
-}
-
-.card:active,
-.btn:active,
-nav a:active,
-.back:active,
-.cartItem button:active,
-span[onclick]:active {
-  transform: scale(0.97);
-  border: 2px solid #16a34a;
-}
-
-.card:focus,
-.btn:focus,
-nav a:focus {
-  outline: none;
-  border: 2px solid #22c55e;
-}
- 
-
-.btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-  /* CART MODERN */
-.cartModal{
-  position:fixed;
-  top:0;
-  right:0;
-  width:100%;
-  max-width:400px;
-  height:100%;
-  background:#fff;
-  box-shadow:-10px 0 30px rgba(0,0,0,0.2);
-  display:none;
-  flex-direction:column;
-  z-index:9999;
-}
-
-.cartHeader{
-  font-size:18px;
-  font-weight:700;
-}
-
-.cartBody{
-  flex:1;
-  overflow-y:auto;
-  padding:10px;
-}
-
-/* ITEM */
-.cartItem{
-  display:flex;
-  gap:10px;
-  padding:10px;
-  border-radius:12px;
-  margin-bottom:10px;
-}
-
-.cartInfo{
-  flex:1;
-  font-size:14px;
-}
-
-.cartItem button{
-  background:#ef4444;
-  border:none;
-  color:#fff;
-  padding:6px 10px;
-  border-radius:6px;
-}
-
-/* TOTAL BOX */
-.checkoutBox{
-  background:#f8fafc;
-  border-top:1px solid #e5e7eb;
-}
-
-#total{
-  font-size:14px;
-  margin-bottom:10px;
-}
-
-/* INPUTS schöner */
-.checkoutBox input{
-  margin-top:6px;
-}
-
-/* PAYPAL BUTTON ABSTAND */
-#paypal-button-container{
-  margin-top:10px;
-}
+  
 </style>
 </head>
 
@@ -328,29 +212,12 @@ function showPopup(){
   const random = data[Math.floor(Math.random()*data.length)];
   const minutes = Math.floor(Math.random()*5)+1;
 
-  const flags = {
-  "Deutschland":"🇩🇪",
-  "Italien":"🇮🇹",
-  "Frankreich":"🇫🇷",
-  "England":"🇬🇧",
-  "Spanien":"🇪🇸",
-  "Österreich":"🇦🇹",
-  "Schweiz":"🇨🇭",
-  "Niederlande":"🇳🇱",
-  "Tschechien":"🇨🇿",
-  "Kroatien":"🇭🇷",
-  "Argentinien":"🇦🇷",
-  "Brasilien":"🇧🇷",
-  "Türkei":"🇹🇷",
-  "VAE":"🇦🇪",
-  "Japan":"🇯🇵",
-  "USA":"🇺🇸"
-};
+  const flags = { ... };
 
   const teams = ["Real Madrid","Barcelona","Bayern München","PSG","Liverpool","Juventus"];
   const randomTeam = teams[Math.floor(Math.random()*teams.length)];
 
-  const text = `${flags[random.country] || "🌍"} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
+  const text = `${flags[random.country]} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
 
   const popup = document.getElementById("popup");
   popup.innerText = text;
@@ -370,11 +237,7 @@ function showPopup(){
   }, 4000);
 }
 
-function loopPopup(){
-  showPopup();
-  setTimeout(loopPopup, Math.random()*8000 + 5000);
-}
-loopPopup();
+setInterval(showPopup, Math.random()*8000 + 5000);
 </script>
 <nav>
 
@@ -537,7 +400,7 @@ function renderCart(){
 let b = document.getElementById('cartBody');
 
 if(!cart.length){
-  b.innerHTML = "<p style='padding:20px;text-align:center'>🛒 Dein Warenkorb ist leer</p>";
+  b.innerHTML = "<p style='padding:20px'>🛒 Dein Warenkorb ist leer</p>";
   document.getElementById('total').innerHTML = "";
   return;
 }
@@ -550,12 +413,11 @@ b.innerHTML = cart.map((c,i)=>`
   <div class='cartInfo'>
     <b>${c.n}</b><br>
     Größe: ${c.size}<br>
-
-    ${c.player ? `👤 ${c.player}<br>` : ""}
-    ${c.number ? `🔢 ${c.number}<br>` : ""}
+    ${c.player ? `Name: ${c.player}<br>` : ""}
+    ${c.number ? `Nr: ${c.number}<br>` : ""}
 
     <div class='qtyBox'>
-      <button onclick='changeQty(${i}, -1)'>−</button>
+      <button onclick='changeQty(${i}, -1)'>-</button>
       <span>${c.qty}</span>
       <button onclick='changeQty(${i}, 1)'>+</button>
     </div>
@@ -574,13 +436,13 @@ let shipping = totalQty ? SHIPPING : 0;
 let total = subtotal + shipping;
 
 document.getElementById('total').innerHTML = `
-<b>Artikel:</b> ${totalQty}<br>
-<b>Zwischensumme:</b> ${subtotal.toFixed(2)}€<br>
-<b>Versand:</b> ${shipping.toFixed(2)}€<br>
-<hr style="margin:10px 0">
-<b style="font-size:18px;">Gesamt: ${total.toFixed(2)}€</b>
+Artikel: ${totalQty}<br>
+Zwischensumme: ${subtotal.toFixed(2)}€ <br>
+Versand: ${shipping.toFixed(2)}€ <br>
+<b>Gesamt: ${total.toFixed(2)}€</b>
 `;
 }
+
 // 🌍 COUNTRIES EXPANDED
 const countries={
 de:"Deutschland",fr:"Frankreich",es:"Spanien",gb:"England",it:"Italien",pt:"Portugal",nl:"Niederlande",be:"Belgien",ch:"Schweiz",at:"Österreich",
@@ -617,24 +479,8 @@ const leagues={
 "Süper Lig":["Galatasaray","Fenerbahçe","Besiktas","Trabzonspor"]
 };
 
-const retro=[
-"Deutschland 2014",
-"Manchester United 2008",
-"Manchester United 2020",
-"Manchester United 2021",
-"Real Madrid 2012",
-"Real Madrid 2013",
-"Real Madrid 2014",
-"Real Madrid 2015",
-"Real Madrid 2016",
-"Real Madrid 2017",
-"Real Madrid 2018",
-"Brasilien 2002",
-"AC Milan 2006",
-"Barcelona 2015",
-"Frankreich 1998",
-"Frankreich 2006"
-];
+const retro=["Deutschland 1990","Brasilien 2002","Frankreich 1998","Italien 2006"];
+
 // 🖼️ BILDER FÜR ALLE TEAMS (HIER NUR LINKS ÄNDERN)
 const teamImages = {
 
@@ -775,58 +621,20 @@ const bestsellers = [
 
 app.innerHTML = `
 
-<!-- HERO IMAGE FULL -->
+<!-- HERO -->
 <div style="
-position:relative;
-height:400px;
+background:linear-gradient(135deg,#ffffff,#f1f5f9);
+color:#111;
+padding:30px;
 border-radius:20px;
-overflow:hidden;
 margin-bottom:25px;
-">
-
-<img src="https://media.gq-magazin.de/photos/690b73094fa0fed19422f786/3:2/w_2562,h_1708,c_limit/WC26_Product_Shoot_16x9_HighRes_Hero.jpg"
-style="
-width:100%;
-height:100%;
-object-fit:cover;
-filter:brightness(0.6);
-">
-
-<div style="
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
 text-align:center;
-color:#fff;
 ">
-
-<h1 style="font-size:2.5rem;">⚽ FootballJerseyONE</h1>
-
-<p style="margin-top:10px;font-size:1.2rem;">
+<h1 style="font-size:2rem;">⚽ FootballJerseyONE</h1>
+<p style="color:#555;margin-top:10px;">
 Die besten Fußballtrikots 2026 🔥
 </p>
 
-<button class="btn" onclick="go('clubs')" style="
-margin-top:20px;
-background:#22c55e;
-">
-Jetzt shoppen
-</button>
-
-</div>
-
-</div>
-
-<img src="https://media.gq-magazin.de/photos/690b73094fa0fed19422f786/3:2/w_2562,h_1708,c_limit/WC26_Product_Shoot_16x9_HighRes_Hero.jpg"
-style="
-width:100%;
-max-width:500px;
-border-radius:15px;
-object-fit:cover;
-">
-
-</div>
 <button class="btn" onclick="go('clubs')" style="max-width:200px;margin-top:15px;">
 Jetzt shoppen
 </button>
@@ -920,54 +728,9 @@ return;
 if(h.startsWith('team-')){
 let name=decodeURIComponent(h.replace('team-',''));
 
-// ✅ RETRO PRODUKT (NUR 1 TRIKOT)
-if(retro.includes(name)){
-  let img = `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey')}`;
+let homeImg = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
+let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
 
-  app.innerHTML=`
-  <div class='title'>
-    <span class='back' onclick='back()'>⬅ Zurück</span>
-    ${name}
-  </div>
-
-  <div class='grid'>
-    <div class='card'>
-      <img src="${img}" />
-
-      <b>${name} Retro Trikot</b>
-
-      <div style="font-size:18px;font-weight:700;">11.99€</div>
-
-      <div style="color:#22c55e;">✔ Auf Lager</div>
-
-      <select id="size-retro">
-        <option>S</option><option>M</option><option>L</option><option>XL</option>
-      </select>
-
-      <input id="qty-retro" type="number" value="1" min="1">
-
-      <button class='btn' onclick="
-      add(
-      '${name} Retro',
-      11.99,
-      '${img}',
-      document.getElementById('size-retro').value,
-      parseInt(document.getElementById('qty-retro').value),
-      '',
-      ''
-      )">
-      🛒 Jetzt kaufen
-      </button>
-
-    </div>
-  </div>
-  `;
-  return;
-}
-
-// ✅ NORMALE TEAMS (HEIM + AUSWÄRTS)
-let homeImg = teamImages[name]?.home || "https://via.placeholder.com/300x200?text=Kein+Bild";
-let awayImg = teamImages[name]?.away || "https://via.placeholder.com/300x200?text=Kein+Bild";
 app.innerHTML=`
 <div class='title'>
 <span class='back' onclick='back()'>⬅ Zurück</span>
@@ -978,40 +741,86 @@ ${name}
 
 <div class='card'>
 <img src="${homeImg}" />
-<b>${name} Heimtrikot 25/26</b>
+<b style="font-size:14px;">${name} Heimtrikot 25/26</b>
+
 <div style="font-size:18px;font-weight:700;">11.99€</div>
+
+<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
+✔ Auf Lager
+</div>
+
+<div style="color:#ef4444;font-size:13px;font-weight:600;">
+⚠ Nur noch 3 verfügbar
+</div></div>
+
+<div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
+
 <select id="size-home">
 <option>S</option><option>M</option><option>L</option><option>XL</option>
 </select>
+
 <input id="qty-home" type="number" value="1" min="1">
+
+<input id="player-home" placeholder="Name">
+<input id="number-home" type="number" placeholder="Nr.">
+
 <button class='btn' onclick="
-add('${name} Heimtrikot',11.99,'${homeImg}',
+add(
+'${name} Heimtrikot',
+11.99,
+'${homeImg}',
 document.getElementById('size-home').value,
-parseInt(document.getElementById('qty-home').value),'','')">
-🛒 Kaufen
+parseInt(document.getElementById('qty-home').value),
+document.getElementById('player-home').value,
+document.getElementById('number-home').value
+)">
+🛒 Jetzt kaufen
 </button>
 </div>
 
 <div class='card'>
 <img src="${awayImg}" />
-<b>${name} Auswärtstrikot 25/26</b>
+<b style="font-size:14px;">${name} Auswärtstrikot 25/26</b>
+
 <div style="font-size:18px;font-weight:700;">11.99€</div>
+
+<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
+✔ Auf Lager
+</div>
+
+<div style="color:#ef4444;font-size:13px;font-weight:600;">
+⚠ Nur noch 3 verfügbar
+</div></div>
+
+<div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
+
 <select id="size-away">
 <option>S</option><option>M</option><option>L</option><option>XL</option>
 </select>
+
 <input id="qty-away" type="number" value="1" min="1">
+
+<input id="player-away" placeholder="Name">
+<input id="number-away" type="number" placeholder="Nr.">
+
 <button class='btn' onclick="
-add('${name} Auswärtstrikot',11.99,'${awayImg}',
+add(
+'${name} Auswärtstrikot',
+11.99,
+'${awayImg}',
 document.getElementById('size-away').value,
-parseInt(document.getElementById('qty-away').value),'','')">
-🛒 Kaufen
+parseInt(document.getElementById('qty-away').value),
+document.getElementById('player-away').value,
+document.getElementById('number-away').value
+)">
+🛒 Jetzt kaufen
 </button>
 </div>
 
 </div>
 `;
 }
-
+}
 
 render();
 </script>
