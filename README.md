@@ -63,18 +63,18 @@
 
 /* CARDS (SEHR WICHTIG) */
 .card{
-  background:#fff;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid #eee;
   cursor:pointer;
-  transition:0.25s;
-  position:relative;
 }
 
 .card:hover{
-  transform:translateY(-6px) scale(1.02);
-  box-shadow:0 15px 35px rgba(0,0,0,0.1);
+  border:1px solid #22c55e;
+}
+
+button, .navLink, .cartBtn{
+  cursor:pointer;
+}
+  *{
+  transition:all 0.2s ease;
 }
 
 /* BUTTONS BESSER */
@@ -82,6 +82,7 @@
   background:linear-gradient(135deg,#111,#333);
   border-radius:12px;
 }
+
 .btn:hover{
   background:#22c55e;
 }
@@ -97,11 +98,7 @@
 }
 
 .hero img{
-  position:absolute;
-  right:-40px;
-  top:0;
-  height:100%;
-  opacity:0.2;
+  filter:blur(2px);
 }
 
 /* BADGES */
@@ -116,27 +113,9 @@
   font-size:12px;
 }
   
-  .logoBox{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  position:relative;
-}
+  
 
-.logoImg{
-  width:70px;
-  height:50px;
-  transform:rotate(-8deg);
-  box-shadow:0 8px 20px rgba(0,0,0,0.15);
-}
 
-  transform:rotate(-10deg); /* 👉 diagonal */
-  transition:0.3s;
-}
-
-.logoImg:hover{
-  transform:rotate(0deg) scale(1.1);
-}
   
 *{
   margin:0;
@@ -204,8 +183,7 @@ nav a:hover{
   grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:12px;
 }
-/* CARD */
-<img width="534" height="596" alt="image" src="https://github.com/user-attachments/assets/946236e2-1641-49ba-aab4-c9d635f14c28" />
+
 
 
 .card:hover{
@@ -341,12 +319,22 @@ function showPopup(){
   const random = data[Math.floor(Math.random()*data.length)];
   const minutes = Math.floor(Math.random()*5)+1;
 
-  const flags = { ... };
+  const flags = {
+  Deutschland: "🇩🇪",
+  Italien: "🇮🇹",
+  Frankreich: "🇫🇷",
+  England: "🇬🇧",
+  Spanien: "🇪🇸",
+  Österreich: "🇦🇹",
+  Schweiz: "🇨🇭",
+  Niederlande: "🇳🇱",
+  USA: "🇺🇸"
+};
 
   const teams = ["Real Madrid","Barcelona","Bayern München","PSG","Liverpool","Juventus"];
   const randomTeam = teams[Math.floor(Math.random()*teams.length)];
 
-  const text = `${flags[random.country]} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
+  const text = `${flags[random.country] || "🌍"} ${random.name} aus ${random.city} hat ${randomTeam} Trikot vor ${minutes} Min gekauft`;
 
   const popup = document.getElementById("popup");
   popup.innerText = text;
@@ -789,13 +777,9 @@ return `
 </div>
 `;
 
-}).join('')}
-</div>
 
-`;
 
-}).join('')}
-</div>
+
 
 <!-- CTA -->
 <div style="
