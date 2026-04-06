@@ -10,6 +10,112 @@
 
 <style>
 
+  /* NAVBAR */
+.logoBox{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logoImg{
+  width:65px;
+  height:50px;
+  object-fit:cover;
+  border-radius:10px;
+  transform:rotate(-8deg);
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  transition:0.3s;
+}
+.logoImg:hover{
+  transform:rotate(0deg) scale(1.1);
+}
+
+.navRight{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.navLink{
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.2s;
+}
+.navLink:hover{
+  background:#f1f5f9;
+  color:#22c55e;
+}
+
+/* CART BUTTON */
+.cartBtn{
+  background:#111;
+  color:#fff;
+  padding:6px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.2s;
+}
+.cartBtn:hover{
+  background:#22c55e;
+}
+
+/* CARDS (SEHR WICHTIG) */
+.card{
+  background:#fff;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid #eee;
+  cursor:pointer;
+  transition:0.25s;
+  position:relative;
+}
+
+.card:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 15px 35px rgba(0,0,0,0.1);
+}
+
+/* BUTTONS BESSER */
+.btn{
+  background:linear-gradient(135deg,#111,#333);
+  border-radius:12px;
+}
+.btn:hover{
+  background:#22c55e;
+}
+
+/* HERO SECTION */
+.hero{
+  background:linear-gradient(135deg,#ffffff,#e2e8f0);
+  border-radius:20px;
+  padding:30px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero img{
+  position:absolute;
+  right:-40px;
+  top:0;
+  height:100%;
+  opacity:0.2;
+}
+
+/* BADGES */
+.badge{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:#ef4444;
+  color:#fff;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+}
+  
   .logoBox{
   display:flex;
   align-items:center;
@@ -270,13 +376,14 @@ setInterval(showPopup, Math.random()*8000 + 5000);
   <img src="https://media.gq-magazin.de/photos/690b73094fa0fed19422f786/3:2/w_2562,h_1708,c_limit/WC26_Product_Shoot_16x9_HighRes_Hero.jpg" class="logoImg">
 </div>
 
-<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-  <input class="search" placeholder="Suche..." oninput="searchAll(this.value)" style="padding:6px 10px;border-radius:8px;border:1px solid #ddd;" />
+<div class="navRight">
+  <input class="search" placeholder="🔍 Suche..." oninput="searchAll(this.value)" />
 
-  <a onclick="go('national')">National</a>
-<a onclick="go('clubs')">Vereine</a>
-<a onclick="go('retro')">Retro</a>
-  <span onclick="openCart()" style="cursor:pointer">
+  <a onclick="go('national')" class="navLink">National</a>
+  <a onclick="go('clubs')" class="navLink">Vereine</a>
+  <a onclick="go('retro')" class="navLink">Retro</a>
+
+  <span onclick="openCart()" class="cartBtn">
     🛒 <span id="cartCount">0</span>
   </span>
 </div>
@@ -645,33 +752,17 @@ const bestsellers = [
 
 app.innerHTML = `
 
-<!-- HERO -->
-<div style="
-background:linear-gradient(135deg,#ffffff,#f1f5f9);
-color:#111;
-padding:30px;
-border-radius:20px;
-margin-bottom:25px;
-text-align:center;
-">
-<h1 style="font-size:2rem;">⚽ FootballJerseyONE</h1>
-<p style="color:#555;margin-top:10px;">
-Die besten Fußballtrikots 2026 🔥
-</p>
+<div class="hero">
+  <img src="https://media.gq-magazin.de/photos/690b73094fa0fed19422f786/3:2/w_2562,h_1708,c_limit/WC26_Product_Shoot_16x9_HighRes_Hero.jpg">
 
-<button class="btn" onclick="go('clubs')" style="max-width:200px;margin-top:15px;">
-Jetzt shoppen
-</button>
+  <h1>⚽ FootballJerseyONE</h1>
+  <p>Die besten Fußballtrikots 2026 🔥</p>
+
+  <button class="btn" onclick="go('clubs')" style="max-width:200px;margin-top:15px;">
+    Jetzt shoppen
+  </button>
 </div>
 
-<!-- TRUST -->
-<div style="display:flex;gap:15px;flex-wrap:wrap;margin-bottom:20px;">
-<div class="card">🚚 Schneller Versand</div>
-<div class="card">💳 Sicher bezahlen</div>
-<div class="card">⭐ Top Qualität</div>
-</div>
-
-<!-- BESTSELLER -->
 <div class='title'>🔥 Bestseller</div>
 
 <div class='grid'>
@@ -682,27 +773,25 @@ let img = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${name
 return `
 <div class='card' onclick="openTeam('${name}')">
 
-<div style="
-position:absolute;
-background:#ef4444;
-padding:4px 8px;
-border-radius:6px;
-font-size:12px;">
-Bestseller
-</div>
+<div class="badge">🔥 Bestseller</div>
 
 <img src="${img}" />
 
 <b>${name}</b>
 
-<div style="color:#22c55e;font-size:13px;">✔ Auf Lager</div>
-<div style="color:#ef4444;font-size:12px;">⚠ Nur noch wenige!</div>
+<div style="color:#22c55e;">✔ Auf Lager</div>
+<div style="color:#ef4444;">⚠ Nur noch wenige!</div>
 
 <div style="font-weight:700;margin-top:5px;">11.99€</div>
 
-<button class='btn'>Jetzt ansehen</button>
+<button class='btn'>Ansehen</button>
 
 </div>
+`;
+
+}).join('')}
+</div>
+
 `;
 
 }).join('')}
