@@ -365,6 +365,9 @@ function showPopup(){
 </div>
 
 <div class="navRight">
+  <a onclick="go('impressum')" class="navLink">Impressum</a>
+<a onclick="go('datenschutz')" class="navLink">Datenschutz</a>
+<a onclick="go('widerruf')" class="navLink">Widerruf</a>
   <input class="search" placeholder="🔍 Suche..." oninput="searchAll(this.value)" />
 
   <a onclick="go('national')" class="navLink">National</a>
@@ -397,7 +400,24 @@ function showPopup(){
 
 
 <script>
-let cart=JSON.parse(localStorage.getItem('cart')||'[]');
+function showToast(msg){
+  const t = document.createElement("div");
+  t.innerText = msg;
+  t.style = `
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#22c55e;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:10px;
+  z-index:99999;
+  `;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.remove()},3000);
+}
+  
+  let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 const SHIPPING=4.99;
 
 
@@ -424,18 +444,18 @@ function add(n,p,img,size,qty,player,number){
 
 // ❌ VALIDIERUNG
 if(!size){
-  alert("Bitte Größe auswählen");
+  showToast("Deine Nachricht")"Bitte Größe auswählen");
   return;
 }
 
 if(!qty || qty < 1){
-  alert("Ungültige Menge");
+  showToast("Deine Nachricht")"Ungültige Menge");
   return;
 }
 
 // optional: Name nur wenn Nummer gesetzt
 if(number && !player){
-  alert("Bitte Namen zum Trikot eingeben");
+  showToast("Deine Nachricht")"Bitte Namen zum Trikot eingeben");
   return;
 }
 
@@ -490,7 +510,7 @@ let email = document.getElementById('cust-email').value.trim();
 let address = document.getElementById('cust-address').value.trim();
 
 if(!name || !email || !address){
-  alert("Bitte alle Felder ausfüllen!");
+  showToast("Deine Nachricht")"Bitte alle Felder ausfüllen!");
   return;
 }
 
@@ -770,14 +790,47 @@ return `
 <div style="color:#22c55e;">✔ Auf Lager</div>
 <div style="color:#ef4444;">⚠ Nur noch wenige!</div>
 
-<div style="font-weight:700;margin-top:5px;">11.99€</div>
+<div style="text-decoration:line-through;color:#999;">79.99€</div>
+<div style="font-weight:700;">11.99€</div>
 
 <button class='btn'>Ansehen</button>
 
 </div>
 `;
 }).join('')}
+if(h==='impressum'){
+app.innerHTML=`
+<div class='title'>Impressum</div>
+<p>
+Lionel Eiloot<br>
+Königsallee 27<br>
+40212 Düsseldorf<br>
+Deutschland<br><br>
+E-Mail: support@footballjerseyone.com
+</p>
+`;
+return;
+}
 
+if(h==='datenschutz'){
+app.innerHTML=`
+<div class='title'>Datenschutz</div>
+<p>
+Wir speichern deine Daten nur zur Bestellabwicklung.
+</p>
+`;
+return;
+}
+
+if(h==='widerruf'){
+app.innerHTML=`
+<div class='title'>Widerrufsrecht</div>
+<p>
+Du hast 14 Tage Zeit deine Bestellung zu widerrufen nur wenn es nicht Beschädigt ist, wir haften nicht wenn dein Paket nicht angekommen ist.
+</p>
+`;
+return;
+}
 
 
 
@@ -834,7 +887,9 @@ ${name}
 <img src="${homeImg}" />
 <b style="font-size:14px;">${name} Heimtrikot 25/26</b>
 
-<div style="font-size:18px;font-weight:700;">11.99€</div>
+<div style="text-decoration:line-through;color:#999;">79.99€</div>
+<div style="font-weight:700;">11.99€</div>
+
 
 <div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
 ✔ Auf Lager
@@ -845,7 +900,13 @@ ${name}
 </div></div>
 
 <div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
-
+<div style="font-size:12px;color:#16a34a;">
+✔ Sicher bezahlen (PayPal)<br>
+✔ Top Qualität<br>
+</div>
+<div style="font-size:12px;color:#666;">
+🚚 Lieferung: 5–7 Werktage
+</div>
 <select id="size-home">
 <option>S</option><option>M</option><option>L</option><option>XL</option>
 </select>
@@ -873,7 +934,9 @@ document.getElementById('number-home').value
 <img src="${awayImg}" />
 <b style="font-size:14px;">${name} Auswärtstrikot 25/26</b>
 
-<div style="font-size:18px;font-weight:700;">11.99€</div>
+<div style="text-decoration:line-through;color:#999;">79.99€</div>
+<div style="font-weight:700;">11.99€</div>
+
 
 <div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
 ✔ Auf Lager
@@ -884,7 +947,13 @@ document.getElementById('number-home').value
 </div></div>
 
 <div style="font-size:12px;color:#666;">inkl. Versand ab 4.99€</div>
-
+<div style="font-size:12px;color:#16a34a;">
+✔ Sicher bezahlen (PayPal)<br>
+✔ Top Qualität<br>
+</div>
+<div style="font-size:12px;color:#666;">
+🚚 Lieferung: 5–7 Werktage
+</div>
 <select id="size-away">
 <option>S</option><option>M</option><option>L</option><option>XL</option>
 </select>
