@@ -226,9 +226,19 @@ input, select{
 }
 
 /* CART */
-.cartModal{
+
+  .cartModal{
+  display:none;
+  position:fixed;
+  top:0;
+  right:0;
+  width:100%;
+  max-width:400px;
+  height:100%;
   background:#ffffff;
   color:#111;
+  flex-direction:column;
+  z-index:9999;
 }
 
 .cartHeader{
@@ -444,18 +454,19 @@ function add(n,p,img,size,qty,player,number){
 
 // ❌ VALIDIERUNG
 if(!size){
-  showToast("Deine Nachricht")"Bitte Größe auswählen");
+ showToast("Bitte Größe auswählen");
   return;
 }
 
 if(!qty || qty < 1){
-  showToast("Deine Nachricht")"Ungültige Menge");
+ showToast("Ungültige Menge");
+
   return;
 }
 
 // optional: Name nur wenn Nummer gesetzt
 if(number && !player){
-  showToast("Deine Nachricht")"Bitte Namen zum Trikot eingeben");
+ showToast("Bitte Namen zum Trikot eingeben");
   return;
 }
 
@@ -504,13 +515,18 @@ paypal.Buttons({
   },
 
  onApprove: function(data, actions) {
-
+console.log({
+  name,
+  email,
+  address,
+  cart
+});
 let name = document.getElementById('cust-name').value.trim();
 let email = document.getElementById('cust-email').value.trim();
 let address = document.getElementById('cust-address').value.trim();
 
 if(!name || !email || !address){
-  showToast("Deine Nachricht")"Bitte alle Felder ausfüllen!");
+ showToast("Bitte alle Felder ausfüllen!");
   return;
 }
 
@@ -744,7 +760,7 @@ function render(){
 save();
 const app=document.getElementById('app');
 const h=location.hash.replace('#','')||'home';
-
+if(h==='impressum'){ app.innerHTML= <div class='title'>Impressum</div> <p> Lionel Eiloot<br> Königsallee 27<br> 40212 Düsseldorf<br> Deutschland<br><br> E-Mail: support@footballjerseyone.com </p> ; return; } if(h==='datenschutz'){ app.innerHTML= <div class='title'>Datenschutz</div> <p> Wir speichern deine Daten nur zur Bestellabwicklung. </p> ; return; } if(h==='widerruf'){ app.innerHTML= <div class='title'>Widerrufsrecht</div> <p> Du hast 14 Tage Zeit deine Bestellung zu widerrufen nur wenn es nicht Beschädigt ist, wir haften nicht wenn dein Paket nicht angekommen ist. </p> ; return; }
 if(h==='home'){
 
 const bestsellers = [
@@ -797,44 +813,12 @@ return `
 
 </div>
 `;
-}).join('')}
-if(h==='impressum'){
-app.innerHTML=`
-<div class='title'>Impressum</div>
-<p>
-Lionel Eiloot<br>
-Königsallee 27<br>
-40212 Düsseldorf<br>
-Deutschland<br><br>
-E-Mail: support@footballjerseyone.com
-</p>
-`;
-return;
-}
-
-if(h==='datenschutz'){
-app.innerHTML=`
-<div class='title'>Datenschutz</div>
-<p>
-Wir speichern deine Daten nur zur Bestellabwicklung.
-</p>
-`;
-return;
-}
-
-if(h==='widerruf'){
-app.innerHTML=`
-<div class='title'>Widerrufsrecht</div>
-<p>
-Du hast 14 Tage Zeit deine Bestellung zu widerrufen nur wenn es nicht Beschädigt ist, wir haften nicht wenn dein Paket nicht angekommen ist.
-</p>
-`;
-return;
-}
+}).join('')} `;
 
 
 
-<!-- CTA -->
+
+// CTA
 
 <div style="margin-top:30px; padding:20px; background:#020617; border-radius:15px; text-align:center;">
   <h2>🔥 Verpasse keine Angebote</h2>
@@ -891,7 +875,7 @@ ${name}
 <div style="font-weight:700;">11.99€</div>
 
 
-<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
+<div style="color:#22c55e;font-size:13px;">
 ✔ Auf Lager
 </div>
 
@@ -908,7 +892,11 @@ ${name}
 🚚 Lieferung: 5–7 Werktage
 </div>
 <select id="size-home">
-<option>S</option><option>M</option><option>L</option><option>XL</option>
+<option value="">Größe wählen</option>
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
 </select>
 
 <input id="qty-home" type="number" value="1" min="1">
@@ -938,7 +926,7 @@ document.getElementById('number-home').value
 <div style="font-weight:700;">11.99€</div>
 
 
-<div style="color:#16a34a;font-size:13px;"><div style="color:#22c55e;font-size:13px;">
+<div style="color:#22c55e;font-size:13px;">
 ✔ Auf Lager
 </div>
 
@@ -955,7 +943,11 @@ document.getElementById('number-home').value
 🚚 Lieferung: 5–7 Werktage
 </div>
 <select id="size-away">
-<option>S</option><option>M</option><option>L</option><option>XL</option>
+<option value="">Größe wählen</option>
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
 </select>
 
 <input id="qty-away" type="number" value="1" min="1">
@@ -983,6 +975,7 @@ document.getElementById('number-away').value
 }
 
 render();
+  setInterval(showPopup, 6000);
 </script>
 <div id="popup" style="
 position:fixed;
