@@ -953,7 +953,7 @@ if(h.startsWith('team-')){
    <b>${name} Heimtrikot</b>
    <div>11.99€</div>
 
-   <select id="size-home">
+   <select id="size-home-${name}">
      <option value="">Größe wählen</option>
      <option>S</option>
      <option>M</option>
@@ -968,7 +968,7 @@ if(h.startsWith('team-')){
        '${name} Heimtrikot',
        11.99,
        '${homeImg}',
-       document.getElementById('size-home').value,
+       document.getElementById(`size-home-${name}`).value,
        parseInt(document.getElementById('qty-home').value),
        '',
        ''
@@ -1015,10 +1015,8 @@ if(h.startsWith('team-')){
  let homeImg = teamImages[name]?.home || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey home')}`;
  let awayImg = teamImages[name]?.away || `https://source.unsplash.com/400x300/?${encodeURIComponent(name+' football jersey away')}`;
 
- app.innerHTML = `
-   <!-- DEIN ALTER CODE HIER -->
- `;
-}
+let homeImg = teamImages[name]?.home || "https://via.placeholder.com/300x200";
+let awayImg = teamImages[name]?.away || "https://via.placeholder.com/300x200";
 app.innerHTML=`
 <div class='title'>
 <span class='back' onclick='back()'>⬅ Zurück</span>
@@ -1051,7 +1049,7 @@ ${name}
 <div style="font-size:12px;color:#666;">
 🚚 Lieferung: 5–7 Werktage
 </div>
-<select id="size-home">
+<select id="size-home-${name}">
 <option value="">Größe wählen</option>
 <option>S</option>
 <option>M</option>
@@ -1069,7 +1067,7 @@ add(
 '${name} Heimtrikot',
 11.99,
 '${homeImg}',
-document.getElementById('size-home').value,
+document.getElementById(`size-home-${name}`).value,
 parseInt(document.getElementById('qty-home').value),
 document.getElementById('player-home').value,
 document.getElementById('number-home').value
